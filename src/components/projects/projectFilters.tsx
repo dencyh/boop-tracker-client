@@ -1,33 +1,37 @@
 import React, { useState } from "react";
 import CompletionFilter from "./completionFilters";
 
+interface IProjectFilters {
+  done: boolean;
+  pending: boolean;
+}
+
 const ProjectFilters = () => {
-  const [checked, setChecked] = useState("radio2");
-  const isRadioChecked = (value: string): boolean => checked === value;
-  const handleRadio = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setChecked(e.currentTarget.value);
-    console.log(checked);
+  const [checked, setChecked] = useState<IProjectFilters>({
+    done: false,
+    pending: false
+  });
+
+  const handleCheck = (value: "done" | "pending"): void => {
+    setChecked((prev) => ({ ...prev, [value]: !prev[value] }));
   };
   return (
-    <div className="flex items-center mr-4 m-5">
-      <input
-        className="w-4 h-4 text-green-600 accent-red-600"
-        type="radio"
-        name="radio"
-        value="radio1"
-        checked={isRadioChecked("radio1")}
-        onChange={handleRadio}
-      />
-      <input
-        className="w-4 h-4 text-green-600 accent-green-600 "
-        type="radio"
-        name="radio"
-        value="radio2"
-        checked={isRadioChecked("radio2")}
-        onChange={handleRadio}
-      />
-      <CompletionFilter completed={false} />
-      <CompletionFilter completed={true} />
+    <div className="flex justify-between my-5">
+      <h3 className="text-sm text-slate-500 font-bold uppercase dark:text-white">
+        Projects
+      </h3>
+      <div className="flex">
+        <CompletionFilter
+          value="done"
+          checked={checked.done}
+          onCheck={handleCheck}
+        />
+        <CompletionFilter
+          value="pending"
+          checked={checked.pending}
+          onCheck={handleCheck}
+        />
+      </div>
     </div>
   );
 };
