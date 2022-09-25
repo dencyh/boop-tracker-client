@@ -1,12 +1,13 @@
-import Drawer from "../components/drawer/drawer";
-import MainScreen from "../components/mainscreen/mainscreen";
+import Sidebar from "../components/sidebar/sidebar";
+import Bugs from "../components/bugs/bugs";
+import Projects from "../components/projects/projects";
 
 export function Welcome() {
   return (
     <div className="flex">
-      <Drawer/>
-      <Drawer/>
-      <MainScreen/>
+      <Sidebar/>
+      <Projects/>
+      <Bugs/>
     </div>
   );
 }

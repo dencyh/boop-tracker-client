@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HeaderTabs = () => {
+const SidebarHeaderTabs = () => {
   return (
     <div
       className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
@@ -21,4 +21,4 @@ const HeaderTabs = () => {
   );
 };
 
-export default HeaderTabs;
+export default SidebarHeaderTabs;
