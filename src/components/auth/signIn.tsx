@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from "react";
+import React, { FC, FormEvent, useContext, useState } from "react";
 import { Context } from "../../index";
 import { observer } from "mobx-react-lite";
 
@@ -7,7 +7,7 @@ const SignIn: FC = () => {
   const [password, setPassword] = useState<string>("");
   const { store } = useContext(Context);
 
-  const handleSignIn = (e: any) => {
+  const handleSignIn = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     store.signIn(email, password);
   };

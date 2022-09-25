@@ -11,7 +11,7 @@ const SidebarFooter = () => {
           className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
         >
           {/*<FontAwesomeIcon icon={solid("right-from-bracket")}/>*/}
-          <span className="text-slate-500">
+          <span className="text-slate-500 dark:text-white">
             <FontAwesomeIcon icon={solid("moon")} />
             <span className="ml-3">Sign out</span>
           </span>

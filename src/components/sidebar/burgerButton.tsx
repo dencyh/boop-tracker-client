@@ -4,9 +4,7 @@ const BurgerButton = () => {
   return (
     <button
       type="button"
-      data-drawer-dismiss="drawer-navigation"
-      aria-controls="drawer-navigation"
-      className="h-1/2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5  inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+      className="h-fit text-gray-400 bg-transparent hover:bg-gray-300 hover:text-gray-600 rounded-lg text-sm p-1.5  inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

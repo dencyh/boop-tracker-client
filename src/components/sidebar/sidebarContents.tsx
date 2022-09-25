@@ -2,11 +2,14 @@ import React from "react";
 import SidebarMenuItem from "./sidebarMenuItem";
 import { ISidebarMenuItem } from "../../data/sidebarItems";
 
-const SidebarContents = ({ sidebarItems }: any) => {
-  console.log(sidebarItems);
+const SidebarContents = ({
+  sidebarItems
+}: {
+  sidebarItems: ISidebarMenuItem[];
+}) => {
   return (
     <ul className="space-y-2">
-      {sidebarItems.map((sidebarItem: any) => (
+      {sidebarItems.map((sidebarItem) => (
         <SidebarMenuItem key={sidebarItem.id} {...sidebarItem} />
       ))}
     </ul>
