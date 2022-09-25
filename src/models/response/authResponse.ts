@@ -1,9 +1,9 @@
-import {IUser} from "../IUser";
+import { IUser } from "../IUser";
 
 export interface AuthResponse {
   tokens: {
-    accessToken: string,
-    refreshToken: string,
+    accessToken: string;
+    refreshToken: string;
   };
   user: IUser;
 }

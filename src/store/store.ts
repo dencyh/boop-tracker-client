@@ -1,9 +1,9 @@
-import {IUser} from "../models/IUser";
-import {makeAutoObservable} from "mobx";
-import {AuthService} from "../services/authService";
+import { IUser } from "../models/IUser";
+import { makeAutoObservable } from "mobx";
+import { AuthService } from "../services/authService";
 import axios from "axios";
-import {AuthResponse} from "../models/response/authResponse";
-import {API_URL} from "../http";
+import { AuthResponse } from "../models/response/authResponse";
+import { API_URL } from "../http";
 
 export default class Store {
   user = {} as IUser;
@@ -27,19 +27,29 @@ export default class Store {
       console.log(response);
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setAuth(true);
-      this.setUser((response.data.user));
+      this.setUser(response.data.user);
     } catch (e: any) {
       console.log(e.response?.data?.message);
     }
   }
 
-  async signUp(first_name: string, last_name: string, email: string, password: string) {
+  async signUp(
+    first_name: string,
+    last_name: string,
+    email: string,
+    password: string
+  ) {
     try {
-      const response = await AuthService.signUp(first_name, last_name, email, password);
+      const response = await AuthService.signUp(
+        first_name,
+        last_name,
+        email,
+        password
+      );
       console.log(response);
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setAuth(true);
-      this.setUser((response.data.user));
+      this.setUser(response.data.user);
     } catch (e: any) {
       console.log(e.response?.data?.message);
     }
@@ -56,14 +66,15 @@ export default class Store {
     }
   }
 
-
   async checkAuth() {
     try {
-      const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true});
+      const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {
+        withCredentials: true
+      });
       console.log(response);
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setAuth(true);
-      this.setUser((response.data.user));
+      this.setUser(response.data.user);
     } catch (e: any) {
       console.log(e.response?.data?.message);
     }

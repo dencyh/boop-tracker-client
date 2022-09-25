@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import CompletionFilter from "./completionFilters";
 
 const ProjectFilters = () => {
@@ -12,16 +12,22 @@ const ProjectFilters = () => {
     <div className="flex items-center mr-4 m-5">
       <input
         className="w-4 h-4 text-green-600 accent-red-600"
-        type="radio" name="radio" value="radio1"
+        type="radio"
+        name="radio"
+        value="radio1"
         checked={isRadioChecked("radio1")}
-        onChange={handleRadio}/>
+        onChange={handleRadio}
+      />
       <input
         className="w-4 h-4 text-green-600 accent-green-600 "
-        type="radio" name="radio" value="radio2"
+        type="radio"
+        name="radio"
+        value="radio2"
         checked={isRadioChecked("radio2")}
-        onChange={handleRadio}/>
-      <CompletionFilter completed={false}/>
-      <CompletionFilter completed={true}/>
+        onChange={handleRadio}
+      />
+      <CompletionFilter completed={false} />
+      <CompletionFilter completed={true} />
     </div>
   );
 };

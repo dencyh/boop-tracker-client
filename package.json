@@ -40,7 +40,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint --ext .ts,.tsx src --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -66,6 +66,12 @@
     "@typescript-eslint/parser": "^5.38.0",
     "babel-plugin-transform-react-jsx-source": "^6.22.0",
     "eslint": "^8.24.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.8",
+    "prettier": "^2.7.1",
     "tailwindcss": "^3.1.8"
   }
 }
