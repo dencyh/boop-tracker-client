@@ -40,7 +40,7 @@ const SignIn: FC = () => {
               value={email}
             />
             <p className="mt-2 text-xs">
-              We couldn&apos;t find an account with that email address.
+              We could not find an account with that email address.{" "}
               <a
                 href="/"
                 className="text-blue-600 dark:text-blue-500 underline"

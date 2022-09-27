@@ -1,18 +1,13 @@
-import shibaLogo from "../assets/my-shiba-512.png";
 import { Link } from "react-router-dom";
 import React from "react";
+import AppLogo from "./appLogo";
 
 export function Header() {
   return (
     <div className="container mx-auto">
       <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
         <div className="container flex flex-wrap justify-between items-center mx-auto">
-          <Link to="/auth" className="flex items-center">
-            <img src={shibaLogo} className="h-6 sm:h-20" alt="Shiba Logo" />
-            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-              Boop Tracker
-            </span>
-          </Link>
+          <AppLogo />
           <div className="flex items-center xl:w-1/4 lg:w-2/5 md:w-3/5">
             <form className="w-4/5">
               <label

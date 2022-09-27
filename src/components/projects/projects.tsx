@@ -6,7 +6,7 @@ const Projects = () => {
   return (
     <div
       id="drawer-navigation"
-      className="bg-white p-4 drop-shadow-green-outline relative flex flex-col shrink-0 w-270px xl:w-80 h-screen bg-white dark:bg-gray-800 dark:border-l border-gray-700"
+      className="p-4 drop-shadow-green-outline relative flex flex-col shrink-0 w-270px xl:w-80 h-screen bg-white dark:bg-gray-800 dark:border-l border-gray-700"
       tabIndex={-1}
       aria-labelledby="drawer-navigation-label"
     >

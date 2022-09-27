@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import SidebarHeaderTabs from "./sidebarHeaderTabs";
 import AppLogo from "../appLogo";
+import { Context } from "../../index";
 
 import SidebarContents from "./sidebarContents";
 import { sidebarItems } from "../../data/sidebarItems";
@@ -8,11 +9,12 @@ import BurgerButton from "./burgerButton";
 import SidebarFooter from "./sidebarFooter";
 
 const Sidebar = () => {
+  const { store } = useContext(Context);
   return (
     <div
       id="drawer-navigation"
       className="p-4 drop-shadow-md flex flex-col shrink-0 xl:w-80 lg:w-240px h-screen border-r border-gray-200 bg-white dark:bg-gray-800"
-      tabIndex="-1"
+      tabIndex={-1}
       aria-labelledby="drawer-navigation-label"
     >
       <div className="flex items-center">
