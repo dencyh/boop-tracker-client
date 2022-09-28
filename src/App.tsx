@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Auth } from "./pages/auth";
 import { Header } from "./components/header";
 import { Routes, Route, Link } from "react-router-dom";
-import { Welcome } from "./pages/welcome";
+import { MainView } from "./pages/mainView";
 import { Context } from "./index";
 import { observer } from "mobx-react-lite";
 
@@ -14,14 +14,7 @@ function App() {
     }
   }, []);
 
-  return (
-    <>
-      <Routes>
-        <Route path="/" element={store.isAuth ? <Welcome /> : <Auth />} />
-        <Route path="/welcome" element={<Welcome />} />
-      </Routes>
-    </>
-  );
+  return store.isAuth ? <MainView /> : <Auth />;
 }
 
 export default observer(App);

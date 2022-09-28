@@ -1,7 +1,9 @@
 import React from "react";
-import Button from "../controls/button";
-import CloseButton from "../controls/closeButton";
-import Toggle from "../controls/toggle";
+import Button from "../microComponents/controls/button";
+import CloseButton from "../microComponents/controls/closeButton";
+import Toggle from "../microComponents/controls/toggle";
+import Input from "../microComponents/inputs/input";
+import Textarea from "../microComponents/inputs/textarea";
 
 interface IModal {
   isOpen: boolean;
@@ -16,23 +18,8 @@ const Modal = ({ isOpen, onClose }: IModal) => {
           <h2 className="text-xl">Project</h2>
           <form className="flex flex-col mx-auto">
             <CloseButton onClick={onClose} />
-            <label className="block mb-4 text-sm font-medium text-gray-900 dark:text-gray-400">
-              Title
-              <input
-                type="text"
-                className="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full mt-2 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                required
-                placeholder="Project name..."
-              />
-            </label>
-            <label className="block mb-4 text-sm font-medium text-gray-900 dark:text-gray-400">
-              Description
-              <textarea
-                rows={4}
-                className="block mt-2 p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Project description..."
-              ></textarea>
-            </label>
+            <Input label="Title" />
+            <Textarea label="Description" rows={5} />
             <Toggle name="Finished" />
             <div className="w-fit mt-5">
               <Button name="Create" />

@@ -1,5 +1,5 @@
 import { Path, UseFormRegister } from "react-hook-form";
-import { IFormValues } from "./signUp";
+import { IFormValues } from "../../../pages/views/auth/signUp";
 import React from "react";
 
 type InputProps = {

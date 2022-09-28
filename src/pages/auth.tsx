@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import SignIn from "../components/auth/signIn";
-import { SignUp } from "../components/auth/signUp";
+import SignIn from "./views/auth/signIn";
+import SignUp from "./views/auth/signUp";
 import { Header } from "../components/header";
 
 export function Auth() {

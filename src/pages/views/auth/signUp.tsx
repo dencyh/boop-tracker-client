@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { FormHeader } from "./formHeader";
-import { FormInput } from "./formInput";
+import { FormHeader } from "../../../components/microComponents/inputs/formHeader";
+import { FormInput } from "../../../components/microComponents/inputs/formInput";
 import * as yop from "yup";
 
 export interface IFormValues {
@@ -13,7 +13,7 @@ const errorMessages = {
   email: "Email is required"
 };
 
-export function SignUp() {
+const signUp = () => {
   const {
     register,
     handleSubmit,
@@ -41,4 +41,6 @@ export function SignUp() {
       </form>
     </div>
   );
-}
+};
+
+export default signUp;

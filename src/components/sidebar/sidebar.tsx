@@ -1,15 +1,13 @@
 import React, { useContext } from "react";
 import SidebarHeaderTabs from "./sidebarHeaderTabs";
 import AppLogo from "../appLogo";
-import { Context } from "../../index";
 
 import SidebarContents from "./sidebarContents";
 import { sidebarItems } from "../../data/sidebarItems";
-import BurgerButton from "./burgerButton";
+import BurgerButton from "../microComponents/controls/burgerButton";
 import SidebarFooter from "./sidebarFooter";
 
 const Sidebar = () => {
-  const { store } = useContext(Context);
   return (
     <div
       id="drawer-navigation"
@@ -17,7 +15,7 @@ const Sidebar = () => {
       tabIndex={-1}
       aria-labelledby="drawer-navigation-label"
     >
-      <div className="flex items-center">
+      <div className="flex items-center justify-between">
         <AppLogo />
         <BurgerButton />
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Button from "../controls/button";
-import Modal from "./modal";
+import Button from "../../../components/microComponents/controls/button";
+import Modal from "../../../components/bugs/modal";
 
 const Bugs = () => {
   const [modalOpen, setModalOpen] = useState(false);
