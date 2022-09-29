@@ -22,6 +22,12 @@ interface SignUpInputs extends Omit<SignInInputs, "name"> {
   name: keyof SignUpValues;
 }
 
+const signUpHeader = {
+  header: "Sign up",
+  text: "Already have an account?",
+  button: "Sign in"
+};
+
 const signUp = ({ onSignOption }: SignInProps) => {
   const [values, setValues] = useState({
     firstName: "",
@@ -91,7 +97,7 @@ const signUp = ({ onSignOption }: SignInProps) => {
 
   return (
     <form onSubmit={(e) => handleSignUn(e)}>
-      <SignHeader onSignOption={onSignOption} />
+      <SignHeader onSignOption={onSignOption} {...signUpHeader} />
       <div className="mb-6">
         {signUpInputs.map((input: SignUpInputs) => (
           <Input

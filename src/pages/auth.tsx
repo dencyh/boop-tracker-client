@@ -12,6 +12,17 @@ export function Auth() {
     setHaveAccount(!haveAccount);
   };
 
+  const signHeaders = {
+    signIn: {
+      text: "New user?",
+      button: "Create an account"
+    },
+    signUp: {
+      text: "Already have an account?",
+      button: "Sign in"
+    }
+  };
+
   return (
     <>
       <Header />

@@ -25,6 +25,12 @@ export interface SignInInputs {
   required?: boolean;
 }
 
+const signInHeader = {
+  header: "Sign in",
+  text: "New user?",
+  button: "Create an account"
+};
+
 const SignIn = ({ onSignOption }: SignInProps) => {
   const { store } = useContext(Context);
   const [values, setValues] = useState<SignInValues>({
@@ -53,6 +59,7 @@ const SignIn = ({ onSignOption }: SignInProps) => {
   const [inputs, setInputs] = useState(signInInputs);
 
   const onChange = (e: FormEvent<HTMLInputElement>) => {
+    setResError("");
     const target = e.target as HTMLInputElement;
     setValues({ ...values, [target.name]: target.value });
   };
@@ -78,7 +85,6 @@ const SignIn = ({ onSignOption }: SignInProps) => {
   };
 
   useEffect(() => {
-    console.log(resError);
     setInputs(
       signInInputs.map((input) =>
         input.name === resError
@@ -90,7 +96,7 @@ const SignIn = ({ onSignOption }: SignInProps) => {
 
   return (
     <form onSubmit={(e) => handleSignIn(e)}>
-      <SignHeader onSignOption={onSignOption} />
+      <SignHeader onSignOption={onSignOption} {...signInHeader} />
       <div className="mb-3">
         {inputs.map((input) => (
           <Input
