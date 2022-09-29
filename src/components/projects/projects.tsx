@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SearchBar from "./seachBar";
 import ProjectFilters from "./projectFilters";
+import { Context } from "../..";
+import { observer } from "mobx-react-lite";
 
 const Projects = () => {
+  const { store } = useContext(Context);
+
+  useEffect(() => {
+    store.getUserProjects();
+  }, []);
+
   return (
     <div
       id="drawer-navigation"
@@ -47,10 +55,13 @@ const Projects = () => {
         <SearchBar />
       </div>
       <ProjectFilters />
-      <div className="flex items-center"></div>
-      <div className="h-full py-4 overflow-y-auto flex flex-col justify-between"></div>
+      <ul className="flex flex-col">
+        {store.projects.map((project) => (
+          <li key={project.id}>{project?.title}</li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default Projects;
+export default observer(Projects);

@@ -1,3 +1,5 @@
+import { IProject } from "./../models/IProject";
+import { ProjectService } from "./../services/projectService";
 import { IUser } from "../models/IUser";
 import { makeAutoObservable } from "mobx";
 import { AuthService } from "../services/authService";
@@ -7,6 +9,7 @@ import { API_URL } from "../http";
 
 export default class Store {
   user = {} as IUser;
+  projects = [] as IProject[];
   isAuth = false;
   isLoading = false;
 
@@ -22,13 +25,17 @@ export default class Store {
     this.user = user;
   }
 
+  setProjects(projects: IProject[]) {
+    this.projects = projects;
+  }
+
   setLoading(value: boolean) {
     this.isLoading = value;
   }
 
   async signIn(email: string, password: string) {
     try {
-      const response = await AuthService.test(email, password);
+      const response = await AuthService.signIn(email, password);
       console.log(response);
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setAuth(true);
@@ -93,6 +100,16 @@ export default class Store {
       console.log(e);
     } finally {
       this.setLoading(false);
+    }
+  }
+
+  async getUserProjects() {
+    try {
+      const response = await ProjectService.getProjects();
+      this.setProjects(response.data);
+      console.log(response);
+    } catch (e: unknown) {
+      console.log(e);
     }
   }
 }

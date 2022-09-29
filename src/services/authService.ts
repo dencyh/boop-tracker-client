@@ -24,18 +24,6 @@ export class AuthService {
     return api.post<AuthResponse>("/signin", { email, password });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static async test(email: any, password: any) {
-    // return fetch("http://localhost:8080/api/signin", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({ email, password })
-    // });
-    return api.post("/signin", { email, password });
-  }
-
   static async signOut(): Promise<void> {
     return api.post("/signout");
   }

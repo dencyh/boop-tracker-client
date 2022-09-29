@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Auth } from "./pages/auth";
 import { Header } from "./components/header";
 import { Routes, Route, Link } from "react-router-dom";
-import { MainView } from "./pages/mainView";
+import { WorkSpace } from "./pages/workSpace";
 import { Context } from "./index";
 import { observer } from "mobx-react-lite";
 import Loader from "./components/loader";
@@ -22,7 +22,7 @@ function App() {
       </div>
     );
 
-  return store.isAuth ? <MainView /> : <Auth />;
+  return store.isAuth ? <WorkSpace /> : <Auth />;
 }
 
 export default observer(App);

@@ -1,14 +1,14 @@
 import Sidebar from "../components/sidebar/sidebar";
-import Bugs from "./views/mainContainer/bugs";
+import Bugs from "./views/workspaceContainer/bugs";
 import Projects from "../components/projects/projects";
-import React, { useContext } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Feed from "./views/mainContainer/feed";
-import Timesheet from "./views/mainContainer/timesheet";
-import Milestones from "./views/mainContainer/milestones";
+import Feed from "./views/workspaceContainer/feed";
+import Timesheet from "./views/workspaceContainer/timesheet";
+import Milestones from "./views/workspaceContainer/milestones";
 import NotFound from "./notFound";
 
-export function MainView() {
+export function WorkSpace() {
   return (
     <div className="flex">
       <Sidebar />
