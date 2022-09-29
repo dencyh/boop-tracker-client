@@ -4,7 +4,7 @@ import AppLogo from "../appLogo";
 
 import SidebarContents from "./sidebarContents";
 import { sidebarItems } from "../../data/sidebarItems";
-import BurgerButton from "../microComponents/controls/burgerButton";
+import BurgerButton from "../controls/burgerButton";
 import SidebarFooter from "./sidebarFooter";
 
 const Sidebar = () => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Button from "../components/microComponents/controls/button";
+import Button from "../components/controls/button";
 
 const NotFound = () => {
   return (

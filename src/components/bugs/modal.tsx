@@ -1,9 +1,9 @@
 import React from "react";
-import Button from "../microComponents/controls/button";
-import CloseButton from "../microComponents/controls/closeButton";
-import Toggle from "../microComponents/controls/toggle";
-import Input from "../microComponents/inputs/input";
-import Textarea from "../microComponents/inputs/textarea";
+import Button from "../controls/button";
+import CloseButton from "../controls/closeButton";
+import Toggle from "../controls/toggle";
+import Input from "../inputs/input";
+import Textarea from "../inputs/textarea";
 
 interface IModal {
   isOpen: boolean;

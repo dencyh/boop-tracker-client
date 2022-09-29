@@ -1,45 +1,109 @@
-import React, { useRef, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { FormHeader } from "../../../components/microComponents/inputs/formHeader";
-import { FormInput } from "../../../components/microComponents/inputs/formInput";
-import * as yop from "yup";
+import React, { FormEvent, useContext, useRef, useState } from "react";
+import { SubmitHandler } from "react-hook-form";
+import { Context } from "../../../index";
+import Button from "../../../components/controls/button";
+import Input from "../../../components/inputs/input";
+import SignHeader from "./signHeader";
+import { SignInInputs } from "./signIn";
 
-export interface IFormValues {
-  email: string;
-  password: string;
-}
-
-const errorMessages = {
-  email: "Email is required"
+type SignInProps = {
+  onSignOption: () => void;
 };
 
-const signUp = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<IFormValues>();
+type SignUpValues = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
-  const onSubmit: SubmitHandler<IFormValues> = (data) => console.log(data);
+interface SignUpInputs extends Omit<SignInInputs, "name"> {
+  name: keyof SignUpValues;
+}
+
+const signUp = ({ onSignOption }: SignInProps) => {
+  const [values, setValues] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
+
+  const signUpInputs: SignUpInputs[] = [
+    {
+      name: "firstName",
+      type: "text",
+      placeholder: "First name",
+      errorMessage: "Can not be empty",
+      label: "First name",
+      required: true
+    },
+    {
+      name: "lastName",
+      type: "text",
+      placeholder: "Last name",
+      errorMessage: "Can not be empty",
+      label: "Last name",
+      required: true
+    },
+    {
+      name: "email",
+      type: "email",
+      placeholder: "elon@mars.com",
+      errorMessage: "Must be an email",
+      label: "Email",
+      required: true
+    },
+    {
+      name: "password",
+      type: "password",
+      placeholder: "",
+      errorMessage:
+        "Must be minimum six characters, at least one letter and one number",
+      label: "Password",
+      pattern: "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$"
+    },
+    {
+      name: "confirmPassword",
+      type: "password",
+      placeholder: "",
+      errorMessage: "Passwords don't match",
+      label: "Confirm password",
+      pattern: values.password
+    }
+  ];
+
+  const { store } = useContext(Context);
+
+  const handleSignUn = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { firstName, lastName, email, password } = values;
+    const response = await store.signUp(firstName, lastName, email, password);
+    console.log(response);
+  };
+
+  const onChange = (e: FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    setValues({ ...values, [target.name]: target.value });
+  };
 
   return (
-    <div className="flex-1 p-10 max-w-lg">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormHeader />
-
-        <FormInput
-          label="email"
-          register={register}
-          required={true}
-          errors={errors}
-        />
-        <FormInput label="password" register={register} />
-
-        <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          Submit
-        </button>
-      </form>
-    </div>
+    <form onSubmit={(e) => handleSignUn(e)}>
+      <SignHeader onSignOption={onSignOption} />
+      <div className="mb-6">
+        {signUpInputs.map((input: SignUpInputs) => (
+          <Input
+            key={input.name}
+            {...input}
+            value={values[input.name]}
+            onChange={onChange}
+          />
+        ))}
+      </div>
+      <Button name="Sumbit" type="submit" />
+    </form>
   );
 };
 

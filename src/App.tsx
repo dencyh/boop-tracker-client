@@ -5,6 +5,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import { MainView } from "./pages/mainView";
 import { Context } from "./index";
 import { observer } from "mobx-react-lite";
+import Loader from "./components/loader";
 
 function App() {
   const { store } = useContext(Context);
@@ -13,6 +14,13 @@ function App() {
       store.checkAuth();
     }
   }, []);
+
+  if (store.isLoading)
+    return (
+      <div className="contianer h-screen flex justify-center items-center">
+        <Loader />
+      </div>
+    );
 
   return store.isAuth ? <MainView /> : <Auth />;
 }

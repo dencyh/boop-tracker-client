@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "../../../components/microComponents/controls/button";
+import Button from "../../../components/controls/button";
 import Modal from "../../../components/bugs/modal";
 
 const Bugs = () => {
