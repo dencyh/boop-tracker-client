@@ -1,3 +1,4 @@
+import { UserService } from "./../services/userService";
 import { IProject } from "./../models/IProject";
 import { ProjectService } from "./../services/projectService";
 import { IUser } from "../models/IUser";
@@ -10,6 +11,7 @@ import { API_URL } from "../http";
 export default class Store {
   user = {} as IUser;
   projects = [] as IProject[];
+  users = [] as IUser[];
   isAuth = false;
   isLoading = false;
 
@@ -27,6 +29,10 @@ export default class Store {
 
   setProjects(projects: IProject[]) {
     this.projects = projects;
+  }
+
+  setUsers(users: IUser[]) {
+    this.users = users;
   }
 
   setLoading(value: boolean) {
@@ -47,6 +53,21 @@ export default class Store {
       // console.log(e.response?.data?.message);
       return e.response.status;
     }
+  }
+
+  async createProject(
+    title: string,
+    description: string,
+    viewers: string[],
+    closed: boolean
+  ) {
+    const response = await ProjectService.createProject(
+      title,
+      description,
+      viewers,
+      closed
+    );
+    console.log(response);
   }
 
   async signUp(
@@ -70,7 +91,6 @@ export default class Store {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.log(e);
-      // console.log(e.response?.data?.message);
       return e.response?.data?.message;
     }
   }
@@ -108,6 +128,15 @@ export default class Store {
       const response = await ProjectService.getProjects();
       this.setProjects(response.data);
       console.log(response);
+    } catch (e: unknown) {
+      console.log(e);
+    }
+  }
+
+  async getUsers() {
+    try {
+      const response = await UserService.getUsers();
+      this.setUsers(response.data);
     } catch (e: unknown) {
       console.log(e);
     }

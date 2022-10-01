@@ -4,5 +4,5 @@ export interface IProject {
   description: string;
   created_at: string;
   updated_at: string;
-  finished: boolean;
+  closed: boolean;
 }
