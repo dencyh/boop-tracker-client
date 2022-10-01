@@ -10,8 +10,7 @@ import SidebarFooter from "./sidebarFooter";
 const Sidebar = () => {
   return (
     <div
-      id="drawer-navigation"
-      className="p-4 drop-shadow-md flex flex-col shrink-0 xl:w-80 lg:w-240px h-screen border-r border-gray-200 bg-white dark:bg-gray-800"
+      className="w-310px p-4 drop-shadow-md flex flex-col shrink-0 xl:w-80 lg:w-270px h-screen border-r border-gray-200 bg-white dark:bg-gray-800"
       tabIndex={-1}
       aria-labelledby="drawer-navigation-label"
     >

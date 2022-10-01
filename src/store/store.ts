@@ -45,7 +45,7 @@ export default class Store {
     } catch (e: any) {
       console.log(e);
       // console.log(e.response?.data?.message);
-      return e.response?.data?.message;
+      return e.response.status;
     }
   }
 

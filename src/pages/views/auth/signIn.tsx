@@ -1,9 +1,10 @@
-import React, { FC, FormEvent, useContext, useEffect, useState } from "react";
+import React, { FormEvent, useContext, useState } from "react";
 import { Context } from "../../../index";
 import { observer } from "mobx-react-lite";
 import SignHeader from "./signHeader";
 import Input from "../../../components/inputs/input";
 import Button from "../../../components/controls/button";
+import AuthError from "./authError";
 
 interface SignInProps {
   onSignOption: () => void;
@@ -33,10 +34,11 @@ const signInHeader = {
 
 const SignIn = ({ onSignOption }: SignInProps) => {
   const { store } = useContext(Context);
-  const [values, setValues] = useState<SignInValues>({
+  const initialValues = {
     email: "",
     password: ""
-  });
+  };
+  const [values, setValues] = useState<SignInValues>(initialValues);
 
   const signInInputs: SignInInputs[] = [
     {
@@ -44,22 +46,18 @@ const SignIn = ({ onSignOption }: SignInProps) => {
       type: "email",
       placeholder: "elon@mars.com",
       errorMessage: "Must be an email",
-      serverError: "",
       label: "Email"
     },
     {
       name: "password",
       type: "password",
       placeholder: "",
-      serverError: "",
-      errorMessage: "Passwrod should be at least 6 characters",
+      errorMessage: "Enter password",
       label: "Password"
     }
   ];
-  const [inputs, setInputs] = useState(signInInputs);
 
   const onChange = (e: FormEvent<HTMLInputElement>) => {
-    setResError("");
     const target = e.target as HTMLInputElement;
     setValues({ ...values, [target.name]: target.value });
   };
@@ -67,53 +65,35 @@ const SignIn = ({ onSignOption }: SignInProps) => {
   const handleSignIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { email, password } = values;
-    const response = await store.signIn(email, password);
-    if (response === "email not found") {
-      setResError("email");
-    } else if (response === "wrong password") {
-      setResError("password");
-    } else {
-      setResError("other");
-    }
+    const statusCode = await store.signIn(email, password);
+    setResStatus(statusCode);
+    setValues(initialValues);
   };
 
-  const [resError, setResError] = useState<string>("");
-  const serverErrors = {
-    email: "Couldn't find an account matching the email",
-    password: "Wrong password",
-    other: "Something went wrong. Try again"
-  };
-
-  useEffect(() => {
-    setInputs(
-      signInInputs.map((input) =>
-        input.name === resError
-          ? { ...input, serverError: serverErrors[resError] }
-          : input
-      )
-    );
-  }, [resError]);
+  const [resStatus, setResStatus] = useState<number>(200);
 
   return (
-    <form onSubmit={(e) => handleSignIn(e)}>
-      <SignHeader onSignOption={onSignOption} {...signInHeader} />
-      <div className="mb-3">
-        {inputs.map((input) => (
-          <Input
-            key={input.name}
-            {...input}
-            onChange={onChange}
-            value={values[input.name]}
-          />
-        ))}
-      </div>
-      <Button name="Sumbit" type="submit" />
-      {resError === "other" ? (
-        <p className="mt-4 text-xs text-red-600">{serverErrors[resError]}</p>
+    <>
+      {resStatus === 0 || resStatus >= 400 ? (
+        <AuthError status={resStatus as 0} />
       ) : (
         ""
       )}
-    </form>
+      <form onSubmit={(e) => handleSignIn(e)}>
+        <SignHeader onSignOption={onSignOption} {...signInHeader} />
+        <div className="mb-3">
+          {signInInputs.map((input) => (
+            <Input
+              key={input.name}
+              {...input}
+              onChange={onChange}
+              value={values[input.name]}
+            />
+          ))}
+        </div>
+        <Button name="Sumbit" type="submit" />
+      </form>
+    </>
   );
 };
 

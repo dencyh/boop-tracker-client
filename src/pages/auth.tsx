@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// eslint-disable-next-line import/namespace
 import SignIn from "./views/auth/signIn";
 import SignUp from "./views/auth/signUp";
 import { Header } from "../components/header";
@@ -12,19 +11,8 @@ export function Auth() {
     setHaveAccount(!haveAccount);
   };
 
-  const signHeaders = {
-    signIn: {
-      text: "New user?",
-      button: "Create an account"
-    },
-    signUp: {
-      text: "Already have an account?",
-      button: "Sign in"
-    }
-  };
-
   return (
-    <>
+    <div className="flex flex-col h-screen">
       <Header />
       <div className="flex justify-between items-center container mx-auto max-w-5xl">
         <div className="flex-1 p-10 max-w-lg container mx-auto">
@@ -36,6 +24,6 @@ export function Auth() {
         </div>
         <WelcomeText />
       </div>
-    </>
+    </div>
   );
 }

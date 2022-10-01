@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IBaseInput } from "./IBaseInput";
 
-const Input = ({ label, errorMessage, serverError, ...rest }: IBaseInput) => {
+const Input = ({ label, errorMessage, ...rest }: IBaseInput) => {
   const [focusLoss, setFocusLoss] = useState(false);
   return (
     <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-gray-400">
@@ -24,11 +24,6 @@ const Input = ({ label, errorMessage, serverError, ...rest }: IBaseInput) => {
       >
         {errorMessage}
       </p>
-      {serverError ? (
-        <p className="-mt-4 text-xs text-red-600">{serverError}</p>
-      ) : (
-        ""
-      )}
     </label>
   );
 };

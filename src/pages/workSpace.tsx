@@ -1,6 +1,6 @@
 import Sidebar from "../components/sidebar/sidebar";
 import Bugs from "./views/workspaceContainer/bugs";
-import Projects from "../components/projects/projects";
+import ProjectsList from "../components/sidebar/projects/projectsList";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Feed from "./views/workspaceContainer/feed";
@@ -12,7 +12,7 @@ export function WorkSpace() {
   return (
     <div className="flex">
       <Sidebar />
-      <Projects />
+      <ProjectsList />
       <Routes>
         <Route path="/" element={<Bugs />} />
         <Route path="/milestones" element={<Milestones />} />
