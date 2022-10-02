@@ -1,12 +1,19 @@
 import React from "react";
+import { IBaseInput } from "../inputs/interfaces/IBaseInput";
 
-type ViewerProps = {
+interface ViewerProps extends Omit<IBaseInput, "label"> {
   id: string;
   firstName: string;
   lastName: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
-const Viewer = ({ id, firstName, lastName, onChange }: ViewerProps) => {
+  //   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+const Viewer = ({
+  id,
+  firstName,
+  lastName,
+  onChange,
+  ...rest
+}: ViewerProps) => {
   return (
     <li>
       <div className="">
@@ -15,6 +22,7 @@ const Viewer = ({ id, firstName, lastName, onChange }: ViewerProps) => {
             onChange={onChange}
             type="checkbox"
             value={id}
+            {...rest}
             className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
           />
           <div className="ml-2">

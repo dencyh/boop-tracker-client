@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IBaseInput } from "./IBaseInput";
+import { IBaseInput } from "./interfaces/IBaseInput";
 
 const Input = ({ label, errorMessage, ...rest }: IBaseInput) => {
   const [focusLoss, setFocusLoss] = useState(false);

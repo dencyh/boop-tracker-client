@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Auth } from "./pages/auth";
-import { Header } from "./components/header";
+import { Header } from "./pages/views/auth/header";
 import { Routes, Route, Link } from "react-router-dom";
 import { WorkSpace } from "./pages/workSpace";
 import { Context } from "./index";

@@ -12,9 +12,10 @@ const DropdownSearch = ({ handleViewers }: DropdownSearchProps) => {
   const [isHidden, setIsHidden] = useState(true);
 
   const [users, setUsers] = useState({});
+  const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
-    store.getUsers();
+    store.getViewers();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

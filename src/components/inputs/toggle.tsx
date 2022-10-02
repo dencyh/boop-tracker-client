@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BaseControl } from "../controls/interfaces/baseControl";
-import { IBaseInput } from "./IBaseInput";
+import { IBaseInput } from "./interfaces/IBaseInput";
 
 const Toggle = ({ label, ...rest }: IBaseInput) => {
   return (

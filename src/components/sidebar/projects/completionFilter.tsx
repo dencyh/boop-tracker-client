@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-
-type Value = "open" | "closed";
+import { Filters } from "./projectsList";
 
 interface ICompletionFilter {
-  value: Value;
-  checked: boolean;
-  onCheck: (value: Value) => void;
+  filter: Filters;
+  handleFilters: (filterName: string, checked: boolean) => void;
 }
 
-const CompletionFilter = ({ value, checked, onCheck }: ICompletionFilter) => {
+const CompletionFilter = ({ filter, handleFilters }: ICompletionFilter) => {
+  const { name, isClosed, color } = filter;
+
   const [focus, setFocus] = useState(false);
-  const ringColor = value === "open" ? "ring-green-600" : "ring-violet-600";
-  const ringHover =
-    value === "open" ? "hover:ring-green-600" : "hover:ring-violet-600";
-  const bgColor = value === "open" ? "bg-green-600" : "bg-violet-600";
+  const [isChecked, setIsCheck] = useState(true);
+  const ringColor = `ring-${color}-600`;
+  const ringHover = `hover:ring-${color}-600`;
+  const bgColor = `bg-${color}-600`;
 
   const handleFocus = () => {
     setFocus(true);
@@ -31,14 +31,16 @@ const CompletionFilter = ({ value, checked, onCheck }: ICompletionFilter) => {
         <input
           type="checkbox"
           className="hidden-checkbox"
-          value={value}
+          value={name}
+          checked={isChecked}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={(e) => {
-            onCheck(e.currentTarget.value as Value);
+            handleFilters(e.target.value, e.target.checked);
+            setIsCheck(e.target.checked);
           }}
         />
-        {checked ? (
+        {isChecked ? (
           <span
             aria-hidden={true}
             className={`w-full h-full ${bgColor} rounded-sm transition-all`}
@@ -47,7 +49,7 @@ const CompletionFilter = ({ value, checked, onCheck }: ICompletionFilter) => {
           ""
         )}
       </div>
-      <div className="uppercase text-xs">{value}</div>
+      <div className="uppercase text-xs">{name}</div>
     </label>
   );
 };

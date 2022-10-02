@@ -55,21 +55,6 @@ export default class Store {
     }
   }
 
-  async createProject(
-    title: string,
-    description: string,
-    viewers: string[],
-    closed: boolean
-  ) {
-    const response = await ProjectService.createProject(
-      title,
-      description,
-      viewers,
-      closed
-    );
-    console.log(response);
-  }
-
   async signUp(
     first_name: string,
     last_name: string,
@@ -133,10 +118,26 @@ export default class Store {
     }
   }
 
-  async getUsers() {
+  async createProject(
+    title: string,
+    description: string,
+    viewers: string[],
+    closed: boolean
+  ) {
+    const response = await ProjectService.createProject(
+      title,
+      description,
+      viewers,
+      closed
+    );
+    console.log(response);
+  }
+
+  async getViewers() {
     try {
       const response = await UserService.getUsers();
-      this.setUsers(response.data);
+      const users = response.data.filter((user) => user.id !== this.user.id);
+      this.setUsers(users);
     } catch (e: unknown) {
       console.log(e);
     }
