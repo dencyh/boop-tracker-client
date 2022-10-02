@@ -50,7 +50,9 @@ const CompletionFilter = ({ filter, handleFilters }: ICompletionFilter) => {
           ""
         )}
       </div>
-      <div className="uppercase text-xs">{name}</div>
+      <div className="uppercase text-xs font-semibold text-slate-600">
+        {name}
+      </div>
     </label>
   );
 };

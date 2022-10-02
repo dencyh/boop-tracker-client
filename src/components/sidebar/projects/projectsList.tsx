@@ -74,12 +74,18 @@ const ProjectsList = () => {
       className="w-310px z-20 drop-shadow-green-outline flex flex-col shrink-0 xl:w-80 bg-gray-100 dark:bg-gray-800 dark:border-l border-gray-700 h-screen"
       tabIndex={-1}
     >
-      <div className="p-4">
+      <div className="px-4 mt-4">
         <div className="py-2.5">
           <SearchBar />
         </div>
         <ProjectFilters handleFilters={handleFilters} filters={filters} />
       </div>
+      <h3
+        role="button"
+        className="font-bold text-lg mx-4 p-4 rounded-2xl hover:bg-indigo-100"
+      >
+        All Project
+      </h3>
       <ul className="project-list flex flex-col ml-6 px-4 overflow-auto">
         {filteredProjects.map((project) => (
           <ProjectItem key={project.id} project={project} />

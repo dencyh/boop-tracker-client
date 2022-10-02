@@ -58,8 +58,6 @@ const Modal = ({ isOpen, onClose }: IModal) => {
     const viewerIds = Object.keys(viewers).filter(
       (key) => viewers[key] === true
     );
-    console.log("raw", viewers);
-    console.log("edit", viewerIds);
     await store.createProject(title, description, viewerIds, closed);
 
     // to refresh projects sidebar
@@ -69,7 +67,10 @@ const Modal = ({ isOpen, onClose }: IModal) => {
     <>
       {isOpen && (
         <div className="absolute left-1/2 -translate-x-1/2 top-16 w-2/3 m-5">
-          <h2 className="text-xl">Project</h2>
+          <h2 className="text-xl font-semibold text-slate-600">
+            <button className="border-b-2 border-slate-600">Project</button> /{" "}
+            <button className="text-slate-400">Bug</button>
+          </h2>
           <form className="flex flex-col mx-auto" onSubmit={handleSumbit}>
             <CloseButton onClick={onClose} />
             <Input label="Title" onChange={onChange} name="title" required />
