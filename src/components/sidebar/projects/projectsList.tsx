@@ -63,7 +63,7 @@ const ProjectsList = () => {
 
   useEffect(() => {
     filteredProjects = filterProjects(store.projects, selectedFilter);
-  }, [selectedFilter]);
+  }, [selectedFilter, store.projects]);
 
   function handleFilters(filterName: string, checked: boolean) {
     setSelectedFilter({ ...selectedFilter, [filterName]: checked });
@@ -80,7 +80,7 @@ const ProjectsList = () => {
         </div>
         <ProjectFilters handleFilters={handleFilters} filters={filters} />
       </div>
-      <ul className="flex flex-col pl-4 py-2 overflow-auto">
+      <ul className="project-list flex flex-col ml-6 px-4 overflow-auto">
         {filteredProjects.map((project) => (
           <ProjectItem key={project.id} project={project} />
         ))}

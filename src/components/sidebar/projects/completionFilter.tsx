@@ -11,9 +11,10 @@ const CompletionFilter = ({ filter, handleFilters }: ICompletionFilter) => {
 
   const [focus, setFocus] = useState(false);
   const [isChecked, setIsCheck] = useState(true);
-  const ringColor = `ring-${color}-600`;
-  const ringHover = `hover:ring-${color}-600`;
-  const bgColor = `bg-${color}-600`;
+  const ringColor = color === "green" ? "ring-green-600" : "ring-violet-600";
+  const ringHover =
+    color === "green" ? "hover:ring-green-600" : "hover:ring-violet-600";
+  const bgColor = color === "green" ? "bg-green-600" : "bg-violet-600";
 
   const handleFocus = () => {
     setFocus(true);

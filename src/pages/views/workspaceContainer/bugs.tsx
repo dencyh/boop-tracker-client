@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "../../../components/controls/button";
-import Modal from "../../../components/mainSection/projectModal";
+import Modal from "../../../components/mainSection/newProjectModal";
 
 const Bugs = () => {
   const [modalOpen, setModalOpen] = useState(false);
