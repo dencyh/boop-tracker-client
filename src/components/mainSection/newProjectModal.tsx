@@ -7,6 +7,7 @@ import Input from "../inputs/input";
 import Textarea from "../inputs/textarea";
 import DropdownSearch from "./dropdownSearch";
 import { ProjectService } from "../../services/projectService";
+import { observer } from "mobx-react-lite";
 
 interface IModal {
   isOpen: boolean;
@@ -51,7 +52,7 @@ const Modal = ({ isOpen, onClose }: IModal) => {
     });
   };
 
-  const handleSumbit = (e: React.FormEvent) => {
+  const handleSumbit = async (e: React.FormEvent) => {
     e.preventDefault();
     const { title, description, viewers, closed } = values;
     const viewerIds = Object.keys(viewers).filter(
@@ -59,7 +60,10 @@ const Modal = ({ isOpen, onClose }: IModal) => {
     );
     console.log("raw", viewers);
     console.log("edit", viewerIds);
-    store.createProject(title, description, viewerIds, closed);
+    await store.createProject(title, description, viewerIds, closed);
+
+    // to refresh projects sidebar
+    await store.getUserProjects();
   };
   return (
     <>
@@ -89,4 +93,4 @@ const Modal = ({ isOpen, onClose }: IModal) => {
   );
 };
 
-export default Modal;
+export default observer(Modal);
