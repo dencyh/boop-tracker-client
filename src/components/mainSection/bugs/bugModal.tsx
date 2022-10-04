@@ -1,12 +1,12 @@
-import React, { useContext, useState } from "react";
-import { Context } from "../..";
-import Button from "../controls/button";
-import Input from "../inputs/input";
-import Textarea from "../inputs/textarea";
+import React, { useContext, useEffect, useState } from "react";
+import { Context } from "../../..";
+import Button from "../../controls/button";
+import Input from "../../inputs/input";
+import Textarea from "../../inputs/textarea";
 import CheckboxDropdown from "./checkboxDropdown";
 import SimpleDropdown from "./simpleDropdown";
 
-type BugValues = {
+export interface BugValues {
   title: string;
   description: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,7 +14,7 @@ type BugValues = {
   status: string;
   priority: string;
   due: Date;
-};
+}
 
 const statusData = ["open", "done", "won't do", "duplicate"];
 const priorityData = ["lowest", "low", "medium", "high", "highest"].reverse();
@@ -29,17 +29,13 @@ const BugModal = () => {
     priority: "",
     due: new Date()
   };
+
   const [bugValues, setBugValues] = useState<BugValues>(initialBugValues);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onChange = (e: any) => {
     const target = e.target as HTMLInputElement;
     setBugValues({ ...bugValues, [target.name]: target.value });
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleCheck = (e: any) => {
-    const checked = e.target.checked;
-    setBugValues({ ...bugValues, [e.target.name]: checked });
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,9 +46,19 @@ const BugModal = () => {
     });
   };
 
+  const handleValues = (option: string, value: keyof BugValues) => {
+    setBugValues({
+      ...bugValues,
+      [value]: option
+    });
+  };
+
   const handleSumbit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // const { title, description, viewers, closed } = bugValues;
+
+    console.log(bugValues);
+    const { title, description, status, priority, due, assignedTo } = bugValues;
+
     // const viewerIds = Object.keys(viewers).filter(
     //   (key) => viewers[key] === true
     // );
@@ -84,8 +90,18 @@ const BugModal = () => {
           {/* <div className="mt-4">
         <Toggle label="Closed" name="closed" onChange={handleCheck} />
       </div> */}
-          <SimpleDropdown name="Status" menuItems={statusData} />
-          <SimpleDropdown name="Priority" menuItems={priorityData} />
+          <SimpleDropdown
+            label="Status"
+            name="status"
+            menuItems={statusData}
+            handleValues={handleValues}
+          />
+          <SimpleDropdown
+            label="Priority"
+            name="priority"
+            menuItems={priorityData}
+            handleValues={handleValues}
+          />
         </div>
       </div>
     </form>

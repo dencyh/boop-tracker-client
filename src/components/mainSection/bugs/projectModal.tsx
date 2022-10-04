@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Context } from "../..";
-import Button from "../controls/button";
-import Input from "../inputs/input";
-import Textarea from "../inputs/textarea";
-import Toggle from "../inputs/toggle";
+import { Context } from "../../..";
+import Button from "../../controls/button";
+import Input from "../../inputs/input";
+import Textarea from "../../inputs/textarea";
+import Toggle from "../../inputs/toggle";
 import CheckboxDropdown from "./checkboxDropdown";
 
 type ProjectValues = {

@@ -1,5 +1,11 @@
-import React, { FormEvent, useContext, useEffect, useState } from "react";
-import CloseButton from "../controls/closeButton";
+import React, {
+  FormEvent,
+  useContext,
+  useEffect,
+  useRef,
+  useState
+} from "react";
+import CloseButton from "../../controls/closeButton";
 import { observer } from "mobx-react-lite";
 import ProjectModal from "./projectModal";
 import BugModal from "./bugModal";
@@ -16,11 +22,31 @@ const ModalSelection = ({ isOpen, onClose }: IModal) => {
   const [bugModal, setBugModal] = useState(true);
   const [projectModal, setProjectModal] = useState(false);
 
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (modalRef) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const handleModal = (e: any) => {
+        if (!modalRef.current?.contains(e.target)) {
+          onClose();
+        }
+      };
+
+      document.addEventListener("mousedown", handleModal);
+      return () => {
+        document.removeEventListener("mousedown", handleModal);
+      };
+    }
+  });
   return (
     <>
       {isOpen && (
         <>
-          <div className="absolute left-1/2 -translate-x-1/2 top-20 max-w-screen-lg w-4/5 z-20 p-12 bg-white rounded-xl">
+          <div
+            className="absolute left-1/2 -translate-x-1/2 top-20 max-w-screen-lg w-4/5 z-20 p-12 bg-white rounded-xl"
+            ref={modalRef}
+          >
             <div className="relative flex flex-between mb-4">
               <div className="absolute -top-10 -left-10">
                 <CloseButton onClick={onClose} />
@@ -47,8 +73,10 @@ const ModalSelection = ({ isOpen, onClose }: IModal) => {
                 </button>
               </h2>
             </div>
-            {projectModal && <ProjectModal />}
-            {bugModal && <BugModal />}
+            <div ref={modalRef}>
+              {projectModal && <ProjectModal />}
+              {bugModal && <BugModal />}
+            </div>
           </div>
         </>
       )}

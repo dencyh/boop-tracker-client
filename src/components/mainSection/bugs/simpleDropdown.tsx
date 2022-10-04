@@ -1,15 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
-import Button from "../controls/button";
-import DropdownButton from "../controls/dropdownButton";
+import DropdownButton from "../../controls/dropdownButton";
+import { BugValues } from "./bugModal";
 
 type SimpleDropdownProps = {
-  name: string;
+  label: string;
+  name: keyof BugValues;
   menuItems: string[];
+  handleValues: (option: string, value: keyof BugValues) => void;
 };
-const SimpleDropdown = ({ name, menuItems }: SimpleDropdownProps) => {
-  const [isHidden, setIsHidden] = useState(true);
+const SimpleDropdown = ({
+  label,
+  name,
+  menuItems,
+  handleValues
+}: SimpleDropdownProps) => {
+  const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(name);
+  const [selectedItem, setSelectedItem] = useState(label);
 
   const listRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -18,13 +25,14 @@ const SimpleDropdown = ({ name, menuItems }: SimpleDropdownProps) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleHide = (e: any) => {
       if (!buttonRef.current?.contains(e.target)) {
-        setIsHidden(true);
+        setOpen(false);
         if (
           listRef.current?.contains(e.target) &&
           menuItems.includes(e.target.innerText.toLowerCase())
         ) {
           setSelected(true);
           setSelectedItem(e.target.innerText);
+          // handleValues(e.target.innerText.toLowerCase(), name);
         }
       }
     };
@@ -42,19 +50,21 @@ const SimpleDropdown = ({ name, menuItems }: SimpleDropdownProps) => {
         <DropdownButton
           name={selectedItem}
           selected={selected}
-          onClick={() => setIsHidden(!isHidden)}
+          onClick={() => setOpen(!open)}
         />
       </div>
-      {!isHidden && (
+      {open && (
         <ul
           className="py-1 w-60 z-10 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 text-sm text-gray-700 dark:text-gray-200"
           ref={listRef}
         >
           {menuItems.map((item) => (
             <li
-              role="button"
+              role="checkbox"
+              value={item}
               key={item}
               className="uppercase text-sm block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              onClick={() => handleValues(item, name)}
             >
               {item}
             </li>

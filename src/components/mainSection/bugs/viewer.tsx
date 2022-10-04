@@ -1,5 +1,5 @@
 import React from "react";
-import { IBaseInput } from "../inputs/interfaces/IBaseInput";
+import { IBaseInput } from "../../inputs/interfaces/IBaseInput";
 
 interface ViewerProps extends Omit<IBaseInput, "label"> {
   id: string;
