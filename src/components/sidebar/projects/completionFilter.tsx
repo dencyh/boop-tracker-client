@@ -7,7 +7,7 @@ interface ICompletionFilter {
 }
 
 const CompletionFilter = ({ filter, handleFilters }: ICompletionFilter) => {
-  const { name, isClosed, color } = filter;
+  const { name, color } = filter;
 
   const [focus, setFocus] = useState(false);
   const [isChecked, setIsCheck] = useState(true);

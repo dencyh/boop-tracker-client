@@ -15,8 +15,7 @@ import HideButton from "./hideButton";
 import { IProject } from "../../../models/IProject";
 
 export interface Filters {
-  name: string;
-  isClosed: boolean;
+  name: keyof selectedFilter;
   color: string;
 }
 
@@ -27,12 +26,10 @@ const ProjectsList = () => {
   const filters: Filters[] = [
     {
       name: "open",
-      isClosed: false,
       color: "green"
     },
     {
       name: "closed",
-      isClosed: true,
       color: "violet"
     }
   ];
@@ -62,12 +59,17 @@ const ProjectsList = () => {
   let filteredProjects = filterProjects(store.projects, selectedFilter);
 
   useEffect(() => {
+    console.log({ ...store.currentProject });
     filteredProjects = filterProjects(store.projects, selectedFilter);
   }, [selectedFilter, store.projects]);
 
-  function handleFilters(filterName: string, checked: boolean) {
+  const handleFilters = (filterName: string, checked: boolean) => {
     setSelectedFilter({ ...selectedFilter, [filterName]: checked });
-  }
+  };
+
+  const resetCurrentProject = () => {
+    store.setCurrentProject({} as IProject);
+  };
 
   return (
     <div
@@ -82,7 +84,10 @@ const ProjectsList = () => {
       </div>
       <h3
         role="button"
-        className="font-bold text-lg mx-4 p-4 rounded-2xl hover:bg-indigo-100"
+        className={`font-bold text-lg mx-4 p-4 rounded-2xl hover:bg-indigo-100 ${
+          !store.currentProject.id ? "bg-indigo-100" : ""
+        }`}
+        onClick={resetCurrentProject}
       >
         All Project
       </h3>
