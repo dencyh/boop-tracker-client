@@ -11,6 +11,7 @@ import { API_URL } from "../http";
 export default class Store {
   user = {} as IUser;
   projects = [] as IProject[];
+  currentProject = {} as IProject;
   users = [] as IUser[];
   isAuth = false;
   isLoading = false;
@@ -29,6 +30,10 @@ export default class Store {
 
   setProjects(projects: IProject[]) {
     this.projects = projects;
+  }
+
+  setCurrentProject(project: IProject) {
+    this.currentProject = project;
   }
 
   setUsers(users: IUser[]) {

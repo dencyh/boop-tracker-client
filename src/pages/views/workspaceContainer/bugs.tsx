@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "../../../components/controls/button";
-import Modal from "../../../components/mainSection/newProjectModal";
+import BugView from "../../../components/mainSection/bugView";
+import ModalSelection from "../../../components/mainSection/modalSelection";
 
 const Bugs = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -13,10 +14,16 @@ const Bugs = () => {
   };
   return (
     <>
-      <div className="relative flex items-start justify-between p-4 z-10 w-full bg-white">
-        <Modal isOpen={modalOpen} onClose={handleModalClose} />
-        <div className="z-10 text-3xl w-96">Bugs</div>
-        <Button name="New" onClick={handleModalOpen} />
+      <div className="relative flex flex-col w-full border-l border-gray-200">
+        <ModalSelection isOpen={modalOpen} onClose={handleModalClose} />
+        <div
+          className={"w-full h-full " + (modalOpen ? "blur bg-gray-200" : "")}
+        >
+          <div className="flex items-start justify-between z-10 w-full mt-12">
+            <BugView />
+            <Button name="New" onClick={handleModalOpen} />
+          </div>
+        </div>
       </div>
     </>
   );
