@@ -6,17 +6,21 @@ interface DropdownButtonProps extends BaseControl {
 }
 const DropdownButton = ({ name, selected, ...rest }: DropdownButtonProps) => {
   const bgColors = {
-    highest: "bg-red-300",
-    high: "bg-orange-300",
-    medium: "bg-yellow-300",
-    low: "bg-green-100",
-    lowest: "bg-green-200"
+    highest: "bg-red-600",
+    high: "bg-amber-500",
+    medium: "bg-yellow-500",
+    low: "bg-green-500",
+    lowest: "bg-lime-500",
+    open: "bg-green-600",
+    done: "bg-violet-600",
+    "won't do": "bg-gray-600",
+    duplicate: "bg-orange-600"
   };
   const bgColor = bgColors[name?.toLowerCase() as keyof typeof bgColors];
 
   const defaultStyle =
     "text-white bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800";
-  const selectedStyle = bgColor + " ring-4 ring-blue-300";
+  const selectedStyle = bgColor + " text-white ring-blue-300";
 
   return (
     <button
