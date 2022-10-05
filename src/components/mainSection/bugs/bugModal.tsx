@@ -4,7 +4,11 @@ import Button from "../../controls/button";
 import Input from "../../inputs/input";
 import Textarea from "../../inputs/textarea";
 import CheckboxDropdown from "./checkboxDropdown";
+import LocalizedTimePicker from "./muiPicker";
+import MuiPicker from "./muiPicker";
 import SimpleDropdown from "./simpleDropdown";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 
 export interface BugValues {
   title: string;
@@ -71,6 +75,13 @@ const BugModal = () => {
     <form className="flex flex-col mx-auto" onSubmit={handleSumbit}>
       <div className="flex flex-gap-4 justify-between">
         <div className="w-3/5">
+          <Input
+            label={"Current project"}
+            placeholder={
+              store.currentProject.title || "CHOOSE A PROJECT ON THE LEFT"
+            }
+            disabled
+          />
           <Input label="Title" onChange={onChange} name="title" required />
           <Textarea
             label="Description"
@@ -82,7 +93,10 @@ const BugModal = () => {
             <Button name="Create" />
           </div>
         </div>
-        <div className="flex flex-col gap-4 items-end">
+        <div className="flex flex-col gap-4 items-start">
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <LocalizedTimePicker />
+          </LocalizationProvider>
           <CheckboxDropdown
             buttonLabel="Assign to"
             handleViewers={handleViewers}

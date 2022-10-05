@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Auth } from "./pages/auth";
-import { Header } from "./pages/views/auth/header";
-import { Routes, Route, Link } from "react-router-dom";
 import { WorkSpace } from "./pages/workSpace";
 import { Context } from "./index";
 import { observer } from "mobx-react-lite";
