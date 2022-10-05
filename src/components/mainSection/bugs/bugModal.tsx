@@ -121,16 +121,23 @@ const BugModal = () => {
   const handleSumbit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const projectId = store.currentProject.id;
+    const projectId = Number(store.currentProject.id);
+    const createdBy = store.user.id;
     const { title, description, status, priority, due, assignedTo } = bugValues;
     const errors = checkErrors();
     if (errors[0]) return;
 
-    // const viewerIds = Object.keys(viewers).filter(
-    //   (key) => viewers[key] === true
-    // );
-
-    // await store.createProject(title, description, viewerIds, closed);
+    const userIds = assignedTo.map((userId) => Number(userId));
+    await store.createBug({
+      title,
+      description,
+      status,
+      priority,
+      due,
+      assigned_to: userIds,
+      created_by: Number(createdBy),
+      project_id: projectId
+    });
 
     // to refresh projects sidebar
     // await store.getUserProjects();

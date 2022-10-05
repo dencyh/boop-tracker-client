@@ -1,3 +1,4 @@
+import { IBug } from "./../models/IBug";
 import { UserService } from "./../services/userService";
 import { IProject } from "./../models/IProject";
 import { ProjectService } from "./../services/projectService";
@@ -138,18 +139,26 @@ export default class Store {
     console.log(response);
   }
 
-  async reportBug(
-    title: string,
-    description: string,
-    viewers: string[],
-    closed: boolean
-  ) {
-    const response = await ProjectService.createProject(
+  async createBug({
+    title,
+    description,
+    status,
+    priority,
+    due,
+    assigned_to,
+    created_by,
+    project_id
+  }: IBug) {
+    const response = await ProjectService.createBug({
       title,
       description,
-      viewers,
-      closed
-    );
+      status,
+      priority,
+      due,
+      assigned_to,
+      created_by,
+      project_id
+    });
     console.log(response);
   }
 
