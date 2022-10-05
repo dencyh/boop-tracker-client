@@ -138,6 +138,21 @@ export default class Store {
     console.log(response);
   }
 
+  async reportBug(
+    title: string,
+    description: string,
+    viewers: string[],
+    closed: boolean
+  ) {
+    const response = await ProjectService.createProject(
+      title,
+      description,
+      viewers,
+      closed
+    );
+    console.log(response);
+  }
+
   async getViewers() {
     try {
       const response = await UserService.getUsers();

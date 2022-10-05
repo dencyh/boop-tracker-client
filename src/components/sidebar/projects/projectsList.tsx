@@ -59,7 +59,7 @@ const ProjectsList = () => {
   let filteredProjects = filterProjects(store.projects, selectedFilter);
 
   useEffect(() => {
-    console.log({ ...store.currentProject });
+    // console.log({ ...store.currentProject });
     filteredProjects = filterProjects(store.projects, selectedFilter);
   }, [selectedFilter, store.projects]);
 

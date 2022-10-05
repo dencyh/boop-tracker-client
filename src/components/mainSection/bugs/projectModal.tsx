@@ -1,25 +1,31 @@
-import React, { useContext, useState } from "react";
+import { observer } from "mobx-react-lite";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../..";
 import Button from "../../controls/button";
 import Input from "../../inputs/input";
 import Textarea from "../../inputs/textarea";
 import Toggle from "../../inputs/toggle";
+import { BugValues } from "./bugModal";
 import CheckboxDropdown from "./checkboxDropdown";
 
-type ProjectValues = {
+export interface ProjectValues {
   title: string;
   description: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  viewers: any;
+  viewers: string[];
   closed: boolean;
-};
+}
 
 const ProjectModal = () => {
   const { store } = useContext(Context);
+
+  useEffect(() => {
+    store.getViewers();
+  }, []);
+
   const initialProjectValues = {
     title: "",
     description: "",
-    viewers: {},
+    viewers: [],
     closed: false
   };
   const [projectValues, setProjectValues] =
@@ -36,11 +42,13 @@ const ProjectModal = () => {
     setProjectValues({ ...projectValues, [e.target.name]: checked });
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleViewers = (ids: any) => {
+  const handleValues = (
+    option: string | string[],
+    value: keyof ProjectValues | keyof BugValues
+  ) => {
     setProjectValues({
       ...projectValues,
-      viewers: ids
+      [value]: option
     });
   };
 
@@ -65,8 +73,10 @@ const ProjectModal = () => {
         onChange={onChange}
       />
       <CheckboxDropdown
-        buttonLabel="Add viewers"
-        handleViewers={handleViewers}
+        label="Add viewers"
+        name="viewers"
+        menuItems={store.users}
+        handleValues={handleValues}
       />
       <div className="mt-4">
         <Toggle label="Closed" name="closed" onChange={handleCheck} />
@@ -78,4 +88,4 @@ const ProjectModal = () => {
   );
 };
 
-export default ProjectModal;
+export default observer(ProjectModal);

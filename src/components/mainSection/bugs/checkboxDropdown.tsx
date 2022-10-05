@@ -1,24 +1,30 @@
 import { observer } from "mobx-react-lite";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { Context } from "../../..";
+import React, { useEffect, useRef, useState } from "react";
+import { IUser } from "../../../models/IUser";
 import DropdownButton from "../../controls/dropdownButton";
+import { BugValues } from "./bugModal";
+import { ProjectValues } from "./projectModal";
 import Search from "./search";
 import Viewer from "./viewer";
 
 type CheckboxDropdown = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  handleViewers: (ids: any) => void;
-  buttonLabel: string;
+  label: string;
+  name: keyof BugValues | keyof ProjectValues;
+  menuItems: IUser[];
+  handleValues: (
+    option: string[],
+    value: keyof BugValues | keyof ProjectValues
+  ) => void;
 };
-const CheckboxDropdown = ({ handleViewers, buttonLabel }: CheckboxDropdown) => {
-  const { store } = useContext(Context);
+const CheckboxDropdown = ({
+  label,
+  name,
+  menuItems,
+  handleValues
+}: CheckboxDropdown) => {
   const [open, setOpen] = useState(false);
 
   const [users, setUsers] = useState({});
-
-  useEffect(() => {
-    store.getViewers();
-  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -31,7 +37,12 @@ const CheckboxDropdown = ({ handleViewers, buttonLabel }: CheckboxDropdown) => {
   };
 
   useEffect(() => {
-    handleViewers(users);
+    const selectedUserIds = Object.keys(users).filter((userId) => {
+      if (users[userId] === true) {
+        return userId;
+      }
+    });
+    handleValues(selectedUserIds, name);
   }, [users]);
 
   const listRef = useRef<HTMLDivElement>(null);
@@ -56,24 +67,24 @@ const CheckboxDropdown = ({ handleViewers, buttonLabel }: CheckboxDropdown) => {
   }, []);
 
   return (
-    <div className="mb-2 w-60">
-      <div className="mb-2 w-fit" ref={buttonRef}>
+    <div className="mb-2 w-60 relative" ref={buttonRef}>
+      <div className="w-fit">
         <DropdownButton
           selected={false}
-          name={buttonLabel}
+          name={label}
           onClick={() => setOpen(!open)}
         />
       </div>
       {/* {open && ( */}
       <div
-        className={`mb-6 z-10 w-60 bg-white rounded shadow dark:bg-gray-700 ${
+        className={`absolute h-56 z-10 w-60 bg-white rounded shadow dark:bg-gray-700 ${
           open ? "" : "hidden"
         }`}
         ref={listRef}
       >
         <Search />
-        <ul className="w-full overflow-y-auto px-3 pb-3 h-40 text-sm text-gray-700 dark:text-gray-200">
-          {store.users.map((user) => (
+        <ul className="w-full overflow-y-auto px-3 pb-3 h-40 text-sm text-gray-700 dark:text-gray-200 absolute">
+          {menuItems.map((user) => (
             <Viewer
               key={user.id}
               id={user.id}
