@@ -3,16 +3,100 @@ import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../..";
 import relativeTime from "dayjs/plugin/relativeTime";
+import BugNumbers from "./bugNumbers";
+import { IBug } from "../../../models/IBug";
 dayjs.extend(relativeTime);
+
+export interface BugStats {
+  number: number;
+  text: string;
+  color: string;
+}
 
 const BugView = () => {
   const { store } = useContext(Context);
+
+  const [bugStats, setBugStats] = useState({
+    open: {
+      number: 35,
+      text: "Open bugs",
+      color: "bg-green-300"
+    },
+    done: {
+      number: 12,
+      text: "Closed bugs",
+      color: "bg-violet-200"
+    },
+    overdue: {
+      number: 4,
+      text: "Overdue",
+      color: "bg-rose-300"
+    },
+    today: {
+      number: 2,
+      text: "Due today",
+      color: "bg-lime-200"
+    },
+    week: {
+      number: 8,
+      text: "Due this week",
+      color: "bg-teal-200"
+    }
+  });
+
+  const checkBugTime = (bug: IBug) =>
+    Math.floor(dayjs(bug.due).diff(dayjs(new Date()), "day", true));
+
+  const reduceNumberFuncs = {
+    open: (sum: number, bug: IBug) => (bug.status === "open" ? sum + 1 : sum),
+    done: (sum: number, bug: IBug) => (bug.status === "done" ? sum + 1 : sum),
+    overdue: (sum: number, bug: IBug) =>
+      checkBugTime(bug) < 0 ? sum + 1 : sum,
+    today: (sum: number, bug: IBug) =>
+      checkBugTime(bug) === 0 ? sum + 1 : sum,
+    week: (sum: number, bug: IBug) =>
+      checkBugTime(bug) > 0 && checkBugTime(bug) < 7 ? sum + 1 : sum
+  };
+
+  const calculateNumbers = (callback: (sum: number, bug: IBug) => number) => {
+    return store.projects.reduce((acc, project) => {
+      if (!project.bugs.length) {
+        return acc + 0;
+      } else {
+        return acc + project.bugs.reduce(callback, 0);
+      }
+    }, 0);
+  };
+
+  calculateNumbers(reduceNumberFuncs.week);
+
+  useEffect(() => {
+    setBugStats((prev) => {
+      return Object.keys(prev).reduce(
+        (acc, key) => {
+          return {
+            ...acc,
+            [key]: {
+              ...acc[key],
+              number: calculateNumbers(reduceNumberFuncs[key])
+            }
+          };
+        },
+        { ...prev }
+      );
+    });
+  }, [store.projects]);
 
   return (
     <div>
       <h1 className="mb-4 border-b-2 pb-6 text-2xl font-bold text-gray-600">
         Bugs
       </h1>
+      <div className="flex gap-8 border-b-2 pb-6">
+        {Object.keys(bugStats).map((stat) => (
+          <BugNumbers key={stat} {...bugStats[stat]} />
+        ))}
+      </div>
       <table className="mb-6 min-w-full leading-normal">
         <thead>
           <tr>
