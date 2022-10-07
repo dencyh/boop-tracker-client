@@ -13,6 +13,9 @@ module.exports = {
           400: "#ec9128",
           500: "#d58120"
         }
+      },
+      dropShadow: {
+        pop: "0 0 12px rgba(0, 0, 0, 0.15)"
       }
     }
   },

@@ -16,14 +16,10 @@ const Bugs = () => {
   return (
     <>
       <div className="relative flex w-full flex-col">
-        <div>
+        <div className="z-10 drop-shadow-pop">
           <ModalSelection isOpen={modalOpen} onClose={handleModalClose} />
         </div>
-        <div
-          className={
-            "h-full w-full " + (modalOpen ? "bg-gray-200 blur-sm" : "")
-          }
-        >
+        <div className={"h-full w-full" + (modalOpen ? " blur-sm" : "")}>
           <div className="m-12">
             <BugView />
             <div className="absolute right-12 top-12">

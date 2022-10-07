@@ -1,10 +1,4 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState
-} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SearchBar from "./seachBar";
 // eslint-disable-next-line import/namespace, import/default
 import ProjectFilters from "./projectFilters";
@@ -73,7 +67,7 @@ const ProjectsList = () => {
 
   return (
     <div
-      className="drop-shadow-green-outline z-20 flex h-screen w-310px shrink-0 flex-col border-gray-700 bg-gray-100 dark:border-l dark:bg-gray-800 xl:w-80"
+      className="drop-shadow-green-outline z-20 flex h-screen w-310px shrink-0 flex-col border-gray-700 bg-[#ebe5e4] dark:border-l dark:bg-gray-800 xl:w-80"
       tabIndex={-1}
     >
       <div className="mt-4 px-4">

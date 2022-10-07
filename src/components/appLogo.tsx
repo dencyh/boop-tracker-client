@@ -9,7 +9,7 @@ const AppLogo = () => {
         <div className="container mx-auto flex flex-wrap items-center justify-between">
           <Link to="/" className="flex items-center">
             <img src={shibaLogo} className="mr-4 h-10" alt="Shiba Logo" />
-            <span className="text-primary self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+            <span className="self-center whitespace-nowrap text-xl font-semibold text-primary-400 dark:text-white">
               Boop Tracker
             </span>
           </Link>

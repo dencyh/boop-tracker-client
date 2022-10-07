@@ -18,10 +18,10 @@ const DropdownButton = ({ name, selected, ...rest }: DropdownButtonProps) => {
     duplicate: "bg-orange-600"
   };
   const bgColor =
-    bgColors[name?.toLowerCase() as keyof typeof bgColors] || "bg-blue-700";
+    bgColors[name?.toLowerCase() as keyof typeof bgColors] || "bg-primary-400";
 
   const defaultStyle =
-    "text-white bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-800 dark:focus:ring-blue-800";
+    "text-white bg-primary-400 hover:bg-primary-500 dark:bg-blue-600 dark:hover:bg-blue-800 dark:focus:ring-blue-800";
   const selectedStyle = bgColor + " text-white ring-blue-300";
 
   return (
