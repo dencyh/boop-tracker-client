@@ -18,21 +18,6 @@ const ModalSelection = ({ isOpen, onClose }: IModal) => {
 
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // useEffect(() => {
-  //   if (modalRef) {
-  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //     const handleModal = (e: any) => {
-  //       if (!modalRef.current?.contains(e.target)) {
-  //         onClose();
-  //       }
-  //     };
-
-  //     document.addEventListener("mousedown", handleModal);
-  //     return () => {
-  //       document.removeEventListener("mousedown", handleModal);
-  //     };
-  //   }
-  // });
   return (
     <>
       {isOpen && (

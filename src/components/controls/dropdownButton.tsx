@@ -7,8 +7,8 @@ interface DropdownButtonProps extends BaseControl {
 }
 const DropdownButton = ({ name, selected, ...rest }: DropdownButtonProps) => {
   const bgColors = {
-    highest: "bg-red-600",
-    high: "bg-amber-500",
+    highest: "bg-rose-700",
+    high: "bg-red-500",
     medium: "bg-sky-500",
     low: "bg-gray-400",
     lowest: "bg-slate-500",

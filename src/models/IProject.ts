@@ -1,3 +1,4 @@
+import { IBug } from "./IBug";
 export interface IProject {
   id: string;
   title: string;
@@ -5,4 +6,5 @@ export interface IProject {
   created_at: string;
   updated_at: string;
   closed: boolean;
+  bugs: IBug[];
 }

@@ -122,7 +122,7 @@ const BugModal = () => {
     e.preventDefault();
 
     const projectId = Number(store.currentProject.id);
-    const createdBy = store.user.id;
+    const createdBy = store.user;
     const { title, description, status, priority, due, assignedTo } = bugValues;
     const errors = checkErrors();
     if (errors[0]) return;
@@ -135,12 +135,12 @@ const BugModal = () => {
       priority,
       due,
       assigned_to: userIds,
-      created_by: Number(createdBy),
+      created_by: createdBy,
       project_id: projectId
     });
 
-    // to refresh projects sidebar
-    // await store.getUserProjects();
+    // to refresh store
+    await store.getUserProjects();
   };
   return (
     <form className="mx-auto flex flex-col" onSubmit={handleSumbit}>

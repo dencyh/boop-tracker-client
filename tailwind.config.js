@@ -15,7 +15,7 @@ module.exports = {
         }
       },
       dropShadow: {
-        pop: "0 0 12px rgba(0, 0, 0, 0.15)"
+        pop: "0 0 12px #41212B50"
       }
     }
   },
