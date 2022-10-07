@@ -1,5 +1,3 @@
 {
-  "plugins": [
-    "transform-react-jsx-source"
-  ]
+  "plugins": ["transform-react-jsx-source"]
 }

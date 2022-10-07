@@ -52,7 +52,7 @@ const SimpleDropdown = ({
   }, [label]);
 
   return (
-    <div className="mb-2 w-60 relative">
+    <div className="relative mb-2 w-60">
       <div className="mb-2 w-fit" ref={buttonRef}>
         <DropdownButton
           name={selectedItem || "Choose a project"}
@@ -62,7 +62,7 @@ const SimpleDropdown = ({
       </div>
       {open && (
         <ul
-          className="py-1 w-60 z-10 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 text-sm text-gray-700 dark:text-gray-200 absolute max-h-64 overflow-auto"
+          className="absolute z-10 max-h-64 w-60 divide-y divide-gray-100 overflow-auto rounded bg-white py-1 text-sm text-gray-700 shadow dark:bg-gray-700 dark:text-gray-200"
           ref={listRef}
         >
           {Object.keys(menuItems).map((key) => (
@@ -70,7 +70,7 @@ const SimpleDropdown = ({
               role="button"
               value={menuItems[key]}
               key={key}
-              className="uppercase text-sm block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              className="block py-2 px-4 text-sm uppercase hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               onClick={() => handleValues(key, name)}
             >
               {menuItems[key]}

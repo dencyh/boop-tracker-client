@@ -15,18 +15,18 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
   const color = project.closed ? "text-violet-600" : "text-green-600";
   return (
     <li
-      className={`flex justify-between my-1 h-full w-full text-left p-3  font-bold text-gray-600 border-r-0  rounded-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-indigo-100  dark:hover:bg-gray-800
-          ${project.id === store.currentProject.id ? "bg-indigo-100" : ""}
+      className={`my-1 mr-0 flex h-full w-full gap-4 rounded-xl border-r-0  p-3 text-left font-bold text-gray-600 hover:bg-white focus:ring-4 focus:ring-gray-200 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800  dark:focus:ring-gray-800
+          ${project.id === store.currentProject.id ? "bg-white" : ""}
       `}
       role="button"
       onClick={() => {
         store.setCurrentProject(project);
       }}
     >
-      <div>{project.title}</div>
       <div className={color}>
-        <FontAwesomeIcon icon={faCircleDot} className="mr-1" />
+        <FontAwesomeIcon icon={faCircleDot} />
       </div>
+      <div>{project.title}</div>
     </li>
   );
 };

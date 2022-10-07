@@ -38,10 +38,10 @@ const ModalSelection = ({ isOpen, onClose }: IModal) => {
       {isOpen && (
         <>
           <div
-            className="absolute left-1/2 -translate-x-1/2 top-20 max-w-screen-lg w-4/5 z-20 p-12 bg-white rounded-xl"
+            className="absolute left-1/2 top-20 z-20 w-4/5 max-w-screen-lg -translate-x-1/2 rounded-xl bg-white p-12"
             ref={modalRef}
           >
-            <div className="relative flex flex-between mb-4">
+            <div className="flex-between relative mb-4 flex">
               <div className="absolute -top-10 -left-10">
                 <CloseButton onClick={onClose} />
               </div>

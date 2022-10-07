@@ -73,10 +73,10 @@ const ProjectsList = () => {
 
   return (
     <div
-      className="w-310px z-20 drop-shadow-green-outline flex flex-col shrink-0 xl:w-80 bg-gray-100 dark:bg-gray-800 dark:border-l border-gray-700 h-screen"
+      className="drop-shadow-green-outline z-20 flex h-screen w-310px shrink-0 flex-col border-gray-700 bg-gray-100 dark:border-l dark:bg-gray-800 xl:w-80"
       tabIndex={-1}
     >
-      <div className="px-4 mt-4">
+      <div className="mt-4 px-4">
         <div className="py-2.5">
           <SearchBar />
         </div>
@@ -84,14 +84,14 @@ const ProjectsList = () => {
       </div>
       <h3
         role="button"
-        className={`font-bold text-lg mx-4 p-4 rounded-2xl hover:bg-indigo-100 ${
-          !store.currentProject.id ? "bg-indigo-100" : ""
+        className={`ml-4 rounded-l-2xl p-4 pr-0 text-lg font-bold hover:bg-white ${
+          !store.currentProject.id ? "bg-white" : ""
         }`}
         onClick={resetCurrentProject}
       >
         All Project
       </h3>
-      <ul className="project-list flex flex-col ml-6 px-4 overflow-auto">
+      <ul className="project-list ml-6 flex flex-col overflow-auto pl-4">
         {filteredProjects.map((project) => (
           <ProjectItem key={project.id} project={project} />
         ))}

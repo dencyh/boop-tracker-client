@@ -10,16 +10,18 @@ import SidebarFooter from "./sidebarFooter";
 const Sidebar = () => {
   return (
     <div
-      className="w-310px p-4 drop-shadow-md flex flex-col shrink-0 xl:w-80 lg:w-270px h-screen border-r border-gray-200 bg-white dark:bg-gray-800"
+      className="lg:w-270px flex h-screen w-310px shrink-0 flex-col border-r border-gray-200 bg-[#41312c] drop-shadow-md  dark:bg-gray-800 xl:w-80"
       tabIndex={-1}
       aria-labelledby="drawer-navigation-label"
     >
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between bg-[#342219] p-4 text-gray-100">
         <AppLogo />
         <BurgerButton />
       </div>
-      <SidebarHeaderTabs />
-      <div className="h-full py-4 overflow-y-auto flex flex-col justify-between">
+      <div className="px-4">
+        <SidebarHeaderTabs />
+      </div>
+      <div className="flex h-full flex-col justify-between overflow-y-auto">
         <SidebarContents sidebarItems={sidebarItems} />
         <SidebarFooter />
       </div>

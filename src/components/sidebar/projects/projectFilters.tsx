@@ -8,8 +8,8 @@ type ProjectFiltersProps = {
 };
 const ProjectFilters = ({ handleFilters, filters }: ProjectFiltersProps) => {
   return (
-    <div className="flex items-center justify-between my-5">
-      <h3 className="text-sm mr-2 text-slate-500 font-bold uppercase dark:text-white">
+    <div className="my-5 flex items-center justify-between">
+      <h3 className="mr-2 text-sm font-bold uppercase text-slate-500 dark:text-white">
         Projects
       </h3>
       <div className="flex">

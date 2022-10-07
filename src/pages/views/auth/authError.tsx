@@ -22,7 +22,7 @@ type AuthErrorProps = {
 const AuthError = ({ status }: AuthErrorProps) => {
   console.log("prop", status);
   return (
-    <div className="fixed w-full bottom-0 left-0 bg-red-500 text-center text-white font-medium text-lg p-2">
+    <div className="fixed bottom-0 left-0 w-full bg-red-500 p-2 text-center text-lg font-medium text-white">
       <p className="mb-1">{serverErrors[status].top}</p>
       <p>{serverErrors[status].bottom}</p>
     </div>

@@ -15,13 +15,13 @@ const Bugs = () => {
 
   return (
     <>
-      <div className="relative flex flex-col w-full border-l border-gray-200">
-        <div className="123">
+      <div className="relative flex w-full flex-col">
+        <div>
           <ModalSelection isOpen={modalOpen} onClose={handleModalClose} />
         </div>
         <div
           className={
-            "w-full h-full " + (modalOpen ? "blur-sm bg-gray-200" : "")
+            "h-full w-full " + (modalOpen ? "bg-gray-200 blur-sm" : "")
           }
         >
           <div className="m-12">

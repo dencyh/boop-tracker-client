@@ -143,10 +143,10 @@ const BugModal = () => {
     // await store.getUserProjects();
   };
   return (
-    <form className="flex flex-col mx-auto" onSubmit={handleSumbit}>
-      <div className="flex flex-gap-4 justify-between">
+    <form className="mx-auto flex flex-col" onSubmit={handleSumbit}>
+      <div className="flex-gap-4 flex justify-between">
         <div className="w-3/5">
-          <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-gray-400">
+          <label className="mb-1 block text-sm font-medium text-gray-900 dark:text-gray-400">
             Current project
           </label>
           <SimpleDropdown
@@ -164,11 +164,11 @@ const BugModal = () => {
             rows={5}
             onChange={onChange}
           />
-          <div className="w-fit mt-5">
+          <div className="mt-5 w-fit">
             <Button name="Create" />
           </div>
         </div>
-        <div className="flex flex-col gap-4 items-start">
+        <div className="flex flex-col items-start gap-4">
           <div className="mb-2">
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <MuiPicker

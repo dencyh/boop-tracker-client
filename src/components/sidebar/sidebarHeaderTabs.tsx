@@ -2,12 +2,12 @@ import React from "react";
 
 const SidebarHeaderTabs = () => {
   return (
-    <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-      <ul className="flex flex-wrap justify-around -mb-px">
+    <div className="border-b border-gray-200 text-center text-sm font-medium text-gray-200 dark:border-gray-700 dark:text-gray-400">
+      <ul className="-mb-px flex flex-wrap justify-around">
         <li className="mr-2">
           <a
             href="#"
-            className="inline-block p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600 active dark:text-blue-500 dark:border-blue-500"
+            className="active inline-block  rounded-t-lg border-b-2  border-primary-400 p-4 text-primary-400 dark:border-blue-500 dark:text-blue-500"
             aria-current="page"
           >
             My Space
@@ -16,7 +16,7 @@ const SidebarHeaderTabs = () => {
         <li className="mr-2">
           <a
             href="#"
-            className="inline-block p-4 rounded-t-lg active border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+            className="active inline-block rounded-t-lg border-b-2 border-transparent p-4 text-gray-400 hover:border-gray-300 hover:text-gray-300 dark:hover:text-gray-200"
           >
             All Users
           </a>

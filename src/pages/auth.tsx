@@ -12,10 +12,10 @@ export function Auth() {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex h-screen flex-col">
       <Header />
-      <div className="flex justify-between items-center container mx-auto max-w-5xl">
-        <div className="flex-1 p-10 max-w-lg container mx-auto">
+      <div className="container mx-auto flex max-w-5xl items-center justify-between">
+        <div className="container mx-auto max-w-lg flex-1 p-10">
           {haveAccount ? (
             <SignUp onSignOption={handleSignOptions} />
           ) : (

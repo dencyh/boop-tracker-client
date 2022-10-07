@@ -23,11 +23,11 @@ const CompletionFilter = ({ filter, handleFilters }: ICompletionFilter) => {
     setFocus(false);
   };
   return (
-    <label className="flex items-center mr-1">
+    <label className="mr-1 flex items-center">
       <div
-        className={`m-2 w-5 h-5 bg-white rounded-sm shadow-md p-1 hover:cursor-pointer outline-none ${
+        className={`m-2 h-5 w-5 rounded-sm bg-white p-1 shadow-md outline-none hover:cursor-pointer ${
           focus ? ringColor : "ring-gray-100"
-        } ring-2 ${ringHover} drop-shadow-sm  flex justify-center items-center transition-all`}
+        } ring-2 ${ringHover} flex  items-center justify-center drop-shadow-sm transition-all`}
       >
         <input
           type="checkbox"
@@ -44,13 +44,13 @@ const CompletionFilter = ({ filter, handleFilters }: ICompletionFilter) => {
         {isChecked ? (
           <span
             aria-hidden={true}
-            className={`w-full h-full ${bgColor} rounded-sm transition-all`}
+            className={`h-full w-full ${bgColor} rounded-sm transition-all`}
           ></span>
         ) : (
           ""
         )}
       </div>
-      <div className="uppercase text-xs font-semibold text-slate-600">
+      <div className="text-xs font-semibold uppercase text-slate-600">
         {name}
       </div>
     </label>

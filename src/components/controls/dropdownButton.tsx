@@ -27,7 +27,7 @@ const DropdownButton = ({ name, selected, ...rest }: DropdownButtonProps) => {
   return (
     <>
       <button
-        className={`w-fit focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center ${
+        className={`inline-flex w-fit items-center rounded-lg px-4 py-2.5 text-center text-sm font-medium focus:outline-none focus:ring-4 focus:ring-blue-300 ${
           selected ? selectedStyle : defaultStyle
         }`}
         type="button"
@@ -35,7 +35,7 @@ const DropdownButton = ({ name, selected, ...rest }: DropdownButtonProps) => {
       >
         {name}{" "}
         <svg
-          className="ml-2 w-4 h-4"
+          className="ml-2 h-4 w-4"
           aria-hidden="true"
           fill="none"
           stroke="currentColor"

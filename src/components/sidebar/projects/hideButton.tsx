@@ -10,8 +10,8 @@ const HideButton = ({ handleHide, isHidden, ...rest }: HideButtonProps) => {
     <button
       type="button"
       className={
-        "absolute top-1/2 right-0 group h-16 w-5 text-white bg-gray-300 hover:bg-gray-400 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium text-sm p-0.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-all" +
-        (isHidden ? " rounded-r-lg translate-x-full" : " rounded-l-lg")
+        "group absolute top-1/2 right-0 inline-flex h-16 w-5 items-center bg-gray-300 p-0.5 text-center text-sm font-medium text-white transition-all hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" +
+        (isHidden ? " translate-x-full rounded-r-lg" : " rounded-l-lg")
       }
       {...rest}
       onClick={handleHide}
@@ -19,7 +19,7 @@ const HideButton = ({ handleHide, isHidden, ...rest }: HideButtonProps) => {
       <svg
         aria-hidden="true"
         className={
-          "w-full h-full transition-all" +
+          "h-full w-full transition-all" +
           (isHidden ? " rotate-0" : " rotate-180")
         }
         fill="currentColor"

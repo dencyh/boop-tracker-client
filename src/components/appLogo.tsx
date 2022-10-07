@@ -5,11 +5,11 @@ import React from "react";
 const AppLogo = () => {
   return (
     <div className="container w-fit">
-      <nav className="border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
-        <div className="container flex flex-wrap justify-between items-center mx-auto">
+      <nav className="rounded border-gray-200 px-2 py-2.5 dark:bg-gray-800 sm:px-4">
+        <div className="container mx-auto flex flex-wrap items-center justify-between">
           <Link to="/" className="flex items-center">
-            <img src={shibaLogo} className="h-10 mr-4" alt="Shiba Logo" />
-            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+            <img src={shibaLogo} className="mr-4 h-10" alt="Shiba Logo" />
+            <span className="text-primary self-center whitespace-nowrap text-xl font-semibold dark:text-white">
               Boop Tracker
             </span>
           </Link>

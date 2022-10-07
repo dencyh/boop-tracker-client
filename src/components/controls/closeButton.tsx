@@ -5,13 +5,13 @@ const CloseButton = ({ onClick }: BaseControl) => {
   return (
     <button
       type="button"
-      className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+      className="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
       data-modal-toggle="defaultModal"
       onClick={onClick}
     >
       <svg
         aria-hidden="true"
-        className="w-5 h-5"
+        className="h-5 w-5"
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"

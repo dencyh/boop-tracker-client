@@ -64,7 +64,7 @@ const ProjectModal = () => {
     await store.getUserProjects();
   };
   return (
-    <form className="flex flex-col mx-auto" onSubmit={handleSumbit}>
+    <form className="mx-auto flex flex-col" onSubmit={handleSumbit}>
       <Input label="Title" onChange={onChange} name="title" required />
       <Textarea
         label="Description"
@@ -81,7 +81,7 @@ const ProjectModal = () => {
       <div className="mt-4">
         <Toggle label="Closed" name="closed" onChange={handleCheck} />
       </div>
-      <div className="w-fit mt-5">
+      <div className="mt-5 w-fit">
         <Button name="Create" />
       </div>
     </form>

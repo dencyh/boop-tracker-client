@@ -15,7 +15,7 @@ function App() {
 
   if (store.isLoading)
     return (
-      <div className="contianer h-screen flex justify-center items-center">
+      <div className="contianer flex h-screen items-center justify-center">
         <Loader />
       </div>
     );

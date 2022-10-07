@@ -8,11 +8,11 @@ const SidebarContents = ({
   sidebarItems: ISidebarMenuItem[];
 }) => {
   return (
-    <ul className="space-y-2">
+    <nav className="mt-4 space-y-2 pl-4">
       {sidebarItems.map((sidebarItem) => (
         <SidebarMenuItem key={sidebarItem.id} {...sidebarItem} />
       ))}
-    </ul>
+    </nav>
   );
 };
 

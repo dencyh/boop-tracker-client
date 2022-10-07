@@ -15,12 +15,12 @@ const SignHeader = ({
   //
   return (
     <>
-      <h3 className="text-3xl font-semibold mb-5">{header}</h3>
+      <h3 className="mb-5 text-3xl font-semibold">{header}</h3>
       <p className="mb-5">
         {text}{" "}
         <button
           type="button"
-          className="text-blue-600 dark:text-blue-500 underline"
+          className="text-blue-600 underline dark:text-blue-500"
           onClick={onSignOption}
         >
           {button}

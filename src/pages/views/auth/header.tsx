@@ -5,8 +5,8 @@ import AppLogo from "../../../components/appLogo";
 export function Header() {
   return (
     <div className="container mx-auto">
-      <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
-        <div className="container flex flex-wrap justify-between items-center mx-auto">
+      <nav className="rounded border-gray-200 bg-white px-2 py-2.5 dark:bg-gray-900 sm:px-4">
+        <div className="container mx-auto flex flex-wrap items-center justify-between">
           <AppLogo />
         </div>
       </nav>

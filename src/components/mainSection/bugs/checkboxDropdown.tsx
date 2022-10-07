@@ -67,7 +67,7 @@ const CheckboxDropdown = ({
   }, []);
 
   return (
-    <div className="mb-2 w-60 relative" ref={buttonRef}>
+    <div className="relative mb-2 w-60" ref={buttonRef}>
       <div className="w-fit">
         <DropdownButton
           selected={false}
@@ -77,13 +77,13 @@ const CheckboxDropdown = ({
       </div>
       {/* {open && ( */}
       <div
-        className={`absolute h-56 z-10 w-60 bg-white rounded shadow dark:bg-gray-700 ${
+        className={`absolute z-10 h-56 w-60 rounded bg-white shadow dark:bg-gray-700 ${
           open ? "" : "hidden"
         }`}
         ref={listRef}
       >
         <Search />
-        <ul className="w-full overflow-y-auto px-3 pb-3 h-40 text-sm text-gray-700 dark:text-gray-200 absolute">
+        <ul className="absolute h-40 w-full overflow-y-auto px-3 pb-3 text-sm text-gray-700 dark:text-gray-200">
           {menuItems.map((user) => (
             <Viewer
               key={user.id}
