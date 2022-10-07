@@ -34,7 +34,10 @@ const BugView = () => {
           </tr>
         </thead>
       </table>
-      {store.projects.map((project) => (
+      {(store.currentProject.id
+        ? [...[], store.currentProject]
+        : store.filteredProjects
+      ).map((project) => (
         <div key={project.id}>
           {/* <h3 className="text-lg font-bold">{project.title}</h3> */}
           <table className="mb-12 min-w-full border-b-2 pb-2 leading-normal">

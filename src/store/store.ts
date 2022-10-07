@@ -12,6 +12,7 @@ import { API_URL } from "../http";
 export default class Store {
   user = {} as IUser;
   projects = [] as IProject[];
+  filteredProjects = [] as IProject[];
   currentProject = {} as IProject;
   users = [] as IUser[];
   isAuth = false;
@@ -35,6 +36,10 @@ export default class Store {
 
   setCurrentProject(project: IProject) {
     this.currentProject = project;
+  }
+
+  setFilteredProjects(projects: IProject[]) {
+    this.filteredProjects = projects;
   }
 
   setUsers(users: IUser[]) {

@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import SearchBar from "./seachBar";
-// eslint-disable-next-line import/namespace, import/default
 import ProjectFilters from "./projectFilters";
 import { Context } from "../../..";
 import { observer } from "mobx-react-lite";
 import ProjectItem from "./projectItem";
-import HideButton from "./hideButton";
+import HideArrowButton from "./hideButton";
 import { IProject } from "../../../models/IProject";
 
 export interface Filters {
@@ -42,19 +41,25 @@ const ProjectsList = () => {
   };
 
   const filterProjects = (projectsArr: IProject[], filter: selectedFilter) => {
-    if (filter === null) return [];
-    return projectsArr.filter(
-      (project) =>
-        (project.closed && selectedFilter.closed) ||
-        (!project.closed && selectedFilter.open)
-    );
+    if (filter === null) {
+      store.setFilteredProjects([]);
+      return;
+    }
+
+    const result = [
+      ...projectsArr.filter(
+        (project) =>
+          (project.closed && selectedFilter.closed) ||
+          (!project.closed && selectedFilter.open)
+      )
+    ];
+    return result;
   };
 
-  let filteredProjects = filterProjects(store.projects, selectedFilter);
-
   useEffect(() => {
-    // console.log({ ...store.currentProject });
-    filteredProjects = filterProjects(store.projects, selectedFilter);
+    store.setFilteredProjects(
+      filterProjects(store.projects, selectedFilter) as IProject[]
+    );
   }, [selectedFilter, store.projects]);
 
   const handleFilters = (filterName: string, checked: boolean) => {
@@ -86,11 +91,11 @@ const ProjectsList = () => {
         All Project
       </h3>
       <ul className="project-list ml-6 flex flex-col overflow-auto pl-4">
-        {filteredProjects.map((project) => (
+        {store.filteredProjects?.map((project) => (
           <ProjectItem key={project.id} project={project} />
         ))}
       </ul>
-      <HideButton handleHide={handleHide} isHidden={isHidden} />
+      <HideArrowButton handleHide={handleHide} isHidden={isHidden} />
     </div>
   );
 };
