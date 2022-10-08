@@ -1,22 +1,12 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { BaseControl } from "./interfaces/baseControl";
+import { statusPriorityColors as bgColors } from "../../data/statusBgColors";
 
 interface DropdownButtonProps extends BaseControl {
   selected: boolean;
 }
 const DropdownButton = ({ name, selected, ...rest }: DropdownButtonProps) => {
-  const bgColors = {
-    highest: "bg-rose-700",
-    high: "bg-red-500",
-    medium: "bg-sky-500",
-    low: "bg-gray-400",
-    lowest: "bg-slate-500",
-    open: "bg-green-600",
-    done: "bg-violet-600",
-    "won't do": "bg-gray-500",
-    duplicate: "bg-orange-600"
-  };
   const bgColor =
     bgColors[name?.toLowerCase() as keyof typeof bgColors] || "bg-primary-400";
 

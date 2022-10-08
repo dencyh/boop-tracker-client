@@ -15,7 +15,10 @@ export interface ProjectValues {
   closed: boolean;
 }
 
-const ProjectModal = () => {
+type ProjetModalProps = {
+  onClose: () => void;
+};
+const ProjectModal = ({ onClose }: ProjetModalProps) => {
   const { store } = useContext(Context);
 
   useEffect(() => {
@@ -62,6 +65,7 @@ const ProjectModal = () => {
 
     // to refresh projects sidebar
     await store.getUserProjects();
+    onClose();
   };
   return (
     <form className="mx-auto flex flex-col" onSubmit={handleSumbit}>

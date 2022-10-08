@@ -5,6 +5,7 @@ import { Context } from "../../..";
 import relativeTime from "dayjs/plugin/relativeTime";
 import BugNumbers from "./bugNumbers";
 import { IBug } from "../../../models/IBug";
+import ProjectTable from "./projectTable";
 dayjs.extend(relativeTime);
 
 export interface BugStats {
@@ -16,30 +17,36 @@ export interface BugStats {
 const BugView = () => {
   const { store } = useContext(Context);
 
+  const [visibleProjects, setVisibleProjects] = useState(
+    store.currentProject.id
+      ? [...[], store.currentProject]
+      : store.filteredProjects
+  );
+
   const [bugStats, setBugStats] = useState({
     open: {
-      number: 35,
+      number: "-",
       text: "Open bugs",
       color: "bg-green-300"
     },
     done: {
-      number: 12,
+      number: "-",
       text: "Closed bugs",
       color: "bg-violet-200"
     },
     overdue: {
-      number: 4,
+      number: "-",
       text: "Overdue",
       color: "bg-rose-300"
     },
     today: {
-      number: 2,
+      number: "-",
       text: "Due today",
       color: "bg-lime-200"
     },
     week: {
-      number: 8,
-      text: "Due this week",
+      number: "-",
+      text: "Due in 7 days",
       color: "bg-teal-200"
     }
   });
@@ -58,8 +65,11 @@ const BugView = () => {
       checkBugTime(bug) > 0 && checkBugTime(bug) < 7 ? sum + 1 : sum
   };
 
-  const calculateNumbers = (callback: (sum: number, bug: IBug) => number) => {
-    return store.projects.reduce((acc, project) => {
+  const calculateNumbers = (
+    state,
+    callback: (sum: number, bug: IBug) => number
+  ) => {
+    return state.reduce((acc, project) => {
       if (!project.bugs.length) {
         return acc + 0;
       } else {
@@ -68,9 +78,22 @@ const BugView = () => {
     }, 0);
   };
 
-  calculateNumbers(reduceNumberFuncs.week);
+  useEffect(() => {
+    setVisibleProjects(
+      store.currentProject.id
+        ? [...[], store.currentProject]
+        : store.filteredProjects
+    );
+  }, [store.currentProject, store.filteredProjects]);
 
   useEffect(() => {
+    // console.log(store.currentProject.id);
+    // setVisibleProjects(
+    //   store.currentProject.id
+    //     ? [...[], store.currentProject]
+    //     : store.filteredProjects
+    // );
+    console.log(visibleProjects);
     setBugStats((prev) => {
       return Object.keys(prev).reduce(
         (acc, key) => {
@@ -78,14 +101,19 @@ const BugView = () => {
             ...acc,
             [key]: {
               ...acc[key],
-              number: calculateNumbers(reduceNumberFuncs[key])
+              number: calculateNumbers(visibleProjects, reduceNumberFuncs[key])
             }
           };
         },
         { ...prev }
       );
     });
-  }, [store.projects]);
+  }, [
+    store.filteredProjects,
+    store.currentProject,
+    store.projects,
+    visibleProjects
+  ]);
 
   return (
     <div>
@@ -100,68 +128,30 @@ const BugView = () => {
       <table className="mb-6 min-w-full leading-normal">
         <thead>
           <tr>
-            <th className="w-2/6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
+            <th className="w-4/12 py-3 px-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
               Bug
             </th>
-            <th className="w-1/6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
+            <th className="w-1/12 py-3 px-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
               Status
             </th>
-            <th className="w-1/6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
+            <th className="w-1/12 py-3 px-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
+              Priority
+            </th>
+            <th className="w-2/12 py-3 px-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
               Created
             </th>
-            <th className="w-1/6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
+            <th className="w-2/12 py-3 px-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
               Due
             </th>
-            <th className="w-1/6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
+            <th className="w-2/12 py-3 px-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
               Reporter
             </th>
           </tr>
         </thead>
       </table>
-      {(store.currentProject.id
-        ? [...[], store.currentProject]
-        : store.filteredProjects
-      ).map((project) => (
+      {visibleProjects.map((project) => (
         <div key={project.id}>
-          {/* <h3 className="text-lg font-bold">{project.title}</h3> */}
-          <table className="mb-12 min-w-full border-b-2 pb-2 leading-normal">
-            <thead className="text-left">
-              <tr>
-                <th>{project.title}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {project.bugs.map((bug) => (
-                <tr key={bug.title} className="border-b-2 text-sm">
-                  <td className="w-2/6 py-2">
-                    <div className="ml-3 mb-4">
-                      <p className="text-gray-900">{bug.title}</p>
-                      <p className="text-xs text-gray-600">{bug.description}</p>
-                    </div>
-                  </td>
-                  <td className="w-1/6">
-                    <span className="mr-2 rounded-xl bg-violet-500 px-2.5 py-1 font-medium text-white dark:bg-gray-700 dark:text-gray-300">
-                      {bug.status}
-                    </span>
-                  </td>
-                  <td className="w-1/6">
-                    <p className="text-gray-900">
-                      {dayjs(bug.created_at).format("DD/MM/YYYY")}
-                    </p>
-                  </td>
-                  <td className="w-1/6">
-                    <p className="text-gray-600">
-                      {dayjs(bug.due).format("DD/MM HH:mm")}
-                    </p>
-                    <p className="text-gray-600">{dayjs(bug.due).fromNow()}</p>
-                  </td>
-                  <td className="w-1/6">
-                    <h5>{bug.created_by.first_name}</h5>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ProjectTable {...project} />
         </div>
       ))}
     </div>

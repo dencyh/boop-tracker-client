@@ -108,7 +108,7 @@ export default class Store {
       const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {
         withCredentials: true
       });
-      console.log(response);
+      // console.log(response);
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
@@ -123,7 +123,7 @@ export default class Store {
     try {
       const response = await ProjectService.getProjects();
       this.setProjects(response.data);
-      console.log(response);
+      // console.log(response);
     } catch (e: unknown) {
       console.log(e);
     }
@@ -165,6 +165,7 @@ export default class Store {
       project_id
     });
     console.log(response);
+    return response;
   }
 
   async getViewers() {

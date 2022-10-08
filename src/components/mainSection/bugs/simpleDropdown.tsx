@@ -17,7 +17,6 @@ const SimpleDropdown = ({
   menuItems,
   handleValues
 }: SimpleDropdownProps) => {
-  const { store } = useContext(Context);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(false);
   const [selectedItem, setSelectedItem] = useState(label);

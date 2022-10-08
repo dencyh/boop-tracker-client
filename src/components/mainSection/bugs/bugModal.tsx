@@ -11,6 +11,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { observer } from "mobx-react-lite";
 import { ProjectValues } from "./projectModal";
 import BugModalError from "./bugModalError";
+import { IProject } from "../../../models/IProject";
 
 export interface BugValues {
   title: string;
@@ -39,7 +40,10 @@ const priorityData = ["lowest", "low", "medium", "high", "highest"]
     return { ...acc, [item]: item };
   }, {});
 
-const BugModal = () => {
+type BugModalProps = {
+  onClose: () => void;
+};
+const BugModal = ({ onClose }: BugModalProps) => {
   const { store } = useContext(Context);
 
   const availableProjects = store.projects.reduce((acc, project) => {
@@ -57,7 +61,7 @@ const BugModal = () => {
     status: "open",
     priority: "medium",
     due: new Date(),
-    projectId: store.currentProject.id
+    projectId: ""
   };
 
   const [bugValues, setBugValues] = useState<BugValues>(initialBugValues);
@@ -121,8 +125,9 @@ const BugModal = () => {
   const handleSumbit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const projectId = Number(store.currentProject.id);
+    setBugValues((prev) => ({ ...prev, projectId: store.currentProject.id }));
     const createdBy = store.user;
+
     const { title, description, status, priority, due, assignedTo } = bugValues;
     const errors = checkErrors();
     if (errors[0]) return;
@@ -136,12 +141,30 @@ const BugModal = () => {
       due,
       assigned_to: userIds,
       created_by: createdBy,
-      project_id: projectId
+      project_id: store.currentProject.id
     });
 
     // to refresh store
+
     await store.getUserProjects();
+
+    // Why doesn't it work here?
+    // store.projects.forEach((project) => {
+    //   if (project.id == projectId) {
+    //     store.setCurrentProject(project);
+    //   }
+    // });
   };
+
+  useEffect(() => {
+    store.projects.forEach((project) => {
+      if (project.id == bugValues.projectId) {
+        store.setCurrentProject(project);
+        onClose();
+      }
+    });
+  }, [store.projects]);
+
   return (
     <form className="mx-auto flex flex-col" onSubmit={handleSumbit}>
       <div className="flex-gap-4 flex justify-between">

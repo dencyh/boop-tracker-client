@@ -53,8 +53,8 @@ const ModalSelection = ({ isOpen, onClose }: IModal) => {
               </h2>
             </div>
             <div ref={modalRef}>
-              {projectModal && <ProjectModal />}
-              {bugModal && <BugModal />}
+              {projectModal && <ProjectModal onClose={onClose} />}
+              {bugModal && <BugModal onClose={onClose} />}
             </div>
           </div>
         </>

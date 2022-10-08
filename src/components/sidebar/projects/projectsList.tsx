@@ -42,6 +42,7 @@ const ProjectsList = () => {
 
   const filterProjects = (projectsArr: IProject[], filter: selectedFilter) => {
     if (filter === null) {
+      store.setCurrentProject({} as IProject);
       store.setFilteredProjects([]);
       return;
     }
@@ -57,9 +58,14 @@ const ProjectsList = () => {
   };
 
   useEffect(() => {
+    // On load
     store.setFilteredProjects(
       filterProjects(store.projects, selectedFilter) as IProject[]
     );
+
+    if (!store.filteredProjects.includes(store.currentProject)) {
+      store.setCurrentProject({} as IProject);
+    }
   }, [selectedFilter, store.projects]);
 
   const handleFilters = (filterName: string, checked: boolean) => {
@@ -91,7 +97,7 @@ const ProjectsList = () => {
         All Project
       </h3>
       <ul className="project-list ml-6 flex flex-col overflow-auto pl-4">
-        {store.filteredProjects?.map((project) => (
+        {store.filteredProjects.map((project) => (
           <ProjectItem key={project.id} project={project} />
         ))}
       </ul>
