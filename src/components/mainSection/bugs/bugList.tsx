@@ -87,13 +87,6 @@ const BugView = () => {
   }, [store.currentProject, store.filteredProjects]);
 
   useEffect(() => {
-    // console.log(store.currentProject.id);
-    // setVisibleProjects(
-    //   store.currentProject.id
-    //     ? [...[], store.currentProject]
-    //     : store.filteredProjects
-    // );
-    console.log(visibleProjects);
     setBugStats((prev) => {
       return Object.keys(prev).reduce(
         (acc, key) => {

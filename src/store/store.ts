@@ -1,3 +1,4 @@
+import { BugService } from "./../services/bugService";
 import { IBug } from "./../models/IBug";
 import { UserService } from "./../services/userService";
 import { IProject } from "./../models/IProject";
@@ -14,6 +15,7 @@ export default class Store {
   projects = [] as IProject[];
   filteredProjects = [] as IProject[];
   currentProject = {} as IProject;
+  bug = {} as IBug;
   users = [] as IUser[];
   isAuth = false;
   isLoading = false;
@@ -28,6 +30,10 @@ export default class Store {
 
   setUser(user: IUser) {
     this.user = user;
+  }
+
+  setBug(bug: IBug) {
+    this.bug = bug;
   }
 
   setProjects(projects: IProject[]) {
@@ -61,7 +67,6 @@ export default class Store {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.log(e);
-      // console.log(e.response?.data?.message);
       return e.response.status;
     }
   }
@@ -108,7 +113,6 @@ export default class Store {
       const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {
         withCredentials: true
       });
-      // console.log(response);
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
@@ -123,7 +127,6 @@ export default class Store {
     try {
       const response = await ProjectService.getProjects();
       this.setProjects(response.data);
-      // console.log(response);
     } catch (e: unknown) {
       console.log(e);
     }
@@ -144,6 +147,18 @@ export default class Store {
     console.log(response);
   }
 
+  async getBug(id: number) {
+    try {
+      const response = await BugService.getBug(id);
+      console.log(response);
+
+      this.setBug(response.data);
+      console.log(this.bug, "what we get");
+    } catch (e: unknown) {
+      console.log(e);
+    }
+  }
+
   async createBug({
     title,
     description,
@@ -154,7 +169,7 @@ export default class Store {
     created_by,
     project_id
   }: IBug) {
-    const response = await ProjectService.createBug({
+    const response = await BugService.createBug({
       title,
       description,
       status,

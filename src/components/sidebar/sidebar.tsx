@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import SidebarHeaderTabs from "./sidebarHeaderTabs";
-import AppLogo from "../appLogo";
+import AppLogo from "../misc/appLogo";
 
 import SidebarContents from "./sidebarContents";
 import { sidebarItems } from "../../data/sidebarItems";

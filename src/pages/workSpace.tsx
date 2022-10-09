@@ -7,6 +7,7 @@ import Feed from "./views/workspaceContainer/feed";
 import Timesheet from "./views/workspaceContainer/timesheet";
 import Milestones from "./views/workspaceContainer/milestones";
 import NotFound from "./notFound";
+import Bug from "../components/mainSection/bugs/bug";
 
 export function WorkSpace() {
   return (
@@ -17,6 +18,7 @@ export function WorkSpace() {
         <Route path="/" element={<Bugs />} />
         <Route path="/milestones" element={<Milestones />} />
         <Route path="/bugs" element={<Bugs />} />
+        <Route path="/bugs/:id" element={<Bug />} />
         <Route path="/timesheet" element={<Timesheet />} />
         <Route path="/feed" element={<Feed />} />
         <Route path="*" element={<NotFound />} />

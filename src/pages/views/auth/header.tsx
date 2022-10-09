@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import React from "react";
-import AppLogo from "../../../components/appLogo";
+import AppLogo from "../../../components/misc/appLogo";
 
 export function Header() {
   return (

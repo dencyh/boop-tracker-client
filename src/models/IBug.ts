@@ -1,3 +1,4 @@
+import { IProject } from "./IProject";
 import { IUser } from "./IUser";
 export interface IBug {
   id?: string;
@@ -9,5 +10,8 @@ export interface IBug {
   assigned_to: number[];
   created_by: IUser;
   project_id: string;
+  project?: IProject;
   created_at?: Date;
+  updated_at?: Date;
+  comments?: string[];
 }

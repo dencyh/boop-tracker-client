@@ -1,5 +1,5 @@
 import React from "react";
-import { BugStats } from "./bugView";
+import { BugStats } from "./bugList";
 
 const BugNumbers = ({ number, text, color }: BugStats) => {
   return (

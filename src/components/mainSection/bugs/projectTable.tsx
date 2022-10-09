@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { IProject } from "../../../models/IProject";
 import { statusPriorityColors as statusBgColors } from "../../../data/statusBgColors";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { IBug } from "../../../models/IBug";
+import { Link } from "react-router-dom";
+import { Context } from "../../..";
 dayjs.extend(relativeTime);
 
 const ProjectTable = (project: IProject) => {
+  const { store } = useContext(Context);
   return (
     <table className="mb-12 min-w-full border-b-2 pb-2 leading-normal">
       <thead className="text-left">
@@ -18,10 +21,12 @@ const ProjectTable = (project: IProject) => {
         {project.bugs.map((bug: IBug) => (
           <tr key={bug.id} className="border-b-2 text-sm">
             <td className="w-4/12 py-2 px-2">
-              <div className="ml-3 mb-4">
-                <p className="text-gray-900">{bug.title}</p>
-                <p className="text-xs text-gray-600">{bug.description}</p>
-              </div>
+              <Link to={`/bugs/${bug.id}`}>
+                <div className="ml-3 mb-4">
+                  <p className="text-gray-900">{bug.title}</p>
+                  <p className="text-xs text-gray-600">{bug.description}</p>
+                </div>
+              </Link>
             </td>
             <td className="w-1/12 px-2">
               <span

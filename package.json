@@ -6,6 +6,8 @@
     "transform-react-jsx-source"
   ],
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^35.2.0",
+    "@ckeditor/ckeditor5-react": "^5.0.2",
     "@fortawesome/fontawesome-common-types": "^6.2.0",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
