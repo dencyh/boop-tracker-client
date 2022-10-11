@@ -14,8 +14,8 @@ export class BugService {
     status,
     priority,
     due,
-    assigned_to,
-    created_by,
+    assignedTo,
+    createdBy,
     project_id
   }: IBugClient) {
     return api.post("/bugs", {
@@ -24,8 +24,8 @@ export class BugService {
       status,
       priority,
       due,
-      assigned_to,
-      created_by,
+      assignedTo,
+      createdBy,
       project_id
     });
   }

@@ -84,8 +84,8 @@ const CheckboxDropdown = ({
             <Viewer
               key={user.id}
               id={user.id}
-              firstName={user.first_name}
-              lastName={user.last_name}
+              firstName={user.firstName}
+              lastName={user.lastName}
               onChange={handleChange}
             />
           ))}

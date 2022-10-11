@@ -72,15 +72,15 @@ export default class Store {
   }
 
   async signUp(
-    first_name: string,
-    last_name: string,
+    firstName: string,
+    lastName: string,
     email: string,
     password: string
   ) {
     try {
       const response = await AuthService.signUp(
-        first_name,
-        last_name,
+        firstName,
+        lastName,
         email,
         password
       );
@@ -162,8 +162,8 @@ export default class Store {
     status,
     priority,
     due,
-    assigned_to,
-    created_by,
+    assignedTo,
+    createdBy,
     project_id
   }: IBugClient) {
     const response = await BugService.createBug({
@@ -172,8 +172,8 @@ export default class Store {
       status,
       priority,
       due,
-      assigned_to,
-      created_by,
+      assignedTo,
+      createdBy,
       project_id
     });
     console.log(response);

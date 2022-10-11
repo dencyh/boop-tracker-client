@@ -1,11 +1,11 @@
 export interface IUser {
   id: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
-  email_confirmed: boolean;
-  confirmation_link: string;
-  created_at: string;
-  updated_at: string;
+  emailConfirmed: boolean;
+  confirmationLink: string;
+  createdAt: string;
+  updatedAt: string;
 }

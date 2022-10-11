@@ -59,7 +59,7 @@ const BugTable = ({ data }: TableProps) => {
     {
       text: "Created",
       class: "w-2/12 py-2 text-xs font-semibold text-gray-600 text-center",
-      path: "created_at",
+      path: "createdAt",
       component: (bug) => <CreatedAt {...bug} />
     },
     {
@@ -71,7 +71,7 @@ const BugTable = ({ data }: TableProps) => {
     {
       text: "Reporter",
       class: "w-2/12 py-2 text-sm text-right",
-      path: "created_by.id",
+      path: "createdBy.id",
       component: (bug) => <Reporter {...bug} />
     }
   ];

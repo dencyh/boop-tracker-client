@@ -9,8 +9,8 @@ import { IComment } from "../../../../models/IBug";
 import InitialsAvatar from "./initialsAvatar";
 
 const Comment = (comment: IComment) => {
-  const firstName = comment.user.first_name;
-  const lastName = comment.user.last_name;
+  const firstName = comment.user.firstName;
+  const lastName = comment.user.lastName;
   return (
     <>
       <div className="mb-2 flex items-center gap-2">
@@ -18,10 +18,10 @@ const Comment = (comment: IComment) => {
           <InitialsAvatar {...{ firstName, lastName }} />
         </span>
         <span className="font-semibold">
-          {comment.user.first_name} {comment.user.last_name}
+          {comment.user.firstName} {comment.user.lastName}
         </span>
         <span className="text-gray-500">
-          &#8226; {dayjs(comment.updated_at).fromNow()}
+          &#8226; {dayjs(comment.updatedAt).fromNow()}
         </span>
       </div>
       <div className="prose mb-2 text-gray-700">

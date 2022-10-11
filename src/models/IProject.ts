@@ -3,8 +3,8 @@ export interface IProject {
   id: string;
   title: string;
   description: string;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
   closed: boolean;
   bugs: IBug[];
 }

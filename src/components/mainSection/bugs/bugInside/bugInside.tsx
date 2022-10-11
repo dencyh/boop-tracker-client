@@ -43,15 +43,15 @@ const BugInside = () => {
     store.bug.id
       ? setAllUsers(
           store.users.map((item) => ({
-            name: item.first_name + " " + item.last_name,
+            name: item.firstName + " " + item.lastName,
             id: item.id
           }))
         )
       : "";
     store.bug.id
       ? setAssignedTo(
-          store.bug.assigned_to.map((item) => ({
-            name: item.first_name + " " + item.last_name,
+          store.bug.assignedTo.map((item) => ({
+            name: item.firstName + " " + item.lastName,
             id: item.id
           }))
         )
@@ -87,11 +87,11 @@ const BugInside = () => {
             <div>
               <CreationInfo
                 {...{
-                  firstName: store.bug.created_by.first_name,
-                  lastName: store.bug.created_by.last_name,
+                  firstName: store.bug.createdBy.firstName,
+                  lastName: store.bug.createdBy.lastName,
                   projectTitle: store.bug.project.title,
-                  createdAt: store.bug.created_at,
-                  updatedAt: store.bug.updated_at
+                  createdAt: store.bug.createdAt,
+                  updatedAt: store.bug.updatedAt
                 }}
               />
               <h2 className="mt-2 py-2 text-3xl font-semibold">

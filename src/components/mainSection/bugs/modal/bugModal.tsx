@@ -138,8 +138,8 @@ const BugModal = ({ onClose }: BugModalProps) => {
       status,
       priority,
       due,
-      assigned_to: userIds,
-      created_by: createdBy,
+      assignedTo: userIds,
+      createdBy: createdBy,
       project_id: store.currentProject.id
     });
 

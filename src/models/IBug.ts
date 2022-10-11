@@ -7,8 +7,8 @@ export interface IBugClient {
   status: string;
   priority: string;
   due: Date;
-  assigned_to: number[];
-  created_by: IUser;
+  assignedTo: number[];
+  createdBy: IUser;
   project_id?: string;
 }
 
@@ -23,16 +23,16 @@ export interface IComment {
   text: string;
   bug: IBug;
   user: IUser;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface IBug extends Omit<IBugClient, "assigned_to"> {
+export interface IBug extends Omit<IBugClient, "assignedTo"> {
   id: string;
   project: IProject;
-  created_by: IUser;
-  created_at: Date;
-  updated_at: Date;
+  createdBy: IUser;
+  createdAt: Date;
+  updatedAt: Date;
   comments: IComment[];
-  assigned_to: IUser[];
+  assignedTo: IUser[];
 }

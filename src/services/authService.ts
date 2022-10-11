@@ -4,14 +4,14 @@ import { AuthResponse } from "../models/response/authResponse";
 
 export class AuthService {
   static async signUp(
-    first_name: string,
-    last_name: string,
+    firstName: string,
+    lastName: string,
     email: string,
     password: string
   ): Promise<AxiosResponse<AuthResponse>> {
     return api.post<AuthResponse>("/signup", {
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       email,
       password
     });

@@ -4,7 +4,7 @@ import { IBug } from "../../../../models/IBug";
 const Reporter = (bug: IBug) => {
   return (
     <p>
-      {bug.created_by.first_name} {bug.created_by.last_name}
+      {bug.createdBy.firstName} {bug.createdBy.lastName}
     </p>
   );
 };
