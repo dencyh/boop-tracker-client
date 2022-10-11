@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -7,9 +8,25 @@ import SimpleDropdown from "../modal/simpleDropdown";
 import { BugValues, priorityData, statusData } from "../modal/bugModal";
 import { ProjectValues } from "../modal/projectModal";
 import Multiselect from "multiselect-react-dropdown";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import Editor from "../comments/editor";
+import Comment from "../comments/comment";
+const markdown = `Just a link: https://reactjs.com.`;
 
 const BugInside = () => {
   const { store } = useContext(Context);
+  const onChange = ({ currentTarget: { value } }) => {
+    setMarkdownSource(value);
+  };
+  const defaultMd = `
+* [x] azeazea
+
+| Feature    | Support              |
+| ---------- | -------------------- |
+| CommonMark | 100%                 |
+| GFM        | 100%                 |`;
+  const [markdownSource, setMarkdownSource] = useState(defaultMd);
 
   const initialBugValues: BugValues = {
     title: "",
@@ -131,6 +148,27 @@ const BugInside = () => {
             <ul>
               <li></li>
             </ul>
+            <div>
+              <>
+                <textarea
+                  onChange={onChange}
+                  value={markdownSource}
+                  className="
+          w-full
+          resize
+          overflow-auto
+          whitespace-pre
+          border
+          border-solid
+          border-gray-300
+          font-mono
+        "
+                />
+                <ReactMarkdown remarkPlugins={[remarkGfm]} className="prose">
+                  {markdownSource}
+                </ReactMarkdown>
+              </>
+            </div>
           </div>
         </div>
       )}
