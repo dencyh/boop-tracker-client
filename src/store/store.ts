@@ -1,5 +1,5 @@
 import { BugService } from "./../services/bugService";
-import { IBug, IBugClient } from "./../models/IBug";
+import { IBug, IBugClient, ICommentClient } from "./../models/IBug";
 import { UserService } from "./../services/userService";
 import { IProject } from "./../models/IProject";
 import { ProjectService } from "./../services/projectService";
@@ -144,16 +144,13 @@ export default class Store {
       viewers,
       closed
     );
-    console.log(response);
   }
 
   async getBug(id: number) {
     try {
       const response = await BugService.getBug(id);
-      console.log(response);
 
       this.setBug(response.data);
-      console.log(this.bug, "what we get");
     } catch (e: unknown) {
       console.log(e);
     }
@@ -179,6 +176,19 @@ export default class Store {
       created_by,
       project_id
     });
+    console.log(response);
+    return response;
+  }
+
+  async postComment(text: string) {
+    const userId = Number(this.user.id);
+    const bugId = Number(this.bug.id);
+    const response = await BugService.postComment({
+      text,
+      userId,
+      bugId
+    });
+    this.getBug(bugId);
     console.log(response);
     return response;
   }

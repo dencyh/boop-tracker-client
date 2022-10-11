@@ -56,24 +56,24 @@ const SimpleDropdown = ({
           onClick={() => setOpen(!open)}
         />
       </div>
-      {open && (
-        <ul
-          className="absolute z-10 max-h-64 w-60 divide-y divide-gray-100 overflow-auto rounded bg-white py-1 text-sm text-gray-700 shadow dark:bg-gray-700 dark:text-gray-200"
-          ref={listRef}
-        >
-          {Object.keys(menuItems).map((key) => (
-            <li
-              role="button"
-              value={menuItems[key]}
-              key={key}
-              className="block py-2 px-4 text-sm uppercase hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              onClick={() => handleValues(key, name)}
-            >
-              {menuItems[key]}
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul
+        className={`absolute z-10 max-h-64 w-fit divide-y divide-gray-100 overflow-auto rounded bg-white py-1 text-sm text-gray-700 shadow dark:bg-gray-700 dark:text-gray-200 ${
+          open ? "" : "hidden"
+        }`}
+        ref={listRef}
+      >
+        {Object.keys(menuItems).map((key) => (
+          <li
+            role="button"
+            value={menuItems[key]}
+            key={key}
+            className="block py-2 px-4 text-sm uppercase hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            onClick={() => handleValues(key, name)}
+          >
+            {menuItems[key]}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

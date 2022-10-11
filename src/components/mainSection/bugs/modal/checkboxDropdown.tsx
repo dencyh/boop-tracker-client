@@ -67,13 +67,13 @@ const CheckboxDropdown = ({
   }, []);
 
   return (
-    <div className="relative mb-2 w-60" ref={buttonRef}>
+    <div className="relative mb-2" ref={buttonRef}>
       <div className="w-fit">
         <DropdownButton name={label} onClick={() => setOpen(!open)} />
       </div>
       {/* {open && ( */}
       <div
-        className={`absolute z-10 h-56 w-60 rounded bg-white shadow dark:bg-gray-700 ${
+        className={`absolute -left-full z-10 h-56 w-60 rounded bg-white shadow dark:bg-gray-700 ${
           open ? "" : "hidden"
         }`}
         ref={listRef}

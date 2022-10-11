@@ -1,7 +1,4 @@
 import React, { ReactNode } from "react";
-import { IBug } from "../../../../models/IBug";
-import TableBody from "./tableBody";
-import TableHeaders from "./tableHeaders";
 
 type TableProps = {
   children: ReactNode;

@@ -5,7 +5,7 @@ const TableHeaders = ({ columns }) => {
     <thead>
       <tr>
         {Object.keys(columns).map((path) => (
-          <td className={columns[path].class} key={columns[path].path}>
+          <td className={columns[path].class} key={columns[path].text}>
             {columns[path].text}
           </td>
         ))}

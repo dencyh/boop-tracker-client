@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import SignIn from "./views/auth/signIn";
-import SignUp from "./views/auth/signUp";
-import { Header } from "./views/auth/header";
-import WelcomeText from "./views/auth/welcomeText";
+import SignIn from "../components/auth/signIn";
+import SignUp from "../components/auth/signUp";
+import { Header } from "../components/auth/header";
+import WelcomeText from "../components/auth/welcomeText";
 
 export function Auth() {
   const [haveAccount, setHaveAccount] = useState(false);

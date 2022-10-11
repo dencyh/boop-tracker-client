@@ -1,8 +1,8 @@
 import React, { FormEvent, useContext, useRef, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
-import { Context } from "../../../index";
-import Button from "../../../components/controls/button";
-import Input from "../../../components/inputs/input";
+import { Context } from "../../index";
+import Button from "../controls/button";
+import Input from "../inputs/input";
 import SignHeader from "./signHeader";
 import { SignInInputs } from "./signIn";
 

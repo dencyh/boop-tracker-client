@@ -1,9 +1,9 @@
 import React, { FormEvent, useContext, useState } from "react";
-import { Context } from "../../../index";
+import { Context } from "../../index";
 import { observer } from "mobx-react-lite";
 import SignHeader from "./signHeader";
-import Input from "../../../components/inputs/input";
-import Button from "../../../components/controls/button";
+import Input from "../inputs/input";
+import Button from "../controls/button";
 import AuthError from "./authError";
 
 interface SignInProps {

@@ -1,4 +1,3 @@
-/* eslint-disable react/no-children-prop */
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -8,25 +7,17 @@ import SimpleDropdown from "../modal/simpleDropdown";
 import { BugValues, priorityData, statusData } from "../modal/bugModal";
 import { ProjectValues } from "../modal/projectModal";
 import Multiselect from "multiselect-react-dropdown";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import Editor from "../comments/editor";
-import Comment from "../comments/comment";
-const markdown = `Just a link: https://reactjs.com.`;
+import Comment from "./comment";
+import Textarea from "../../../inputs/textarea";
+import Button from "../../../controls/button";
 
 const BugInside = () => {
   const { store } = useContext(Context);
+
   const onChange = ({ currentTarget: { value } }) => {
     setMarkdownSource(value);
   };
-  const defaultMd = `
-* [x] azeazea
-
-| Feature    | Support              |
-| ---------- | -------------------- |
-| CommonMark | 100%                 |
-| GFM        | 100%                 |`;
-  const [markdownSource, setMarkdownSource] = useState(defaultMd);
+  const [markdownSource, setMarkdownSource] = useState("");
 
   const initialBugValues: BugValues = {
     title: "",
@@ -40,8 +31,7 @@ const BugInside = () => {
 
   const [bugValues, setBugValues] = useState<BugValues>(initialBugValues);
   const { id } = useParams();
-  const [bugData, setBugDate] = useState();
-  const [assigned, setAssigned] = useState([{ name: "1", id: "1" }]);
+  const [allUsers, setAllUsers] = useState([{ name: "1", id: "1" }]);
   const [assignedTo, setAssignedTo] = useState([{ name: "1", id: "1" }]);
 
   useEffect(() => {
@@ -51,9 +41,9 @@ const BugInside = () => {
 
   useEffect(() => {
     store.bug.id
-      ? setAssigned(
+      ? setAllUsers(
           store.users.map((item) => ({
-            name: item.first_name + item.last_name,
+            name: item.first_name + " " + item.last_name,
             id: item.id
           }))
         )
@@ -61,16 +51,12 @@ const BugInside = () => {
     store.bug.id
       ? setAssignedTo(
           store.bug.assigned_to.map((item) => ({
-            name: item.first_name + item.last_name,
+            name: item.first_name + " " + item.last_name,
             id: item.id
           }))
         )
       : "";
   }, [store.bug]);
-
-  useEffect(() => console.log(assigned), [assigned]);
-
-  //   useEffect(() => {}, [store.bug]);
 
   const handleValues = (
     option: string | string[] | Date | undefined,
@@ -89,11 +75,15 @@ const BugInside = () => {
       });
     }
   };
+  const handleComment = (text: string) => {
+    store.postComment(text);
+    setMarkdownSource("");
+  };
   return (
-    <div className="w-full p-8">
+    <div className="h-screen w-full overflow-auto p-8">
       {store.bug.id && (
         <div className="flex flex-col gap-4">
-          <div className="flex justify-between p-4">
+          <div className="flex justify-between rounded-md border-b-2 p-4">
             <div>
               <CreationInfo
                 {...{
@@ -112,7 +102,7 @@ const BugInside = () => {
             <div className="flex w-60 flex-col items-end gap-2">
               <div className="w-80">
                 <Multiselect
-                  options={assigned} // Options to display in the dropdown
+                  options={allUsers} // Options to display in the dropdown
                   selectedValues={assignedTo} // Preselected value to persist in dropdown
                   // onSelect={this.onSelect} // Function will trigger on select event
                   // onRemove={this.onRemove} // Function will trigger on remove event
@@ -136,38 +126,21 @@ const BugInside = () => {
           </div>
 
           <div>
-            <div>Comments({store.bug.comments?.length}):</div>
+            <div className="mb-6">Comments({store.bug.comments?.length}):</div>
             <ul>
-              {/* <Comment /> */}
-              <li>{/* <div>{parser(comment)}</div> */}</li>
-              {/* {store.bug.comments?.map((comment) => (
-        <li key={comment}>{parser(comment)}</li>
-      ))} */}
+              {store.bug.comments?.map((comment) => (
+                <li key={comment.id} className="mb-8">
+                  <Comment {...comment} />
+                </li>
+              ))}
             </ul>
 
-            <ul>
-              <li></li>
-            </ul>
             <div>
-              <>
-                <textarea
-                  onChange={onChange}
-                  value={markdownSource}
-                  className="
-          w-full
-          resize
-          overflow-auto
-          whitespace-pre
-          border
-          border-solid
-          border-gray-300
-          font-mono
-        "
-                />
-                <ReactMarkdown remarkPlugins={[remarkGfm]} className="prose">
-                  {markdownSource}
-                </ReactMarkdown>
-              </>
+              <Textarea rows={5} onChange={onChange} value={markdownSource} />
+              <Button
+                name="Send"
+                onClick={() => handleComment(markdownSource)}
+              />
             </div>
           </div>
         </div>

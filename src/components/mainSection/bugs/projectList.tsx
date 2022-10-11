@@ -7,7 +7,6 @@ import BugNumbers from "./bugNumbers";
 import { IBug } from "../../../models/IBug";
 import BugTable from "./bugTable";
 import Table from "./bugTable/table";
-import TableBody from "./bugTable/tableBody";
 import TableHeaders from "./bugTable/tableHeaders";
 dayjs.extend(relativeTime);
 

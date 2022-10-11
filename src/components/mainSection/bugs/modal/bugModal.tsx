@@ -11,7 +11,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { observer } from "mobx-react-lite";
 import { ProjectValues } from "./projectModal";
 import BugModalError from "./bugModalError";
-import { IProject } from "../../../../models/IProject";
 
 export interface BugValues {
   title: string;
@@ -191,7 +190,7 @@ const BugModal = ({ onClose }: BugModalProps) => {
             <Button name="Create" />
           </div>
         </div>
-        <div className="flex flex-col items-start gap-4">
+        <div className="flex flex-col items-end gap-4">
           <div className="mb-2">
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <MuiPicker

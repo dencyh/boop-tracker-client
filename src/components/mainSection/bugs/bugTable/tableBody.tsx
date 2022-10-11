@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import _ from "lodash";
 import { IBug } from "../../../../models/IBug";
 

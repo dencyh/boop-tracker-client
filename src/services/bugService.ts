@@ -1,4 +1,4 @@
-import { IBugClient } from "./../models/IBug";
+import { IBugClient, ICommentClient } from "./../models/IBug";
 import { AxiosResponse } from "axios";
 import api from "../http";
 import { IBug } from "../models/IBug";
@@ -27,6 +27,14 @@ export class BugService {
       assigned_to,
       created_by,
       project_id
+    });
+  }
+
+  static async postComment({ text, userId, bugId }: ICommentClient) {
+    return api.post("/comments", {
+      text,
+      userId,
+      bugId
     });
   }
 }

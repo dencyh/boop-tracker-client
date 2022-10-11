@@ -1,11 +1,11 @@
 import Sidebar from "../components/sidebar/sidebar";
-import Bugs from "./views/workspaceContainer/bugs";
+import Bugs from "../components/workspaceContainer/bugs";
 import ProjectsList from "../components/sidebar/projects/projectsList";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Feed from "./views/workspaceContainer/feed";
-import Timesheet from "./views/workspaceContainer/timesheet";
-import Milestones from "./views/workspaceContainer/milestones";
+import Feed from "../components/workspaceContainer/feed";
+import Timesheet from "../components/workspaceContainer/timesheet";
+import Milestones from "../components/workspaceContainer/milestones";
 import NotFound from "./notFound";
 import BugInside from "../components/mainSection/bugs/bugInside/bugInside";
 

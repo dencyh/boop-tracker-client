@@ -6,6 +6,7 @@ import { observer } from "mobx-react-lite";
 import ProjectItem from "./projectItem";
 import HideArrowButton from "./hideButton";
 import { IProject } from "../../../models/IProject";
+import { Link } from "react-router-dom";
 
 export interface Filters {
   name: keyof selectedFilter;
@@ -87,7 +88,8 @@ const ProjectsList = () => {
         </div>
         <ProjectFilters handleFilters={handleFilters} filters={filters} />
       </div>
-      <h3
+      <Link
+        to="bugs"
         role="button"
         className={`ml-4 rounded-l-2xl p-4 pr-0 text-lg font-bold hover:bg-white ${
           !store.currentProject.id ? "bg-white" : ""
@@ -95,7 +97,7 @@ const ProjectsList = () => {
         onClick={resetCurrentProject}
       >
         All Project
-      </h3>
+      </Link>
       <ul className="project-list ml-6 flex flex-col overflow-auto pl-4">
         {store.filteredProjects.map((project) => (
           <ProjectItem key={project.id} project={project} />

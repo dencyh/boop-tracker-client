@@ -1,9 +1,7 @@
 import React from "react";
-// eslint-disable-next-line import/namespace
 import { BugModalErrors } from "./bugModal";
 
 const BugModalError = ({ passed, message }: BugModalErrors) => {
-  //   console.log(passed, message);
   return (
     <>
       {passed ? (
