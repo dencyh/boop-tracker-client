@@ -6,9 +6,11 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { IBug } from "../../../models/IBug";
 import { Link } from "react-router-dom";
 import { Context } from "../../..";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMessage } from "@fortawesome/free-regular-svg-icons";
 dayjs.extend(relativeTime);
 
-const ProjectTable = (project: IProject) => {
+const BugT = (project: IProject) => {
   const { store } = useContext(Context);
   return (
     <table className="mb-12 min-w-full border-b-2 pb-2 leading-normal">
@@ -21,10 +23,17 @@ const ProjectTable = (project: IProject) => {
         {project.bugs.map((bug: IBug) => (
           <tr key={bug.id} className="border-b-2 text-sm">
             <td className="w-4/12 py-2 px-2">
-              <Link to={`/bugs/${bug.id}`}>
+              <Link
+                to={`/bugs/${bug.id}`}
+                onClick={() => store.getBug(Number(bug.id))}
+              >
                 <div className="ml-3 mb-4">
-                  <p className="text-gray-900">{bug.title}</p>
-                  <p className="text-xs text-gray-600">{bug.description}</p>
+                  <p className="font-semibold text-gray-900">{bug.title}</p>
+                  {/* <p className="text-xs text-gray-600">{bug.description}</p> */}
+                  <p>
+                    <span className="mr-1">{bug.comments?.length || 0}</span>
+                    <FontAwesomeIcon icon={faMessage} />
+                  </p>
                 </div>
               </Link>
             </td>
@@ -67,4 +76,4 @@ const ProjectTable = (project: IProject) => {
   );
 };
 
-export default ProjectTable;
+export default BugT;

@@ -5,7 +5,8 @@ import { Context } from "../../..";
 import relativeTime from "dayjs/plugin/relativeTime";
 import BugNumbers from "./bugNumbers";
 import { IBug } from "../../../models/IBug";
-import ProjectTable from "./projectTable";
+import BugT from "./bugT";
+import BugTable from "./bugTable/bugTable";
 dayjs.extend(relativeTime);
 
 export interface BugStats {
@@ -14,7 +15,7 @@ export interface BugStats {
   color: string;
 }
 
-const BugView = () => {
+const ProjectList = () => {
   const { store } = useContext(Context);
 
   const [visibleProjects, setVisibleProjects] = useState(
@@ -144,11 +145,17 @@ const BugView = () => {
       </table>
       {visibleProjects.map((project) => (
         <div key={project.id}>
-          <ProjectTable {...project} />
+          {/* <h3>{project.title}</h3> */}
+          <BugTable data={project.bugs} />
         </div>
       ))}
+      {/* {visibleProjects.map((project) => (
+        <div key={project.id}>
+          <BugT {...project} />
+        </div>
+      ))} */}
     </div>
   );
 };
 
-export default observer(BugView);
+export default observer(ProjectList);

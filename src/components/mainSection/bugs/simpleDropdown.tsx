@@ -18,7 +18,6 @@ const SimpleDropdown = ({
   handleValues
 }: SimpleDropdownProps) => {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(false);
   const [selectedItem, setSelectedItem] = useState(label);
 
   const listRef = useRef<HTMLUListElement>(null);
@@ -33,7 +32,6 @@ const SimpleDropdown = ({
           listRef.current?.contains(e.target) &&
           Object.values(menuItems).includes(e.target.innerText.toLowerCase())
         ) {
-          setSelected(true);
           setSelectedItem(e.target.innerText);
         }
       }
@@ -51,11 +49,10 @@ const SimpleDropdown = ({
   }, [label]);
 
   return (
-    <div className="relative mb-2 w-60">
+    <div className="relative mb-2 w-fit">
       <div className="mb-2 w-fit" ref={buttonRef}>
         <DropdownButton
           name={selectedItem || "Choose a project"}
-          selected={selected}
           onClick={() => setOpen(!open)}
         />
       </div>

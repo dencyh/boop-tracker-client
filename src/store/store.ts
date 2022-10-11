@@ -1,5 +1,5 @@
 import { BugService } from "./../services/bugService";
-import { IBug } from "./../models/IBug";
+import { IBug, IBugClient } from "./../models/IBug";
 import { UserService } from "./../services/userService";
 import { IProject } from "./../models/IProject";
 import { ProjectService } from "./../services/projectService";
@@ -168,7 +168,7 @@ export default class Store {
     assigned_to,
     created_by,
     project_id
-  }: IBug) {
+  }: IBugClient) {
     const response = await BugService.createBug({
       title,
       description,

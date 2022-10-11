@@ -28,13 +28,13 @@ export interface BugModalErrors {
   passed: boolean;
 }
 
-const statusData = ["open", "done", "won't do", "duplicate"].reduce(
+export const statusData = ["open", "done", "won't do", "duplicate"].reduce(
   (acc, item) => {
     return { ...acc, [item]: item };
   },
   {}
 );
-const priorityData = ["lowest", "low", "medium", "high", "highest"]
+export const priorityData = ["lowest", "low", "medium", "high", "highest"]
   .reverse()
   .reduce((acc, item) => {
     return { ...acc, [item]: item };

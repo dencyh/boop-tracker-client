@@ -3,10 +3,7 @@ import React from "react";
 import { BaseControl } from "./interfaces/baseControl";
 import { statusPriorityColors as bgColors } from "../../data/statusBgColors";
 
-interface DropdownButtonProps extends BaseControl {
-  selected: boolean;
-}
-const DropdownButton = ({ name, selected, ...rest }: DropdownButtonProps) => {
+const DropdownButton = ({ name, ...rest }: BaseControl) => {
   const bgColor =
     bgColors[name?.toLowerCase() as keyof typeof bgColors] || "bg-primary-400";
 
@@ -17,8 +14,8 @@ const DropdownButton = ({ name, selected, ...rest }: DropdownButtonProps) => {
   return (
     <>
       <button
-        className={`inline-flex w-fit items-center rounded-lg px-4 py-2.5 text-center text-sm font-medium focus:outline-none focus:ring-4 focus:ring-blue-300 ${
-          selected ? selectedStyle : defaultStyle
+        className={`flex w-40 items-center justify-between rounded-lg px-4 py-2.5 text-center text-sm font-medium focus:outline-none focus:ring-4 focus:ring-blue-300 ${
+          name ? selectedStyle : defaultStyle
         }`}
         type="button"
         {...rest}

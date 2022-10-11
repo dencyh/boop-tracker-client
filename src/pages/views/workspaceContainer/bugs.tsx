@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Button from "../../../components/controls/button";
-import BugView from "../../../components/mainSection/bugs/bugList";
+import BugView from "../../../components/mainSection/bugs/projectList";
 import ModalSelection from "../../../components/mainSection/bugs/modalSelection";
 
 const Bugs = () => {

@@ -1,3 +1,4 @@
+import { IBugClient } from "./../models/IBug";
 import { AxiosResponse } from "axios";
 import api from "../http";
 import { IBug } from "../models/IBug";
@@ -16,7 +17,7 @@ export class BugService {
     assigned_to,
     created_by,
     project_id
-  }: IBug) {
+  }: IBugClient) {
     return api.post("/bugs", {
       title,
       description,

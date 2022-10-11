@@ -20,6 +20,8 @@
   "plugins": ["react", "@typescript-eslint", "prettier"],
   "rules": {
     "@typescript-eslint/no-explicit-any": "error",
-    "prefer-const": 0
+    "prefer-const": 0,
+    "react/prop-types": 0,
+    "@typescript-eslint/no-empty-function": 0
   }
 }

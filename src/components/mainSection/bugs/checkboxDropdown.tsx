@@ -69,11 +69,7 @@ const CheckboxDropdown = ({
   return (
     <div className="relative mb-2 w-60" ref={buttonRef}>
       <div className="w-fit">
-        <DropdownButton
-          selected={false}
-          name={label}
-          onClick={() => setOpen(!open)}
-        />
+        <DropdownButton name={label} onClick={() => setOpen(!open)} />
       </div>
       {/* {open && ( */}
       <div
