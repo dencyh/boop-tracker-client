@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../../..";
-import Button from "../../controls/button";
-import Input from "../../inputs/input";
-import Textarea from "../../inputs/textarea";
+import { Context } from "../../../..";
+import Button from "../../../controls/button";
+import Input from "../../../inputs/input";
+import Textarea from "../../../inputs/textarea";
 import CheckboxDropdown from "./checkboxDropdown";
 import MuiPicker from "./muiPicker";
 import SimpleDropdown from "./simpleDropdown";
@@ -11,7 +11,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { observer } from "mobx-react-lite";
 import { ProjectValues } from "./projectModal";
 import BugModalError from "./bugModalError";
-import { IProject } from "../../../models/IProject";
+import { IProject } from "../../../../models/IProject";
 
 export interface BugValues {
   title: string;

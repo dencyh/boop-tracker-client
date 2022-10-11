@@ -1,10 +1,10 @@
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../../..";
-import Button from "../../controls/button";
-import Input from "../../inputs/input";
-import Textarea from "../../inputs/textarea";
-import Toggle from "../../inputs/toggle";
+import { Context } from "../../../..";
+import Button from "../../../controls/button";
+import Input from "../../../inputs/input";
+import Textarea from "../../../inputs/textarea";
+import Toggle from "../../../inputs/toggle";
 import { BugValues } from "./bugModal";
 import CheckboxDropdown from "./checkboxDropdown";
 

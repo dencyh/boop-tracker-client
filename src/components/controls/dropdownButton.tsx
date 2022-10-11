@@ -14,7 +14,7 @@ const DropdownButton = ({ name, ...rest }: BaseControl) => {
   return (
     <>
       <button
-        className={`flex w-40 items-center justify-between rounded-lg px-4 py-2.5 text-center text-sm font-medium focus:outline-none focus:ring-4 focus:ring-blue-300 ${
+        className={`flex items-center justify-between rounded-lg px-4 py-2.5 text-center text-sm font-medium focus:outline-none focus:ring-4 focus:ring-blue-300 ${
           name ? selectedStyle : defaultStyle
         }`}
         type="button"

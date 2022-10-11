@@ -1,10 +1,14 @@
 import React, { useCallback, useState } from "react";
 import { IBug } from "../../../../models/IBug";
-import { IProject } from "../../../../models/IProject";
 import Table from "./table";
 import TableBody from "./tableBody";
 import TableHeaders from "./tableHeaders";
 import _ from "lodash";
+import StatusBadge from "./statusBadge";
+import CreatedAt from "./createdAt";
+import Due from "./due";
+import BugLink from "./bugLink";
+import Reporter from "./reporter";
 
 type TableProps = {
   data: IBug[];
@@ -36,33 +40,39 @@ const BugTable = ({ data }: TableProps) => {
   const columns = [
     {
       text: "Bug",
-      class: "w-4/12 py-2 px-2",
-      key: "title"
+      class: "w-4/12 py-2 text-sm",
+      path: "title",
+      component: (bug) => <BugLink {...bug} />
     },
     {
       text: "Status",
-      class: "w-1/12 py-2 px-2",
-      key: "status"
+      class: "w-1/12 py-2 text-sm pr-4 text-center",
+      path: "status",
+      component: (bug) => <StatusBadge {...{ bug, path: "status" }} />
     },
     {
       text: "Priority",
-      class: "w-1/12 py-2 px-2",
-      key: "priority"
+      class: "w-1/12 py-2 text-sm pr-4 text-center",
+      path: "priority",
+      component: (bug) => <StatusBadge {...{ bug, path: "priority" }} />
     },
     {
       text: "Created",
-      class: "w-2/12 py-2 px-2",
-      key: "created_at"
+      class: "w-2/12 py-2 text-xs font-semibold text-gray-600 text-center",
+      path: "created_at",
+      component: (bug) => <CreatedAt {...bug} />
     },
     {
       text: "Due",
-      class: "w-2/12 py-2 px-2",
-      key: "due"
+      class: "w-2/12 py-2 text-xs font-semibold text-gray-600 text-center",
+      path: "due",
+      component: (bug) => <Due {...bug} />
     },
     {
       text: "Reporter",
-      class: "w-2/12 py-2 px-2",
-      key: "created_by.id"
+      class: "w-2/12 py-2 text-sm text-right",
+      path: "created_by.id",
+      component: (bug) => <Reporter {...bug} />
     }
   ];
 
@@ -72,7 +82,7 @@ const BugTable = ({ data }: TableProps) => {
   );
   return (
     <Table>
-      <TableHeaders {...{ columns }} />
+      {/* <TableHeaders {...{ columns }} /> */}
       <TableBody {...{ columns, data: data }} />
     </Table>
   );

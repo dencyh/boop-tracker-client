@@ -4,9 +4,9 @@ const TableHeaders = ({ columns }) => {
   return (
     <thead>
       <tr>
-        {Object.keys(columns).map((key) => (
-          <td className={columns[key].class} key={columns[key].key}>
-            {columns[key].text}
+        {Object.keys(columns).map((path) => (
+          <td className={columns[path].class} key={columns[path].path}>
+            {columns[path].text}
           </td>
         ))}
       </tr>

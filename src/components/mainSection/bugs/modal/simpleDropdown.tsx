@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Context } from "../../..";
-import DropdownButton from "../../controls/dropdownButton";
+import { Context } from "../../../..";
+import DropdownButton from "../../../controls/dropdownButton";
 import { BugValues } from "./bugModal";
 
 type SimpleDropdownProps = {

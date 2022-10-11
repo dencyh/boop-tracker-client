@@ -1,11 +1,11 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef, useState } from "react";
-import { IUser } from "../../../models/IUser";
-import DropdownButton from "../../controls/dropdownButton";
+import { IUser } from "../../../../models/IUser";
+import DropdownButton from "../../../controls/dropdownButton";
 import { BugValues } from "./bugModal";
 import { ProjectValues } from "./projectModal";
-import Search from "./search";
-import Viewer from "./viewer";
+import Search from "../search";
+import Viewer from "../viewer";
 
 type CheckboxDropdown = {
   label: string;

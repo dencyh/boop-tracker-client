@@ -7,7 +7,7 @@ type TableProps = {
   children: ReactNode;
 };
 const Table = ({ children }: TableProps) => {
-  return <table className="table">{children}</table>;
+  return <table className="table w-full">{children}</table>;
 };
 
 export default Table;

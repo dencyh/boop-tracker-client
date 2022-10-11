@@ -5,10 +5,43 @@ import { Context } from "../../..";
 import relativeTime from "dayjs/plugin/relativeTime";
 import BugNumbers from "./bugNumbers";
 import { IBug } from "../../../models/IBug";
-import BugT from "./bugT";
-import BugTable from "./bugTable/bugTable";
+import BugTable from "./bugTable";
+import Table from "./bugTable/table";
+import TableBody from "./bugTable/tableBody";
+import TableHeaders from "./bugTable/tableHeaders";
 dayjs.extend(relativeTime);
 
+const headerColumns = [
+  {
+    text: "Bug",
+    class: "w-4/12 py-2 text-xs font-semibold uppercase text-gray-600"
+  },
+  {
+    text: "Status",
+    class:
+      "w-1/12 py-2 text-xs text-center pr-4 font-semibold uppercase text-gray-600"
+  },
+  {
+    text: "Priority",
+    class:
+      "w-1/12 py-2 text-xs text-center pr-4 font-semibold uppercase text-gray-600"
+  },
+  {
+    text: "Created",
+    class:
+      "w-2/12 py-2 text-xs text-center font-semibold uppercase text-gray-600"
+  },
+  {
+    text: "Due",
+    class:
+      "w-2/12 py-2 text-xs text-center font-semibold uppercase text-gray-600"
+  },
+  {
+    text: "Reporter",
+    class:
+      "w-2/12 py-2 text-xs text-right font-semibold uppercase text-gray-600"
+  }
+];
 export interface BugStats {
   number: number;
   text: string;
@@ -119,41 +152,18 @@ const ProjectList = () => {
           <BugNumbers key={stat} {...bugStats[stat]} />
         ))}
       </div>
-      <table className="mb-6 min-w-full leading-normal">
-        <thead>
-          <tr>
-            <th className="w-4/12 py-3 px-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
-              Bug
-            </th>
-            <th className="w-1/12 py-3 px-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
-              Status
-            </th>
-            <th className="w-1/12 py-3 px-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
-              Priority
-            </th>
-            <th className="w-2/12 py-3 px-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
-              Created
-            </th>
-            <th className="w-2/12 py-3 px-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
-              Due
-            </th>
-            <th className="w-2/12 py-3 px-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-700">
-              Reporter
-            </th>
-          </tr>
-        </thead>
-      </table>
+      <Table>
+        <TableHeaders {...{ columns: headerColumns }} />
+        {/* <TableBody {...{ columns, data: data }} /> */}
+      </Table>
       {visibleProjects.map((project) => (
-        <div key={project.id}>
-          {/* <h3>{project.title}</h3> */}
+        <div key={project.id} className="pb-2">
+          <h3 className="mt-4 border-b-2 pb-2 text-xl font-bold">
+            {project.title}
+          </h3>
           <BugTable data={project.bugs} />
         </div>
       ))}
-      {/* {visibleProjects.map((project) => (
-        <div key={project.id}>
-          <BugT {...project} />
-        </div>
-      ))} */}
     </div>
   );
 };

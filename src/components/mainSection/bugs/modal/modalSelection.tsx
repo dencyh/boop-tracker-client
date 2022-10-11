@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import CloseButton from "../../controls/closeButton";
+import CloseButton from "../../../controls/closeButton";
 import { observer } from "mobx-react-lite";
 import ProjectModal from "./projectModal";
 import BugModal from "./bugModal";

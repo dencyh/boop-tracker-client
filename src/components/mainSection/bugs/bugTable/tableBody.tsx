@@ -5,7 +5,7 @@ import { IBug } from "../../../../models/IBug";
 type Column = {
   text: string;
   class: string;
-  key: string;
+  path: string;
   component?: React.FC;
 };
 
@@ -14,25 +14,23 @@ type TableBodyProps = {
   columns: Column[];
 };
 const TableBody = ({ data, columns }: TableBodyProps) => {
-  console.log("data", data);
-  console.log("columns", columns);
-  const renderContent = (item, key) => {
-    if (columns[key].component) {
-      const component = columns[key].component;
+  const renderContent = (item, path) => {
+    if (columns[path].component) {
+      const component = columns[path].component;
       if (typeof component === "function") {
         return component(item);
       }
       return component;
     }
-    return _.get(item, columns[key].key);
+    return _.get(item, columns[path].path);
   };
   return (
     <tbody>
       {data.map((item) => (
         <tr key={item.id}>
-          {Object.keys(columns).map((key) => (
-            <td className={columns[key].class} key={key}>
-              {renderContent(item, key)}
+          {Object.keys(columns).map((path) => (
+            <td className={columns[path].class} key={path}>
+              {renderContent(item, path)}
             </td>
           ))}
         </tr>
