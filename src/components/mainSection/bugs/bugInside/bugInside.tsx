@@ -60,20 +60,14 @@ const BugInside = () => {
 
   const handleValues = (
     option: string | string[] | Date | undefined,
-    value: keyof BugValues | keyof ProjectValues
+    value: keyof BugValues
   ) => {
     setBugValues({
       ...bugValues,
       [value]: option
     });
 
-    if (value === "projectId") {
-      store.projects.forEach((project) => {
-        if (Number(project.id) === Number(option)) {
-          store.setCurrentProject(project);
-        }
-      });
-    }
+    store.updateBug(value, option);
   };
   const handleComment = (text: string) => {
     store.postComment(text);

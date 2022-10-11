@@ -1,3 +1,4 @@
+import { BugValues } from "./../components/mainSection/bugs/modal/bugModal";
 import { BugService } from "./../services/bugService";
 import { IBug, IBugClient, ICommentClient } from "./../models/IBug";
 import { UserService } from "./../services/userService";
@@ -191,6 +192,18 @@ export default class Store {
     this.getBug(bugId);
     console.log(response);
     return response;
+  }
+
+  async updateBug(
+    field: keyof BugValues,
+    newValue: string | string[] | Date | undefined
+  ) {
+    const response = await BugService.updateBug(
+      Number(this.bug.id),
+      field,
+      newValue
+    );
+    console.log(response);
   }
 
   async getViewers() {

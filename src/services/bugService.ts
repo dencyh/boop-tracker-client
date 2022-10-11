@@ -2,6 +2,7 @@ import { IBugClient, ICommentClient } from "./../models/IBug";
 import { AxiosResponse } from "axios";
 import api from "../http";
 import { IBug } from "../models/IBug";
+import { BugValues } from "../components/mainSection/bugs/modal/bugModal";
 
 export class BugService {
   static async getBug(id: number): Promise<AxiosResponse<IBug>> {
@@ -28,6 +29,14 @@ export class BugService {
       createdBy,
       project_id
     });
+  }
+
+  static async updateBug(
+    id: number,
+    field: keyof BugValues,
+    newValue: string | string[] | Date | undefined
+  ) {
+    return api.patch(`bugs/${id}`, { field, newValue });
   }
 
   static async postComment({ text, userId, bugId }: ICommentClient) {
