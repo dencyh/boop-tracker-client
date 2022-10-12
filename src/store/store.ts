@@ -1,9 +1,9 @@
-import { BugValues } from "./../components/mainSection/bugs/modal/bugModal";
-import { BugService } from "./../services/bugService";
-import { IBug, IBugClient, ICommentClient } from "./../models/IBug";
-import { UserService } from "./../services/userService";
-import { IProject } from "./../models/IProject";
-import { ProjectService } from "./../services/projectService";
+import { BugValues } from "../components/mainSection/bugs/modal/bugModal";
+import { BugService } from "../services/bugService";
+import { IBug, IBugClient, ICommentClient } from "../models/IBug";
+import { UserService } from "../services/userService";
+import { IProject } from "../models/IProject";
+import { ProjectService } from "../services/projectService";
 import { IUser } from "../models/IUser";
 import { makeAutoObservable } from "mobx";
 import { AuthService } from "../services/authService";

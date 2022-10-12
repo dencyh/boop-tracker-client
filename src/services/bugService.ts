@@ -1,4 +1,4 @@
-import { IBugClient, ICommentClient } from "./../models/IBug";
+import { IBugClient, ICommentClient } from "../models/IBug";
 import { AxiosResponse } from "axios";
 import api from "../http";
 import { IBug } from "../models/IBug";
