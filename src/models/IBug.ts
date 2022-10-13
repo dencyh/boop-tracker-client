@@ -16,6 +16,8 @@ export interface ICommentClient {
   text: string;
   userId: number;
   bugId: number;
+  childId?: string;
+  parentId?: string | null;
 }
 
 export interface IComment {
@@ -25,6 +27,8 @@ export interface IComment {
   user: IUser;
   createdAt: Date;
   updatedAt: Date;
+  children: IComment[];
+  parent: IComment;
 }
 
 export interface IBug extends Omit<IBugClient, "assignedTo"> {

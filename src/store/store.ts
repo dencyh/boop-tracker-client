@@ -181,13 +181,14 @@ export default class Store {
     return response;
   }
 
-  async postComment(text: string) {
+  async postComment(text: string, parentId: string | null) {
     const userId = Number(this.user.id);
     const bugId = Number(this.bug.id);
     const response = await BugService.postComment({
       text,
       userId,
-      bugId
+      bugId,
+      parentId
     });
     this.getBug(bugId);
     console.log(response);

@@ -39,11 +39,16 @@ export class BugService {
     return api.patch(`bugs/${id}`, { field, newValue });
   }
 
-  static async postComment({ text, userId, bugId }: ICommentClient) {
+  static async postComment({ text, userId, bugId, parentId }: ICommentClient) {
     return api.post("/comments", {
       text,
       userId,
-      bugId
+      bugId,
+      parentId
     });
+  }
+
+  static async updateComment({ text, id }) {
+    return api.patch(`comments/${id}`);
   }
 }

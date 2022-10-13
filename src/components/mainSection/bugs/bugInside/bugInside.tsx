@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../../../..";
 import CreationInfo from "./creationInfo";
@@ -10,14 +10,12 @@ import Multiselect from "multiselect-react-dropdown";
 import Comment from "./comment";
 import Textarea from "../../../inputs/textarea";
 import Button from "../../../controls/button";
+import CommentList from "./commentList";
+import { IComment } from "../../../../models/IBug";
+import CommentForm from "./commentForm";
 
 const BugInside = () => {
   const { store } = useContext(Context);
-
-  const onChange = ({ currentTarget: { value } }) => {
-    setMarkdownSource(value);
-  };
-  const [markdownSource, setMarkdownSource] = useState("");
 
   const initialBugValues: BugValues = {
     title: "",
@@ -38,6 +36,36 @@ const BugInside = () => {
     store.getBug(Number(id));
     store.getViewers();
   }, []);
+
+  const commentByParentId = useMemo(() => {
+    if (store.bug?.comments?.length) {
+      const group = {};
+      store.bug.comments.forEach((comment) => {
+        group[comment.parent?.id || "root"] ||= [];
+        group[comment.parent?.id || "root"].push(comment);
+      });
+      return group;
+    } else {
+      return [];
+    }
+  }, [store.bug?.comments]);
+
+  const getReplies = (parentId: string): IComment[] => {
+    return commentByParentId[parentId];
+  };
+
+  const [comments, setComments] = useState({
+    replies: [] as IComment[],
+    rootComments: [] as IComment[]
+  });
+
+  useEffect(() => {
+    setComments({
+      replies: [],
+      rootComments: commentByParentId["root"]
+    });
+  }, [store.bug.comments]);
+  console.log(comments);
 
   useEffect(() => {
     store.bug.id
@@ -69,10 +97,11 @@ const BugInside = () => {
 
     store.updateBug(value, option);
   };
-  const handleComment = (text: string) => {
-    store.postComment(text);
-    setMarkdownSource("");
+  const handleComment = (e, value, parentId) => {
+    e.preventDefault();
+    store.postComment(value, parentId);
   };
+
   return (
     <div className="h-screen w-full overflow-auto p-8">
       {store.bug.id && (
@@ -122,21 +151,18 @@ const BugInside = () => {
           <div>
             <div className="mb-6">Comments({store.bug.comments?.length}):</div>
             <ul>
-              {store.bug.comments?.map((comment) => (
-                <li key={comment.id} className="mb-8">
-                  <Comment {...comment} />
-                </li>
-              ))}
+              {comments.rootComments?.length > 0 && (
+                <CommentList
+                  {...{
+                    comments: comments.rootComments,
+                    getReplies
+                  }}
+                />
+              )}
             </ul>
-
-            <div>
-              <Textarea rows={5} onChange={onChange} value={markdownSource} />
-              <Button
-                name="Send"
-                onClick={() => handleComment(markdownSource)}
-              />
-            </div>
           </div>
+
+          <CommentForm handleComment={handleComment} />
         </div>
       )}
     </div>
