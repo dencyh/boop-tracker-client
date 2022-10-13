@@ -195,6 +195,16 @@ export default class Store {
     return response;
   }
 
+  async updateComment(text: string, commentId: string) {
+    const response = await BugService.updateComment({
+      text,
+      commentId,
+      userId: this.user.id
+    });
+    this.getBug(Number(this.bug.id));
+    console.log(response);
+  }
+
   async updateBug(
     field: keyof BugValues,
     newValue: string | string[] | Date | undefined

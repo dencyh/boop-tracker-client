@@ -5,9 +5,14 @@ import Textarea from "../../../inputs/textarea";
 type CommentFormProps = {
   handleComment: (e, value, parentId) => void;
   parentId?: string | null;
+  initialValue?: string;
 };
-const CommentForm = ({ handleComment, parentId = null }: CommentFormProps) => {
-  const [value, setValue] = useState("");
+const CommentForm = ({
+  handleComment,
+  parentId = null,
+  initialValue = ""
+}: CommentFormProps) => {
+  const [value, setValue] = useState(initialValue);
 
   const onChange = (e) => {
     setValue(e.currentTarget.value);
@@ -20,7 +25,7 @@ const CommentForm = ({ handleComment, parentId = null }: CommentFormProps) => {
         setValue("");
       }}
     >
-      <Textarea rows={5} onChange={onChange} value={value} required />
+      <Textarea rows={3} onChange={onChange} value={value} required />
       <Button name="Send" type="submit" />
     </form>
   );

@@ -18,6 +18,7 @@ type CommentPorps = {
 const Comment = ({ comment, getReplies }: CommentPorps) => {
   const { store } = useContext(Context);
   const [isReplying, setIsReplying] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const firstName = comment.user.firstName;
   const lastName = comment.user.lastName;
 
@@ -27,6 +28,12 @@ const Comment = ({ comment, getReplies }: CommentPorps) => {
     e.preventDefault();
     store.postComment(value, parentId);
     setIsReplying(false);
+  };
+
+  const updateComment = (e, value, parentId) => {
+    e.preventDefault();
+    store.updateComment(value, comment.id);
+    setIsEditing(false);
   };
   return (
     <>
@@ -45,16 +52,41 @@ const Comment = ({ comment, getReplies }: CommentPorps) => {
         </span>
       </div>
       <div className="prose ml-3 mb-2 text-gray-700">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {comment.text}
-        </ReactMarkdown>
-        {comment.id} - {comment.parent?.id}
+        {isEditing ? (
+          <CommentForm
+            {...{
+              handleComment: updateComment,
+              parentId: comment.id,
+              initialValue: comment.text
+            }}
+          />
+        ) : (
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {comment.text}
+          </ReactMarkdown>
+        )}
       </div>
       <div className="flex gap-2 text-sm font-semibold text-slate-700">
-        <button onClick={() => setIsReplying((prev) => !prev)}>
+        <button
+          onClick={() => {
+            setIsReplying((prev) => !prev);
+            setIsEditing(false);
+          }}
+        >
           {isReplying ? "Cancel" : "Reply"}
         </button>
-        <button>Edit</button>
+        {store.user.id === comment.user.id ? (
+          <button
+            onClick={() => {
+              setIsReplying(false);
+              setIsEditing((prev) => !prev);
+            }}
+          >
+            {isEditing ? "Cancel" : "Edit"}
+          </button>
+        ) : (
+          ""
+        )}
         {/* <button>
           <FontAwesomeIcon icon={faHeartRegular} />
           <span className="text-rose-600">

@@ -65,7 +65,6 @@ const BugInside = () => {
       rootComments: commentByParentId["root"]
     });
   }, [store.bug.comments]);
-  console.log(comments);
 
   useEffect(() => {
     store.bug.id

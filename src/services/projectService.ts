@@ -1,4 +1,3 @@
-import { IBug } from "../models/IBug";
 import api from "../http";
 import { AxiosResponse } from "axios";
 import { IProject } from "../models/IProject";

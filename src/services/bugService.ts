@@ -48,7 +48,18 @@ export class BugService {
     });
   }
 
-  static async updateComment({ text, id }) {
-    return api.patch(`comments/${id}`);
+  static async updateComment({
+    text,
+    commentId,
+    userId
+  }: {
+    text: string;
+    commentId: string;
+    userId: string;
+  }) {
+    return api.patch(`comments/${commentId}`, {
+      text,
+      userId
+    });
   }
 }
