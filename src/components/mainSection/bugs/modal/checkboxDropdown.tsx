@@ -1,11 +1,12 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { IUser } from "../../../../models/IUser";
 import DropdownButton from "../../../controls/dropdownButton";
 import { BugValues } from "./bugModal";
 import { ProjectValues } from "./projectModal";
 import Search from "../search";
 import Viewer from "../viewer";
+import { Context } from "../../../..";
 
 type CheckboxDropdown = {
   label: string;
@@ -22,6 +23,8 @@ const CheckboxDropdown = ({
   menuItems,
   handleValues
 }: CheckboxDropdown) => {
+  const { store } = useContext(Context);
+  store.getViewers();
   const [open, setOpen] = useState(false);
 
   const [users, setUsers] = useState({});
@@ -48,32 +51,37 @@ const CheckboxDropdown = ({
   const listRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleHide = (e: any) => {
-      if (
-        !buttonRef.current?.contains(e.target) &&
-        !listRef.current?.contains(e.target)
-      ) {
-        setOpen(false);
-      }
-    };
+  // useEffect(() => {
+  //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //   const handleHide = (e: any) => {
+  //     if (
+  //       !buttonRef.current?.contains(e.target) &&
+  //       !listRef.current?.contains(e.target)
+  //     ) {
+  //       setOpen(false);
+  //     }
+  //   };
 
-    document.addEventListener("click", handleHide);
+  //   document.addEventListener("click", handleHide);
 
-    return () => {
-      document.removeEventListener("click", handleHide);
-    };
-  }, []);
+  //   return () => {
+  //     document.removeEventListener("click", handleHide);
+  //   };
+  // }, []);
 
   return (
     <div className="relative mb-2" ref={buttonRef}>
       <div className="w-fit">
-        <DropdownButton name={label} onClick={() => setOpen(!open)} />
+        <DropdownButton
+          name={label}
+          onClick={() => {
+            setOpen((prev) => !prev);
+          }}
+        />
       </div>
       {/* {open && ( */}
       <div
-        className={`absolute -left-full z-10 h-56 w-60 rounded bg-white shadow dark:bg-gray-700 ${
+        className={`absolute top-12 z-10 h-56  w-60 rounded bg-white shadow dark:bg-gray-700 ${
           open ? "" : "hidden"
         }`}
         ref={listRef}

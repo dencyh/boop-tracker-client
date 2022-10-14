@@ -42,6 +42,7 @@ export const priorityData = ["lowest", "low", "medium", "high", "highest"]
 type BugModalProps = {
   onClose: () => void;
 };
+
 const BugModal = ({ onClose }: BugModalProps) => {
   const { store } = useContext(Context);
 
@@ -146,13 +147,6 @@ const BugModal = ({ onClose }: BugModalProps) => {
     // to refresh store
 
     await store.getUserProjects();
-
-    // Why doesn't it work here?
-    // store.projects.forEach((project) => {
-    //   if (project.id == projectId) {
-    //     store.setCurrentProject(project);
-    //   }
-    // });
   };
 
   useEffect(() => {

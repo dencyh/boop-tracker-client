@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../..";
+import Line from "../mainSection/milestones/stepProgress";
+import Timeline from "../mainSection/milestones/timeline";
 
 const Milestones = () => {
+  const { store } = useContext(Context);
+
   return (
-    <>
-      <div className=" relative z-10 flex w-full items-start justify-between border-l border-gray-200 bg-white p-4">
-        <div className="z-10 w-96 text-3xl">Milestones</div>
+    <div className="relative mx-auto my-2 flex h-fit w-96 items-center justify-between">
+      {/* <div className="m-8">
+        {store.projects.map((project) => (
+          <div key={project.id}>{project.title}</div>
+        ))}
+      </div> */}
+      <Line />
+      <div className="absolute left-20 my-4 h-full">
+        <Timeline />
       </div>
-    </>
+    </div>
   );
 };
 
