@@ -1,24 +1,21 @@
+import { observer } from "mobx-react-lite";
 import React, { useContext } from "react";
 import { Context } from "../..";
-import Line from "../mainSection/milestones/stepProgress";
-import Timeline from "../mainSection/milestones/timeline";
+import ProjectView from "../mainSection/milestones/projectView";
 
 const Milestones = () => {
   const { store } = useContext(Context);
 
   return (
-    <div className="relative mx-auto my-2 flex h-fit w-96 items-center justify-between">
-      {/* <div className="m-8">
-        {store.projects.map((project) => (
-          <div key={project.id}>{project.title}</div>
-        ))}
-      </div> */}
-      <Line />
-      <div className="absolute left-20 my-4 h-full">
-        <Timeline />
-      </div>
+    <div className="h-screen w-full overflow-auto p-12">
+      {(store.currentProject.id
+        ? [...[], store.currentProject]
+        : store.filteredProjects
+      ).map((project) => (
+        <ProjectView {...project} key={project.id} />
+      ))}
     </div>
   );
 };
 
-export default Milestones;
+export default observer(Milestones);

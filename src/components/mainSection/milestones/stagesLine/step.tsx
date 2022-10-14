@@ -5,7 +5,6 @@ import StepInput from "./stepInput";
 
 const Step = ({ first, last }: { first?: boolean; last?: boolean }) => {
   const [selected, setSelected] = useState(false);
-  const [isAddingStep, setIsAddingStep] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
   const name = "Devel opemnt";
 
@@ -36,7 +35,7 @@ const Step = ({ first, last }: { first?: boolean; last?: boolean }) => {
       ) : (
         <div
           aria-label="add before"
-          className={`mb-2 mt-2 ${selected ? "visible" : "invisible"}`}
+          className={`mb-2 mt-1 ${selected ? "visible" : "invisible"}`}
         >
           <StepButton name="+" onClick={() => handleInput()} />
         </div>
@@ -63,7 +62,7 @@ const Step = ({ first, last }: { first?: boolean; last?: boolean }) => {
       ) : (
         <div
           aria-label="add after"
-          className={`mt-2 mb-2 ${selected ? "visible" : "invisible"}`}
+          className={`mt-2 mb-1 ${selected ? "visible" : "invisible"}`}
         >
           <StepButton name="+" onClick={() => handleInput()} />
         </div>

@@ -56,8 +56,6 @@ const ProjectList = () => {
       : store.filteredProjects
   );
 
-  useEffect(() => console.log(visibleProjects), [visibleProjects]);
-
   const [bugStats, setBugStats] = useState({
     open: {
       number: "-",

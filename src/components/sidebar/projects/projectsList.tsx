@@ -88,16 +88,14 @@ const ProjectsList = () => {
         </div>
         <ProjectFilters handleFilters={handleFilters} filters={filters} />
       </div>
-      <Link
-        to="bugs"
-        role="button"
-        className={`ml-4 rounded-l-2xl p-4 pr-0 text-lg font-bold hover:bg-white ${
+      <button
+        className={`ml-4 rounded-l-2xl p-4 pr-0 text-left text-lg font-bold hover:bg-white ${
           !store.currentProject.id ? "bg-white" : ""
         }`}
         onClick={resetCurrentProject}
       >
         All Project
-      </Link>
+      </button>
       <ul className="project-list ml-6 flex flex-col overflow-auto pl-4">
         {store.filteredProjects.map((project) => (
           <ProjectItem key={project.id} project={project} />

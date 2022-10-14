@@ -1,35 +1,36 @@
 import React from "react";
 import dayjs from "dayjs";
 import QuarterOfYear from "dayjs/plugin/quarterOfYear";
+import { IProject } from "../../../../models/IProject";
 dayjs.extend(QuarterOfYear);
 
-const Timeline = () => {
-  // TODO change for props deadline + createdAt
-  const start = dayjs("2022-12-01");
-  const end = dayjs("2023-12-12");
+const Timeline = (project: IProject) => {
+  const start = dayjs(project.createdAt);
+  const end = dayjs(project.deadline);
   const diff = Math.ceil(end.diff(start, "Q", true));
   // [Q1, Q2, Q3]
 
   const quorterArr: (number | string)[] = [];
   for (let i = 0; i < diff; i++) {
-    const q = start.add(i, "Q").quarter();
+    const newDate = start.add(i, "Q");
+    const q = newDate.quarter();
 
     quorterArr.push(q);
     if (q === 4 && i + 1 < diff) {
-      quorterArr.push(start.format("YYYY"));
+      quorterArr.push(newDate.format("YYYY"));
     }
   }
 
   return (
-    <div className="relative flex h-full">
+    <div className="group relative flex h-full">
       <div className="flex flex-col items-end justify-between">
-        <div className="flex items-center">
+        <div className="flex translate-y-7 items-center">
           <span className="mx-3 text-lg font-semibold text-gray-500">
-            10/2022
+            {start.format("MM/YYYY")}
           </span>
           <div className=" h-0.5 w-8  bg-gray-400"></div>
         </div>
-        <div className="absolute flex h-full w-0.5 flex-col items-end justify-around self-end bg-gray-400 py-16 text-gray-500">
+        <div className="flex h-full w-0.5 flex-col items-end justify-around self-end bg-gray-400 py-8 text-gray-500">
           {quorterArr.map((q, index) => (
             <div key={`${index}${q}`} className="flex items-center gap-2">
               {q > 4 ? (
@@ -41,9 +42,9 @@ const Timeline = () => {
             </div>
           ))}
         </div>
-        <div className="flex items-center">
+        <div className="flex -translate-y-7 items-center">
           <span className="mx-3 text-lg font-semibold text-gray-500">
-            10/2023
+            {end.format("MM/YYYY")}
           </span>
           <div className="h-0.5 w-8 bg-gray-400"></div>
         </div>

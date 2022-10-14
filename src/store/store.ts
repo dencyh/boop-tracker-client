@@ -60,14 +60,14 @@ export default class Store {
   async signIn(email: string, password: string) {
     try {
       const response = await AuthService.signIn(email, password);
-      console.log(response);
+      // console.log(response);
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
       return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      console.log(e);
+      console.error(e);
       return e.response.status;
     }
   }
@@ -85,14 +85,14 @@ export default class Store {
         email,
         password
       );
-      console.log(response);
+      // console.log(response);
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
       return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      console.log(e);
+      console.error(e);
       return e.response?.data?.message;
     }
   }
@@ -104,7 +104,7 @@ export default class Store {
       this.setAuth(false);
       this.setUser({} as IUser);
     } catch (e: unknown) {
-      console.log(e);
+      console.error(e);
     }
   }
 
@@ -118,7 +118,7 @@ export default class Store {
       this.setAuth(true);
       this.setUser(response.data.user);
     } catch (e: unknown) {
-      console.log(e);
+      console.error(e);
     } finally {
       this.setLoading(false);
     }
@@ -129,7 +129,7 @@ export default class Store {
       const response = await ProjectService.getProjects();
       this.setProjects(response.data);
     } catch (e: unknown) {
-      console.log(e);
+      console.error(e);
     }
   }
 
@@ -161,7 +161,7 @@ export default class Store {
 
       this.setBug(response.data);
     } catch (e: unknown) {
-      console.log(e);
+      console.error(e);
     }
   }
 
@@ -185,7 +185,7 @@ export default class Store {
       createdBy,
       project_id
     });
-    console.log(response);
+    // console.log(response);
     return response;
   }
 
@@ -199,7 +199,7 @@ export default class Store {
       parentId
     });
     this.getBug(bugId);
-    console.log(response);
+    // console.log(response);
     return response;
   }
 
@@ -210,7 +210,7 @@ export default class Store {
       userId: this.user.id
     });
     this.getBug(Number(this.bug.id));
-    console.log(response);
+    // console.log(response);
   }
 
   async updateBug(
@@ -222,7 +222,7 @@ export default class Store {
       field,
       newValue
     );
-    console.log(response);
+    // console.log(response);
   }
 
   async getViewers() {
@@ -231,7 +231,7 @@ export default class Store {
       const users = response.data.filter((user) => user.id !== this.user.id);
       this.setUsers(users);
     } catch (e: unknown) {
-      console.log(e);
+      console.error(e);
     }
   }
 }

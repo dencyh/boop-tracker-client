@@ -86,7 +86,7 @@ const signUp = ({ onSignOption }: SignInProps) => {
     e.preventDefault();
     const { firstName, lastName, email, password } = values;
     const response = await store.signUp(firstName, lastName, email, password);
-    console.log(response);
+    // console.log(response);
   };
 
   const onChange = (e: FormEvent<HTMLInputElement>) => {
