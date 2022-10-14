@@ -7,12 +7,25 @@ export class ProjectService {
     return api.get<IProject[]>("/projects");
   }
 
-  static async createProject(
-    title: string,
-    description: string,
-    viewers: string[],
-    closed: boolean
-  ): Promise<AxiosResponse<IProject[]>> {
-    return api.post("/projects", { title, description, viewers, closed });
+  static async createProject({
+    title,
+    description,
+    viewers,
+    deadline,
+    closed
+  }: {
+    title: string;
+    description: string;
+    viewers: string[];
+    deadline: Date;
+    closed: boolean;
+  }): Promise<AxiosResponse<IProject[]>> {
+    return api.post("/projects", {
+      title,
+      description,
+      viewers,
+      deadline,
+      closed
+    });
   }
 }

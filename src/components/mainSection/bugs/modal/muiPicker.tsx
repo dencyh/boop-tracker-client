@@ -7,21 +7,25 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { BugValues } from "./bugModal";
+import { ProjectValues } from "./projectModal";
 
 type TimePickerProps = {
   label: string;
-  name: keyof BugValues;
-  handleValues: (option: Date | undefined, value: keyof BugValues) => void;
+  name: keyof BugValues | keyof ProjectValues;
+  handleValues: (
+    option: Date | undefined,
+    value: keyof BugValues | keyof ProjectValues
+  ) => void;
+  initValue?: Dayjs | null;
 };
 export default function MuiPicker({
   label,
   name,
-  handleValues
+  handleValues,
+  initValue
 }: TimePickerProps) {
   const locale = "ru";
-  const [value, setValue] = React.useState<Dayjs | null>(
-    dayjs(Date.now() + 1000 * 60 * 60 * 24)
-  );
+  const [value, setValue] = React.useState<Dayjs | null | undefined>(initValue);
 
   React.useEffect(() => {
     handleValues(value?.toDate(), name);

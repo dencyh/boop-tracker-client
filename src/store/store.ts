@@ -133,18 +133,26 @@ export default class Store {
     }
   }
 
-  async createProject(
-    title: string,
-    description: string,
-    viewers: string[],
-    closed: boolean
-  ) {
-    const response = await ProjectService.createProject(
+  async createProject({
+    title,
+    description,
+    viewers,
+    deadline,
+    closed
+  }: {
+    title: string;
+    description: string;
+    viewers: string[];
+    deadline: Date;
+    closed: boolean;
+  }) {
+    const response = await ProjectService.createProject({
       title,
       description,
       viewers,
+      deadline,
       closed
-    );
+    });
   }
 
   async getBug(id: number) {

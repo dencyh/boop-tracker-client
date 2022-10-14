@@ -6,5 +6,6 @@ export interface IProject {
   createdAt: string;
   updatedAt: string;
   closed: boolean;
+  deadline: Date;
   bugs: IBug[];
 }

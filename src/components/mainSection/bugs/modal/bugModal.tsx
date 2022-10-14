@@ -11,6 +11,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { observer } from "mobx-react-lite";
 import { ProjectValues } from "./projectModal";
 import BugModalError from "./bugModalError";
+import dayjs from "dayjs";
 
 export interface BugValues {
   title: string;
@@ -60,7 +61,7 @@ const BugModal = ({ onClose }: BugModalProps) => {
     assignedTo: [],
     status: "open",
     priority: "medium",
-    due: new Date(),
+    due: dayjs().add(1, "day").toDate(),
     projectId: ""
   };
 
@@ -191,6 +192,7 @@ const BugModal = ({ onClose }: BugModalProps) => {
                 label="Choose due date"
                 name="due"
                 handleValues={handleValues}
+                initValue={dayjs(bugValues.due)}
               />
             </LocalizationProvider>
           </div>
