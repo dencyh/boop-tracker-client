@@ -1,12 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
+import { IStage } from "../../../../models/IProject";
 import Circle from "./circle";
 import StepButton from "./stepButton";
 import StepInput from "./stepInput";
 
-const Step = ({ first, last }: { first?: boolean; last?: boolean }) => {
+const Step = ({
+  stage,
+  first,
+  last,
+  stageNumber,
+  defaultText
+}: {
+  stage?: IStage;
+  first?: boolean;
+  last?: boolean;
+  stageNumber: number;
+  defaultText: string;
+}) => {
   const [selected, setSelected] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
-  const name = "Devel opemnt";
+  const [stageName, setStageName] = useState(stage?.text || defaultText);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,10 +54,10 @@ const Step = ({ first, last }: { first?: boolean; last?: boolean }) => {
         </div>
       )}
       <div className="flex w-full items-center gap-2">
-        <div className="absolute right-10 w-fit truncate">{name}</div>
+        <div className="absolute right-10 w-fit truncate">{stageName}</div>
         <Circle
           selected={selected}
-          name={"1"}
+          name={stageNumber.toString()}
           onClick={() => setSelected((prev) => !prev)}
         />
 
@@ -53,7 +66,7 @@ const Step = ({ first, last }: { first?: boolean; last?: boolean }) => {
             selected ? "visible" : "invisible"
           }`}
         >
-          <StepInput value={name} />
+          <StepInput initValue={stageName} />
         </div>
       </div>
 

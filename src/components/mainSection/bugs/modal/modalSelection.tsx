@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import CloseButton from "../../../controls/closeButton";
 import { observer } from "mobx-react-lite";
 import ProjectModal from "./projectModal";
 import BugModal from "./bugModal";
+import { Context } from "../../../..";
 
 interface IModal {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface IModal {
 }
 
 const ModalSelection = ({ isOpen, onClose }: IModal) => {
+  const { store } = useContext(Context);
   const activeButton = "border-b-2 border-slate-600";
   const inactiveButton = "text-slate-400";
 
@@ -17,6 +19,10 @@ const ModalSelection = ({ isOpen, onClose }: IModal) => {
   const [projectModal, setProjectModal] = useState(false);
 
   const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    store.getViewers();
+  }, []);
 
   return (
     <>
