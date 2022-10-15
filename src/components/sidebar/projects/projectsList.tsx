@@ -7,6 +7,7 @@ import ProjectItem from "./projectItem";
 import HideArrowButton from "./hideButton";
 import { IProject } from "../../../models/IProject";
 import { Link } from "react-router-dom";
+import Search from "../../mainSection/bugs/modal/search";
 
 export interface Filters {
   name: keyof selectedFilter;
@@ -17,6 +18,7 @@ type selectedFilter = { open: boolean; closed: boolean };
 
 const ProjectsList = () => {
   const { store } = useContext(Context);
+  const [query, setQuery] = useState("");
   const filters: Filters[] = [
     {
       name: "open",
@@ -54,7 +56,8 @@ const ProjectsList = () => {
           (project.closed && selectedFilter.closed) ||
           (!project.closed && selectedFilter.open)
       )
-    ];
+    ].filter((item) => item.title.toLowerCase().includes(query));
+
     return result;
   };
 
@@ -67,7 +70,7 @@ const ProjectsList = () => {
     if (!store.filteredProjects.includes(store.currentProject)) {
       store.setCurrentProject({} as IProject);
     }
-  }, [selectedFilter, store.projects]);
+  }, [selectedFilter, store.projects, query]);
 
   const handleFilters = (filterName: string, checked: boolean) => {
     setSelectedFilter({ ...selectedFilter, [filterName]: checked });
@@ -77,6 +80,10 @@ const ProjectsList = () => {
     store.setCurrentProject({} as IProject);
   };
 
+  const handleSearch = (e) => {
+    setQuery(e.currentTarget.value);
+  };
+
   return (
     <div
       className="drop-shadow-green-outline z-20 flex h-screen w-310px shrink-0 flex-col border-gray-700 bg-[#ebe5e4] dark:border-l dark:bg-gray-800 xl:w-80"
@@ -84,7 +91,8 @@ const ProjectsList = () => {
     >
       <div className="mt-4 px-4">
         <div className="py-2.5">
-          <SearchBar />
+          {/* <SearchBar /> */}
+          <Search label="" placeholder="Search" onChange={handleSearch} />
         </div>
         <ProjectFilters handleFilters={handleFilters} filters={filters} />
       </div>
