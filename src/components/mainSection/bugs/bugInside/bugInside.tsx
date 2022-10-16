@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../../..";
 import CreationInfo from "./creationInfo";
 import SimpleDropdown from "../modal/simpleDropdown";
@@ -13,6 +13,7 @@ import Button from "../../../controls/button";
 import CommentList from "./commentList";
 import { IComment } from "../../../../models/IBug";
 import CommentForm from "./commentForm";
+import CloseButton from "../../../controls/closeButton";
 
 const BugInside = () => {
   const { store } = useContext(Context);
@@ -101,10 +102,16 @@ const BugInside = () => {
     store.postComment(value, parentId);
   };
 
+  const navigate = useNavigate();
+  const onClose = () => {
+    navigate("/bugs", { replace: true });
+  };
+
   return (
     <div className="h-screen w-full overflow-auto p-8">
       {store.bug.id && (
         <div className="flex flex-col gap-4">
+          <CloseButton onClick={onClose} />
           <div className="flex justify-between rounded-md border-b-2 p-4">
             <div>
               <CreationInfo
