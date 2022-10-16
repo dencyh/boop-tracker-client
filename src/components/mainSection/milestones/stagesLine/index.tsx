@@ -1,20 +1,40 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useContext, useEffect, useState } from "react";
-import { IProject } from "../../../../models/IProject";
+import { IProject, IStage } from "../../../../models/IProject";
 import Step from "./step";
 import { v4 } from "uuid";
 import { Context } from "../../../..";
 import _ from "lodash";
 
+class LinkedListNode {
+  value: any;
+  next: any;
+  constructor(value, next = null) {
+    this.value = value;
+    this.next = next;
+  }
+
+  toString() {
+    return `${this.value}`;
+  }
+}
+
 const StagesLine = ({ project }: { project: IProject }) => {
   const { store } = useContext(Context);
   const [localStages, setLocalStages] = useState(project.stages);
   useEffect(() => {
-    setLocalStages(
-      [...project.stages].sort((a, b) => {
-        if (!a.next?.id || !b.next?.id) return 1; // null = last
-        return Number(a.next.id) - Number(b.next.id);
-      })
-    );
+    const nextIds = {};
+    Object.values(project.stages).forEach((stage) => {
+      nextIds[stage.next?.id || "root"] = stage;
+    });
+    const list = [] as IStage[];
+    let item = nextIds["root"];
+    for (let i = 0; i < project.stages.length; i++) {
+      list.push(item);
+      // console.log(nextIds[item.id]?.id);
+      item = nextIds[item.id];
+    }
+    setLocalStages(list.reverse());
   }, [project.stages]);
 
   const handleAddStage = (stageNumber: number, order: "next" | "prev") => {
@@ -31,21 +51,7 @@ const StagesLine = ({ project }: { project: IProject }) => {
 
     console.log(newStage);
     store.createStage(newStage);
-
-    // setLocalStages((prev) => {
-    //   prev.splice(index, 0, {
-    //     ...prev[index],
-    //     id: v4(),
-    //     text: "New Stage",
-    //     next: prev[index + 1]
-    //   });
-    //   return [...prev];
-    // });
   };
-
-  // useEffect(() => {
-  //   store.createStage({});
-  // }, [localStages]);
 
   const handleSumbitStage = (stage) => {
     console.log(stage);
