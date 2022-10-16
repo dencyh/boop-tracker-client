@@ -2,7 +2,7 @@ import React from "react";
 
 export interface IBaseInput
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
   errorMessage?: string;
   serverError?: string;
 }

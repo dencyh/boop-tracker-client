@@ -2,7 +2,7 @@ import { BugValues } from "../components/mainSection/bugs/modal/bugModal";
 import { BugService } from "../services/bugService";
 import { IBug, IBugClient, ICommentClient } from "../models/IBug";
 import { UserService } from "../services/userService";
-import { IProject } from "../models/IProject";
+import { IProject, IStage } from "../models/IProject";
 import { ProjectService } from "../services/projectService";
 import { IUser } from "../models/IUser";
 import { makeAutoObservable } from "mobx";
@@ -146,19 +146,45 @@ export default class Store {
     deadline: Date;
     closed: boolean;
   }) {
-    const response = await ProjectService.createProject({
-      title,
-      description,
-      viewers,
-      deadline,
-      closed
-    });
+    try {
+      const response = await ProjectService.createProject({
+        title,
+        description,
+        viewers,
+        deadline,
+        closed
+      });
+    } catch (e: unknown) {
+      console.error(e);
+    }
+  }
+
+  async createStage({
+    text,
+    projectId,
+    nextId = null
+  }: {
+    text: string;
+    projectId: number;
+    nextId: number | null;
+  }) {
+    try {
+      const response = await ProjectService.createStage({
+        text,
+        projectId,
+        userId: Number(this.user.id),
+        nextId
+      });
+      await this.getUserProjects();
+      console.log(response);
+    } catch (e) {}
   }
 
   async getBug(id: number) {
     try {
       const response = await BugService.getBug(id);
 
+      console.log(response);
       this.setBug(response.data);
     } catch (e: unknown) {
       console.error(e);
@@ -175,54 +201,70 @@ export default class Store {
     createdBy,
     project_id
   }: IBugClient) {
-    const response = await BugService.createBug({
-      title,
-      description,
-      status,
-      priority,
-      due,
-      assignedTo,
-      createdBy,
-      project_id
-    });
-    // console.log(response);
-    return response;
+    try {
+      const response = await BugService.createBug({
+        title,
+        description,
+        status,
+        priority,
+        due,
+        assignedTo,
+        createdBy,
+        project_id
+      });
+      // console.log(response);
+      return response;
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async postComment(text: string, parentId: string | null) {
-    const userId = Number(this.user.id);
-    const bugId = Number(this.bug.id);
-    const response = await BugService.postComment({
-      text,
-      userId,
-      bugId,
-      parentId
-    });
-    this.getBug(bugId);
-    // console.log(response);
-    return response;
+    try {
+      const userId = Number(this.user.id);
+      const bugId = Number(this.bug.id);
+      const response = await BugService.postComment({
+        text,
+        userId,
+        bugId,
+        parentId
+      });
+      this.getBug(bugId);
+      // console.log(response);
+      return response;
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async updateComment(text: string, commentId: string) {
-    const response = await BugService.updateComment({
-      text,
-      commentId,
-      userId: this.user.id
-    });
-    this.getBug(Number(this.bug.id));
-    // console.log(response);
+    try {
+      const response = await BugService.updateComment({
+        text,
+        commentId,
+        userId: this.user.id
+      });
+      this.getBug(Number(this.bug.id));
+      // console.log(response);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async updateBug(
     field: keyof BugValues,
     newValue: string | string[] | Date | undefined
   ) {
-    const response = await BugService.updateBug(
-      Number(this.bug.id),
-      field,
-      newValue
-    );
-    // console.log(response);
+    try {
+      const response = await BugService.updateBug(
+        Number(this.bug.id),
+        field,
+        newValue
+      );
+      // console.log(response);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async getViewers() {

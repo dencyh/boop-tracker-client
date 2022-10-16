@@ -28,4 +28,23 @@ export class ProjectService {
       closed
     });
   }
+
+  static async createStage({
+    text,
+    projectId,
+    userId,
+    nextId = null
+  }: {
+    text: string;
+    projectId: number;
+    userId: number;
+    nextId: number | null;
+  }) {
+    return api.post("/projects/stages", {
+      text,
+      projectId,
+      userId,
+      nextId
+    });
+  }
 }
