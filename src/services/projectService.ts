@@ -47,4 +47,21 @@ export class ProjectService {
       nextId
     });
   }
+  static async updateStage({
+    text,
+    stageId,
+    projectId,
+    userId
+  }: {
+    text: string;
+    stageId: number;
+    projectId: number;
+    userId: number;
+  }) {
+    return api.patch(`/projects/stages/${stageId}`, {
+      text,
+      projectId,
+      userId
+    });
+  }
 }

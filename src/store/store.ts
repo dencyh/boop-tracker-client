@@ -136,6 +136,7 @@ export default class Store {
     try {
       const response = await ProjectService.getProjects();
       this.setProjects(response.data);
+      this.setCurrentProject({ ...{} } as IProject);
     } catch (e: unknown) {
       console.error(e);
     }
@@ -180,12 +181,42 @@ export default class Store {
       const response = await ProjectService.createStage({
         text,
         projectId,
-        userId: Number(this.user.id),
+        userId: this.user.id,
         nextId
       });
       await this.getUserProjects();
-      this.setCurrentProjectById(projectId);
+      if (this.currentProject.id) {
+        this.setCurrentProjectById(projectId);
+      } else {
+        this.setCurrentProject({} as IProject);
+      }
       console.log(response);
+    } catch (e) {}
+  }
+
+  async updateStage({
+    text,
+    stageId,
+    projectId
+  }: {
+    text: string;
+    stageId: number;
+    projectId: number;
+  }) {
+    try {
+      const response = await ProjectService.updateStage({
+        text,
+        stageId,
+        projectId,
+        userId: this.user.id
+      });
+      if (this.currentProject.id) {
+        this.setCurrentProjectById(projectId);
+      } else {
+        this.setCurrentProject({} as IProject);
+      }
+      console.log(response);
+      await this.getUserProjects();
     } catch (e) {}
   }
 

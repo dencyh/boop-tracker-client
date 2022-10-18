@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { IProject, IStage } from "../../../models/IProject";
 import CheckButton from "../../../components/controls/checkButton";
 import Circle from "./circle";
 import StepButton from "./stepButton";
 import StepInput from "./stepInput";
+import { Context } from "../../..";
 
 const Step = ({
   stage,
@@ -11,7 +12,8 @@ const Step = ({
   last = false,
   stageNumber,
   defaultText,
-  handleAddStage
+  handleAddStage,
+  handleEditStage
 }: {
   stage?: IStage;
   first?: boolean;
@@ -19,10 +21,12 @@ const Step = ({
   stageNumber: number;
   defaultText: string;
   handleAddStage: (stageNumber: number, order: "next" | "prev") => void;
+  handleEditStage?: (text: string, stageId: number) => void;
 }) => {
+  const { store } = useContext(Context);
   const [selected, setSelected] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
-  const [stageName, setStageName] = useState(stage?.id || defaultText);
+  // const [stageName, setStageName] = useState(stage?.text || defaultText);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,16 +42,15 @@ const Step = ({
     };
   });
 
-  const [inputValue, setInputValue] = useState(stageName);
+  const [inputValue, setInputValue] = useState(stage?.text || defaultText);
 
   const handleInput = (e) => {
     setInputValue(e.target.value);
   };
-  const handleConfirm = (e) => {
-    e.preventDefault();
-    console.log(inputValue);
-    setStageName(inputValue);
-  };
+  // const handleConfirm = (e) => {
+  //   e.preventDefault();
+  //   setStageName(inputValue);
+  // };
 
   return (
     <div
@@ -68,7 +71,9 @@ const Step = ({
         </div>
       )}
       <div className="flex w-full items-center gap-2">
-        <div className="absolute right-10 w-fit truncate">{stageName}</div>
+        <div className="absolute right-10 w-fit truncate">
+          {stage?.text || defaultText}
+        </div>
         <Circle
           selected={selected}
           name={stageNumber.toString()}
@@ -80,10 +85,20 @@ const Step = ({
             selected ? "visible" : "invisible"
           }`}
         >
-          <StepInput value={inputValue} onChange={handleInput} />
-          <div className="ml-1">
-            <CheckButton onClick={handleConfirm} />
-          </div>
+          {!first && !last && (
+            <>
+              <StepInput value={inputValue} onChange={handleInput} />
+              <div className="ml-1">
+                <CheckButton
+                  onClick={
+                    handleEditStage && !first && !last && stage?.id
+                      ? () => handleEditStage(inputValue.toString(), stage.id)
+                      : undefined
+                  }
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
 
