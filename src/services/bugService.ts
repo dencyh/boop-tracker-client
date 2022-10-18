@@ -2,7 +2,7 @@ import { IBugClient, ICommentClient } from "../models/IBug";
 import { AxiosResponse } from "axios";
 import api from "../http";
 import { IBug } from "../models/IBug";
-import { BugValues } from "../components/mainSection/bugs/modal/bugModal";
+import { BugValues } from "../features/bugs/modal/bugModal";
 
 export class BugService {
   static async getBug(id: number): Promise<AxiosResponse<IBug>> {

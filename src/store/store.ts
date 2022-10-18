@@ -1,4 +1,4 @@
-import { BugValues } from "../components/mainSection/bugs/modal/bugModal";
+import { BugValues } from "../features/bugs/modal/bugModal";
 import { BugService } from "../services/bugService";
 import { IBug, IBugClient, ICommentClient } from "../models/IBug";
 import { UserService } from "../services/userService";
