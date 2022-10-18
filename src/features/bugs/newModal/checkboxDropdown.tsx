@@ -5,7 +5,7 @@ import DropdownButton from "../../../components/controls/dropdownButton";
 import { BugValues } from "./bugModal";
 import { ProjectValues } from "./projectModal";
 import Search from "./search";
-import Viewer from "../viewer";
+import Viewer from "./viewer";
 import { Context } from "../../..";
 
 type CheckboxDropdown = {
@@ -107,7 +107,7 @@ const CheckboxDropdown = ({
           {displayUsers.map((user) => (
             <Viewer
               key={user.id}
-              id={user.id}
+              id={user.id.toString()}
               firstName={user.firstName}
               lastName={user.lastName}
               onChange={handleChange}

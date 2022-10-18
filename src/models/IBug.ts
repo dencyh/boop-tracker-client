@@ -9,19 +9,19 @@ export interface IBugClient {
   due: Date;
   assignedTo: number[];
   createdBy: IUser;
-  project_id?: string;
+  project_id?: number;
 }
 
 export interface ICommentClient {
   text: string;
   userId: number;
   bugId: number;
-  childId?: string;
-  parentId?: string | null;
+  childId?: number;
+  parentId?: number | null;
 }
 
 export interface IComment {
-  id: string;
+  id: number;
   text: string;
   bug: IBug;
   user: IUser;
@@ -32,7 +32,7 @@ export interface IComment {
 }
 
 export interface IBug extends Omit<IBugClient, "assignedTo"> {
-  id: string;
+  id: number;
   project: IProject;
   createdBy: IUser;
   createdAt: Date;

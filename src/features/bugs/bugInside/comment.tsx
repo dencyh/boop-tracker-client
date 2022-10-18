@@ -13,7 +13,7 @@ import InitialsAvatar from "./initialsAvatar";
 
 type CommentPorps = {
   comment: IComment;
-  getReplies: (parentId: string) => IComment[];
+  getReplies: (parentId: number) => IComment[];
 };
 const Comment = ({ comment, getReplies }: CommentPorps) => {
   const { store } = useContext(Context);

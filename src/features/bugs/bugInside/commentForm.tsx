@@ -4,7 +4,7 @@ import Textarea from "../../../components/inputs/textarea";
 
 type CommentFormProps = {
   handleComment: (e, value, parentId) => void;
-  parentId?: string | null;
+  parentId?: number | null;
   initialValue?: string;
 };
 const CommentForm = ({

@@ -1,6 +1,6 @@
-import { BugValues } from "../features/bugs/modal/bugModal";
+import { BugValues } from "../features/bugs/newModal/bugModal";
 import { BugService } from "../services/bugService";
-import { IBug, IBugClient, ICommentClient } from "../models/IBug";
+import { IBug, IBugClient } from "../models/IBug";
 import { UserService } from "../services/userService";
 import { IProject, IStage } from "../models/IProject";
 import { ProjectService } from "../services/projectService";
@@ -43,6 +43,14 @@ export default class Store {
 
   setCurrentProject(project: IProject) {
     this.currentProject = project;
+  }
+
+  setCurrentProjectById(projectId: number) {
+    this.projects.forEach((project) => {
+      if (project.id === projectId) {
+        this.setCurrentProject(project);
+      }
+    });
   }
 
   setFilteredProjects(projects: IProject[]) {
@@ -176,6 +184,7 @@ export default class Store {
         nextId
       });
       await this.getUserProjects();
+      this.setCurrentProjectById(projectId);
       console.log(response);
     } catch (e) {}
   }
@@ -219,7 +228,7 @@ export default class Store {
     }
   }
 
-  async postComment(text: string, parentId: string | null) {
+  async postComment(text: string, parentId: number | null) {
     try {
       const userId = Number(this.user.id);
       const bugId = Number(this.bug.id);
@@ -237,7 +246,7 @@ export default class Store {
     }
   }
 
-  async updateComment(text: string, commentId: string) {
+  async updateComment(text: string, commentId: number) {
     try {
       const response = await BugService.updateComment({
         text,

@@ -49,7 +49,6 @@ const StagesLine = ({ project }: { project: IProject }) => {
           : null
     };
 
-    console.log(newStage);
     store.createStage(newStage);
   };
 

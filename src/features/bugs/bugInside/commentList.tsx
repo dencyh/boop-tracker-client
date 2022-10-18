@@ -4,7 +4,7 @@ import Comment from "./comment";
 
 type CommentListPorps = {
   comments: IComment[];
-  getReplies: (parentId: string) => IComment[];
+  getReplies: (parentId: number) => IComment[];
 };
 const CommentList = ({ comments, getReplies }: CommentListPorps) => {
   return (

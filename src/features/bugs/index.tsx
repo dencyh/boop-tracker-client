@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Button from "../../components/controls/button";
 import BugView from "./projectList";
-import ModalSelection from "./modal/modalSelection";
+import ModalSelection from "./newModal/modalSelection";
 
 const Bugs = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -40,6 +40,9 @@ const Bugs = () => {
           className={"h-full w-full" + (modalOpen ? " blur" : "")}
         >
           <div className="m-8 mx-12">
+            <h1 className="mb-4 border-b-2 pb-6 text-2xl font-bold text-gray-600">
+              Bugs
+            </h1>
             <BugView />
             <div className="absolute right-12 top-8">
               <Button name="New" onClick={handleModalOpen} />

@@ -7,7 +7,7 @@ import ProjectItem from "./projectItem";
 import HideArrowButton from "./hideButton";
 import { IProject } from "../../models/IProject";
 import { Link } from "react-router-dom";
-import Search from "../../features/bugs/modal/search";
+import Search from "../../features/bugs/newModal/search";
 
 export interface Filters {
   name: keyof selectedFilter;

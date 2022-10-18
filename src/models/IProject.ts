@@ -1,6 +1,6 @@
 import { IBug } from "./IBug";
 export interface IProject {
-  id: string;
+  id: number;
   title: string;
   description: string;
   createdAt: string;
@@ -12,7 +12,7 @@ export interface IProject {
 }
 
 export interface IStage {
-  id: string;
+  id: number;
   text: string;
   next: IStage;
   createdAt: string;

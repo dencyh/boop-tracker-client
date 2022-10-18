@@ -20,7 +20,7 @@ export interface BugValues {
   status: string;
   priority: string;
   due: Date;
-  projectId: string;
+  projectId: number;
 }
 
 export interface BugModalErrors {
@@ -62,7 +62,7 @@ const BugModal = ({ onClose }: BugModalProps) => {
     status: "open",
     priority: "medium",
     due: dayjs().add(1, "day").toDate(),
-    projectId: ""
+    projectId: store.currentProject.id
   };
 
   const [bugValues, setBugValues] = useState<BugValues>(initialBugValues);
@@ -151,12 +151,7 @@ const BugModal = ({ onClose }: BugModalProps) => {
   };
 
   useEffect(() => {
-    store.projects.forEach((project) => {
-      if (project.id == bugValues.projectId) {
-        store.setCurrentProject(project);
-        onClose();
-      }
-    });
+    store.setCurrentProjectById(bugValues.projectId);
   }, [store.projects]);
 
   return (

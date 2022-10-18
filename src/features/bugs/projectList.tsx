@@ -143,9 +143,6 @@ const ProjectList = () => {
 
   return (
     <div>
-      <h1 className="mb-4 border-b-2 pb-6 text-2xl font-bold text-gray-600">
-        Bugs
-      </h1>
       <div className="flex gap-8 border-b-2 pb-6">
         {Object.keys(bugStats).map((stat) => (
           <BugNumbers key={stat} {...bugStats[stat]} />
@@ -153,7 +150,6 @@ const ProjectList = () => {
       </div>
       <Table>
         <TableHeaders {...{ columns: headerColumns }} />
-        {/* <TableBody {...{ columns, data: data }} /> */}
       </Table>
       {visibleProjects.map((project) => (
         <div key={project.id} className="pb-2">

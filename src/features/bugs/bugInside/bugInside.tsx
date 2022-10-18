@@ -3,13 +3,9 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../..";
 import CreationInfo from "./creationInfo";
-import SimpleDropdown from "../modal/simpleDropdown";
-import { BugValues, priorityData, statusData } from "../modal/bugModal";
-import { ProjectValues } from "../modal/projectModal";
+import SimpleDropdown from "../newModal/simpleDropdown";
+import { BugValues, priorityData, statusData } from "../newModal/bugModal";
 import Multiselect from "multiselect-react-dropdown";
-import Comment from "./comment";
-import Textarea from "../../../components/inputs/textarea";
-import Button from "../../../components/controls/button";
 import CommentList from "./commentList";
 import { IComment } from "../../../models/IBug";
 import CommentForm from "./commentForm";
@@ -25,7 +21,7 @@ const BugInside = () => {
     status: "open",
     priority: "medium",
     due: new Date(),
-    projectId: ""
+    projectId: 0
   };
 
   const [bugValues, setBugValues] = useState<BugValues>(initialBugValues);
@@ -51,7 +47,7 @@ const BugInside = () => {
     }
   }, [store.bug?.comments]);
 
-  const getReplies = (parentId: string): IComment[] => {
+  const getReplies = (parentId: number): IComment[] => {
     return commentByParentId[parentId];
   };
 
@@ -72,7 +68,7 @@ const BugInside = () => {
       ? setAllUsers(
           store.users.map((item) => ({
             name: item.firstName + " " + item.lastName,
-            id: item.id
+            id: item.id.toString()
           }))
         )
       : "";
@@ -80,7 +76,7 @@ const BugInside = () => {
       ? setAssignedTo(
           store.bug.assignedTo.map((item) => ({
             name: item.firstName + " " + item.lastName,
-            id: item.id
+            id: item.id.toString()
           }))
         )
       : "";
