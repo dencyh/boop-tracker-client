@@ -4,10 +4,12 @@ import { IBaseInput } from "./interfaces/IBaseInput";
 const Input = ({ label, errorMessage, ...rest }: IBaseInput) => {
   const [focusLoss, setFocusLoss] = useState(false);
   return (
-    <label className="mb-1 block text-sm font-medium text-gray-900 dark:text-gray-400">
-      {label}
+    <label
+      className={`mb-1 box-border text-sm font-medium text-gray-900 dark:text-gray-400`}
+    >
+      <span>{label}</span>
       <input
-        className="peer mt-1 block w-full rounded-lg border-2 border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 placeholder:text-slate-500 focus:border-blue-500  focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+        className="peer mt-1 block w-96 rounded-lg border-2 border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 placeholder:text-slate-500 focus:border-blue-500  focus:ring-blue-500 disabled:cursor-not-allowed dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
         {...rest}
         onBlur={() => {
           setFocusLoss(true);

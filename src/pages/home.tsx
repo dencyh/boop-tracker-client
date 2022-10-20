@@ -3,7 +3,7 @@ import Bugs from "../features/bugs";
 import ProjectsList from "../components/projectsSidebar/projectsList";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Settings from "../features/settings/settings";
+import Settings from "../features/settings";
 import Milestones from "../features/milestones";
 import NotFound from "./notFound";
 import BugInside from "../features/bugs/bugInside/bugInside";

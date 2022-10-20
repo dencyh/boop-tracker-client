@@ -72,6 +72,8 @@ export default class Store {
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
+      console.log(this.user);
+      console.log(response);
       return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
@@ -97,6 +99,7 @@ export default class Store {
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
+      console.log(response);
       return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
@@ -111,8 +114,39 @@ export default class Store {
       localStorage.removeItem("token");
       this.setAuth(false);
       this.setUser({} as IUser);
+      console.log(response);
     } catch (e: unknown) {
       console.error(e);
+    }
+  }
+
+  async updateUser({
+    firstName,
+    lastName,
+    email,
+    password
+  }: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+  }) {
+    try {
+      const response = await UserService.updateUser({
+        id: this.user.id,
+        firstName,
+        lastName,
+        email,
+        password
+      });
+      localStorage.setItem("token", response.data.tokens.accessToken);
+      this.setUser(response.data.updatedUser);
+      console.log(response);
+      return response;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      console.error(e);
+      return e.response;
     }
   }
 
@@ -163,6 +197,7 @@ export default class Store {
         deadline,
         closed
       });
+      console.log(response);
     } catch (e: unknown) {
       console.error(e);
     }
@@ -191,7 +226,10 @@ export default class Store {
         this.setCurrentProject({} as IProject);
       }
       console.log(response);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
   }
 
   async updateStage({
@@ -217,7 +255,10 @@ export default class Store {
       }
       console.log(response);
       await this.getUserProjects();
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
   }
 
   async getBug(id: number) {
@@ -252,7 +293,7 @@ export default class Store {
         createdBy,
         project_id
       });
-      // console.log(response);
+      console.log(response);
       return response;
     } catch (e) {
       console.error(e);
@@ -270,7 +311,7 @@ export default class Store {
         parentId
       });
       this.getBug(bugId);
-      // console.log(response);
+      console.log(response);
       return response;
     } catch (e) {
       console.error(e);
@@ -285,7 +326,7 @@ export default class Store {
         userId: this.user.id
       });
       this.getBug(Number(this.bug.id));
-      // console.log(response);
+      console.log(response);
     } catch (e) {
       console.error(e);
     }
@@ -301,7 +342,7 @@ export default class Store {
         field,
         newValue
       );
-      // console.log(response);
+      console.log(response);
     } catch (e) {
       console.error(e);
     }
@@ -310,7 +351,7 @@ export default class Store {
   async getViewers() {
     try {
       const response = await UserService.getUsers();
-      const users = response.data.filter((user) => user.id !== this.user.id);
+      const users = response.data.filter((user) => user?.id !== this.user?.id);
       this.setUsers(users);
     } catch (e: unknown) {
       console.error(e);

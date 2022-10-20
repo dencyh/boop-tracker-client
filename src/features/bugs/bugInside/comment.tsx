@@ -38,9 +38,9 @@ const Comment = ({ comment, getReplies }: CommentPorps) => {
   return (
     <>
       <div className="mb-2 flex items-center gap-2">
-        <span>
+        <div className="h-10 w-10">
           <InitialsAvatar {...{ firstName, lastName }} />
-        </span>
+        </div>
         <span className="font-semibold">
           {comment.user.firstName} {comment.user.lastName}
         </span>

@@ -1,29 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useContext, useEffect, useState } from "react";
 import { IProject, IStage } from "../../../models/IProject";
 import Step from "./step";
-import { v4 } from "uuid";
 import { Context } from "../../..";
-import _ from "lodash";
 import { observer } from "mobx-react-lite";
-
-class LinkedListNode {
-  value: any;
-  next: any;
-  constructor(value, next = null) {
-    this.value = value;
-    this.next = next;
-  }
-
-  toString() {
-    return `${this.value}`;
-  }
-}
 
 const StagesLine = ({ project }: { project: IProject }) => {
   const { store } = useContext(Context);
   const [localStages, setLocalStages] = useState(project.stages);
-  console.log(localStages);
 
   useEffect(() => {
     const nextIds = {};
@@ -36,13 +19,11 @@ const StagesLine = ({ project }: { project: IProject }) => {
       list.push(item);
       item = nextIds[item.id];
     }
-    console.log("re render");
     setLocalStages(list.reverse());
   }, [project.stages]);
 
   const handleAddStage = (stageNumber: number, order: "next" | "prev") => {
     const nextStageIndex = order === "next" ? stageNumber : stageNumber - 1;
-    console.log(nextStageIndex);
     const newStage = {
       text: "New Stage",
       projectId: project.id,

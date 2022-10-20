@@ -68,7 +68,8 @@ const signUp = ({ onSignOption }: SignInProps) => {
       errorMessage:
         "Must be minimum six characters, at least one letter and one number",
       label: "Password",
-      pattern: "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$"
+      pattern: "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$",
+      required: true
     },
     {
       name: "confirmPassword",

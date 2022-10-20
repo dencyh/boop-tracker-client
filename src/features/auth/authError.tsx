@@ -17,13 +17,14 @@ const serverErrors = {
 
 type AuthErrorProps = {
   status: keyof typeof serverErrors;
+  message?: string;
 };
 
-const AuthError = ({ status }: AuthErrorProps) => {
+const AuthError = ({ status, message }: AuthErrorProps) => {
   return (
     <div className="fixed bottom-0 left-0 w-full bg-red-500 p-2 text-center text-lg font-medium text-white">
-      <p className="mb-1">{serverErrors[status].top}</p>
-      <p>{serverErrors[status].bottom}</p>
+      <p className="mb-1">{message ? message : serverErrors[status].top}</p>
+      {message ? "" : <p>{serverErrors[status].bottom}</p>}
     </div>
   );
 };

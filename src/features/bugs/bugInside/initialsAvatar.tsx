@@ -34,18 +34,25 @@ const HSLtoString = (hsl: HSL) => {
 type InitialsAvatarProps = {
   firstName: string;
   lastName: string;
+  fontSize?: string;
+  width?: string;
+  height?: string;
 };
 
-const InitialsAvatar = ({ firstName, lastName }: InitialsAvatarProps) => {
+const InitialsAvatar = ({
+  firstName,
+  lastName,
+  fontSize
+}: InitialsAvatarProps) => {
   const bgColor = HSLtoString(generateHSL(firstName));
   return (
     <div
       style={{
         backgroundColor: bgColor
       }}
-      className="flex h-8 w-8 items-center justify-center rounded-full p-2 text-white"
+      className="flex h-full w-full items-center justify-center rounded-full p-2 text-white"
     >
-      <div>
+      <div className={fontSize}>
         {firstName[0]}
         {lastName[0]}
       </div>
