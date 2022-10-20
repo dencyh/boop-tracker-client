@@ -18,7 +18,7 @@ export class UserService {
     firstName: string;
     lastName: string;
     email: string;
-    password: string;
+    password?: string;
   }) {
     return api.patch(`/users/${id}`, { firstName, lastName, email, password });
   }

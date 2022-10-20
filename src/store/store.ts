@@ -129,7 +129,7 @@ export default class Store {
     firstName: string;
     lastName: string;
     email: string;
-    password: string;
+    password?: string;
   }) {
     try {
       const response = await UserService.updateUser({
