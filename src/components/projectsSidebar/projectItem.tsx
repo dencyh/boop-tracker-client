@@ -7,6 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
+import { useNavigate } from "react-router-dom";
 
 type ProjectItemProps = {
   project: IProject;
@@ -14,8 +15,14 @@ type ProjectItemProps = {
 
 const ProjectItem = ({ project }: ProjectItemProps) => {
   const { store } = useContext(Context);
+  const navigate = useNavigate();
 
   const color = project.closed ? "text-violet-600" : "text-green-600";
+
+  const handleEditProject = () => {
+    navigate(`/projects/${project.id}`, { replace: true });
+  };
+
   return (
     <li
       onClick={() => {
@@ -24,7 +31,10 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
       className="relative"
     >
       {project.id === store.currentProject.id && (
-        <button className="absolute right-6 top-1/2 h-8 w-8 -translate-y-1/2 rounded-lg ring-1 ring-inset ring-gray-500 hover:bg-gray-600 hover:text-white">
+        <button
+          className="absolute right-6 top-1/2 z-20 h-8 w-8 -translate-y-1/2 rounded-lg ring-1 ring-inset ring-gray-500 hover:bg-gray-600 hover:text-white"
+          onClick={() => handleEditProject()}
+        >
           <FontAwesomeIcon icon={faPenToSquare} />
         </button>
       )}

@@ -19,4 +19,5 @@ export interface IStage {
   updatedAt: string;
   from: Date;
   till: Date;
+  project: IProject;
 }

@@ -232,6 +232,22 @@ export default class Store {
     }
   }
 
+  async deleteStage(stage: IStage) {
+    try {
+      const response = await ProjectService.deleteStage(stage);
+      await this.getUserProjects();
+      if (this.currentProject.id) {
+        this.setCurrentProjectById(stage.project.id);
+      } else {
+        this.setCurrentProject({} as IProject);
+      }
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
+  }
+
   async updateStage({
     text,
     stageId,

@@ -5,6 +5,7 @@ import Circle from "./circle";
 import StepButton from "./stepButton";
 import StepInput from "./stepInput";
 import { Context } from "../../..";
+import DeleteButton from "../../../components/controls/DeleteButton";
 
 const Step = ({
   stage,
@@ -12,8 +13,7 @@ const Step = ({
   last = false,
   stageNumber,
   defaultText,
-  handleAddStage,
-  handleEditStage
+  handleAddStage
 }: {
   stage?: IStage;
   first?: boolean;
@@ -21,7 +21,6 @@ const Step = ({
   stageNumber: number;
   defaultText: string;
   handleAddStage: (stageNumber: number, order: "next" | "prev") => void;
-  handleEditStage?: (text: string, stageId: number) => void;
 }) => {
   const { store } = useContext(Context);
   const [selected, setSelected] = useState(false);
@@ -47,10 +46,16 @@ const Step = ({
   const handleInput = (e) => {
     setInputValue(e.target.value);
   };
-  // const handleConfirm = (e) => {
-  //   e.preventDefault();
-  //   setStageName(inputValue);
-  // };
+
+  const handleEditStage = (text: string) => {
+    if (!stage) return;
+    store.updateStage({ text, stageId: stage.id, projectId: stage.project.id });
+  };
+
+  const handleDeleteStage = () => {
+    if (!stage) return;
+    store.deleteStage(stage);
+  };
 
   return (
     <div
@@ -81,21 +86,18 @@ const Step = ({
         />
 
         <div
-          className={`absolute left-12 flex w-32 -translate-x-2 items-center ${
+          className={`absolute left-12 flex w-44 -translate-x-2 items-center ${
             selected ? "visible" : "invisible"
           }`}
         >
           {!first && !last && (
             <>
               <StepInput value={inputValue} onChange={handleInput} />
-              <div className="ml-1">
+              <div className="ml-1 flex">
                 <CheckButton
-                  onClick={
-                    handleEditStage && !first && !last && stage?.id
-                      ? () => handleEditStage(inputValue.toString(), stage.id)
-                      : undefined
-                  }
+                  onClick={() => handleEditStage(inputValue.toString())}
                 />
+                <DeleteButton onClick={() => handleDeleteStage()} />
               </div>
             </>
           )}

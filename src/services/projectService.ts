@@ -1,3 +1,4 @@
+import { IStage } from "./../models/IProject";
 import api from "../http";
 import { AxiosResponse } from "axios";
 import { IProject } from "../models/IProject";
@@ -63,5 +64,9 @@ export class ProjectService {
       projectId,
       userId
     });
+  }
+
+  static async deleteStage(stage: IStage) {
+    return api.delete(`/projects/stages/${stage.id}`);
   }
 }

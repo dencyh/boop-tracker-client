@@ -36,10 +36,6 @@ const StagesLine = ({ project }: { project: IProject }) => {
     store.createStage(newStage);
   };
 
-  const handleEditStage = (text: string, stageId: number) => {
-    store.updateStage({ text, stageId, projectId: project.id });
-  };
-
   return (
     <div className="relative flex h-full min-h-fit w-1 flex-col items-center justify-between rounded-xl bg-indigo-600">
       <Step
@@ -55,7 +51,6 @@ const StagesLine = ({ project }: { project: IProject }) => {
           defaultText="Enter stage name"
           stage={stage}
           handleAddStage={handleAddStage}
-          handleEditStage={handleEditStage}
         />
       ))}
       <Step
