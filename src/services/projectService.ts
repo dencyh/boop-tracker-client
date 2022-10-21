@@ -17,10 +17,11 @@ export class ProjectService {
   }: {
     title: string;
     description: string;
-    viewers: string[];
+    viewers: number[];
     deadline: Date;
     closed: boolean;
   }): Promise<AxiosResponse<IProject[]>> {
+    console.log(viewers);
     return api.post("/projects", {
       title,
       description,

@@ -201,7 +201,7 @@ export default class Store {
   }: {
     title: string;
     description: string;
-    viewers: string[];
+    viewers: number[];
     deadline: Date;
     closed: boolean;
   }) {

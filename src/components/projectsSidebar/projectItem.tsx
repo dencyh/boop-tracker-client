@@ -46,7 +46,7 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
         <div className={color}>
           <FontAwesomeIcon icon={faCircleDot} />
         </div>
-        <div>{project.title}</div>
+        <div className="w-2/3">{project.title}</div>
       </button>
     </li>
   );

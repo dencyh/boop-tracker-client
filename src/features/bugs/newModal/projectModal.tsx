@@ -64,9 +64,8 @@ const ProjectModal = ({ onClose }: ProjetModalProps) => {
   const handleSumbit = async (e: React.FormEvent) => {
     e.preventDefault();
     const { title, description, viewers, deadline, closed } = projectValues;
-    const viewerIds = Object.keys(viewers).filter(
-      (key) => viewers[key] === true
-    );
+    console.log(viewers);
+    const viewerIds = viewers.map((key) => Number(key));
     await store.createProject({
       title,
       description,
