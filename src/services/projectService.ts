@@ -31,6 +31,18 @@ export class ProjectService {
     });
   }
 
+  static async updateProject({
+    projectId,
+    option,
+    newValue
+  }: {
+    projectId: number;
+    option: keyof IProject;
+    newValue: string;
+  }) {
+    return api.patch(`/projects/${projectId}`, { option, newValue });
+  }
+
   static async getProjectById(id: number) {
     return api.get<IProject>(`/projects/${id}`);
   }

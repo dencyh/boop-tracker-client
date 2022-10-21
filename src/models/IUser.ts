@@ -1,3 +1,4 @@
+import { IProject } from "./IProject";
 export interface IUser {
   id: number;
   firstName: string;
@@ -8,4 +9,5 @@ export interface IUser {
   confirmationLink: string;
   createdAt: string;
   updatedAt: string;
+  trackingProjects: IProject[];
 }

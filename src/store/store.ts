@@ -219,6 +219,30 @@ export default class Store {
     }
   }
 
+  async updateProject({
+    projectId,
+    option,
+    newValue
+  }: {
+    projectId: number;
+    option: keyof IProject;
+    newValue: string;
+  }) {
+    try {
+      const response = await ProjectService.updateProject({
+        projectId,
+        option,
+        newValue
+      });
+      await this.getUserProjects();
+      await this.getProjectById(Number(projectId));
+      console.log(response);
+    } catch (e) {
+      console.error(e);
+      return e;
+    }
+  }
+
   async createStage({
     text,
     projectId,

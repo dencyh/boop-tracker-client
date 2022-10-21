@@ -5,11 +5,6 @@ import { Context } from "../..";
 import ProjectView from "./projectView";
 
 const Project = () => {
-  //   const { id } = useParams();
-  //   const { store } = useContext(Context);
-  //   useEffect(() => {
-  //     store.getProjectById(Number(id));
-  //   }, [id]);
   return (
     <>
       <ProjectView />

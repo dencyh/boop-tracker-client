@@ -9,8 +9,13 @@ import { IComment } from "../../models/IBug";
 import { BugValues } from "../bugs/newModal/bugModal";
 import EditableField from "./editableField";
 import Loader from "../../components/misc/loader";
+import EditForm from "./editForm";
 
 const ProjectView = () => {
+  const [editing, setEditing] = useState({
+    title: false,
+    description: false
+  });
   const { store } = useContext(Context);
 
   const { id } = useParams();
@@ -40,6 +45,8 @@ const ProjectView = () => {
     navigate("/bugs", { replace: true });
   };
 
+  // const accessToProject = store.user.trackingProjects.find()
+
   return (
     <div className="h-screen w-full overflow-auto p-8">
       {!store.project?.createdBy?.firstName ? (
@@ -57,14 +64,15 @@ const ProjectView = () => {
                   updatedAt: store.project.updatedAt
                 }}
               />
-              <h2 className="mt-2 py-2 text-3xl font-semibold">
-                <EditableField text={store.project.title} />
-              </h2>
-              <p className="py-2">
+              <div className="mt-2 py-2 text-3xl font-semibold">
+                <EditableField text={store.project.title} valueName={"title"} />
+              </div>
+              <div className="py-2">
                 <EditableField
                   text={`Description: ${store.project.description}`}
+                  valueName={"description"}
                 />
-              </p>
+              </div>
             </div>
             <div className="flex w-60 flex-col items-end gap-2">
               <div className="w-80">
