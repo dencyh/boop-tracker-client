@@ -30,6 +30,10 @@ export class ProjectService {
     });
   }
 
+  static async getProjectById(id: number) {
+    return api.get<IProject>(`/projects/${id}`);
+  }
+
   static async createStage({
     text,
     projectId,

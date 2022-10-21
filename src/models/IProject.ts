@@ -1,14 +1,16 @@
+import { IUser } from "./IUser";
 import { IBug } from "./IBug";
 export interface IProject {
   id: number;
   title: string;
   description: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   closed: boolean;
   deadline: Date;
   stages: IStage[];
   bugs: IBug[];
+  createdBy: IUser;
 }
 
 export interface IStage {

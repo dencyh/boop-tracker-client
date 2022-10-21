@@ -7,6 +7,7 @@ import Settings from "../features/settings";
 import Milestones from "../features/milestones";
 import NotFound from "./notFound";
 import BugInside from "../features/bugs/bugInside/bugInside";
+import Project from "../features/projects";
 
 export function Home() {
   return (
@@ -19,6 +20,7 @@ export function Home() {
         <Route path="/bugs" element={<Bugs />} />
         <Route path="/bugs/:id" element={<BugInside />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/projects/:id" element={<Project />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

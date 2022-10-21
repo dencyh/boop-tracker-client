@@ -6,7 +6,7 @@ import React from "react";
 type CreationInfoProps = {
   firstName: string;
   lastName: string;
-  projectTitle: string;
+  projectTitle?: string;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -25,8 +25,15 @@ const CreationInfo = ({
         {dayjs(updatedAt).fromNow()}
       </p>
       <p>
-        <FontAwesomeIcon icon={faLink} />
-        <span className="ml-2">Project - {projectTitle}</span>
+        {projectTitle ? (
+          <>
+            <FontAwesomeIcon icon={faLink} />
+
+            <span className="ml-2">Project - {projectTitle}</span>
+          </>
+        ) : (
+          ""
+        )}
       </p>
     </div>
   );

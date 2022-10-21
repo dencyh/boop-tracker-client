@@ -14,6 +14,7 @@ import { API_URL } from "../http";
 export default class Store {
   user = {} as IUser;
   projects = [] as IProject[];
+  project = {} as IProject;
   filteredProjects = [] as IProject[];
   currentProject = {} as IProject;
   bug = {} as IBug;
@@ -39,6 +40,10 @@ export default class Store {
 
   setProjects(projects: IProject[]) {
     this.projects = projects;
+  }
+
+  setProject(project: IProject) {
+    this.project = project;
   }
 
   setCurrentProject(project: IProject) {
@@ -173,6 +178,17 @@ export default class Store {
       this.setCurrentProject({ ...{} } as IProject);
     } catch (e: unknown) {
       console.error(e);
+    }
+  }
+
+  async getProjectById(id: number) {
+    try {
+      const response = await ProjectService.getProjectById(id);
+      console.log(response);
+      this.setProject(response.data);
+    } catch (e) {
+      console.error(e);
+      return e;
     }
   }
 
