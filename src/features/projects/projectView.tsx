@@ -38,7 +38,7 @@ const ProjectView = () => {
     navigate("/bugs", { replace: true });
   };
 
-  const handleDeleModal = () => {
+  const handleDeleteModal = () => {
     setModalOpen(true);
   };
 
@@ -103,11 +103,13 @@ const ProjectView = () => {
                 </div>
               </div>
               <div className="flex w-60 flex-col items-end gap-2">
-                <Button
-                  name="Delete"
-                  color="bg-red-400 hover:bg-red-500"
-                  onClick={() => handleDeleModal()}
-                />
+                {store.project?.createdBy?.id === store.user.id && (
+                  <Button
+                    name="Delete"
+                    color="bg-red-400 hover:bg-red-500"
+                    onClick={() => handleDeleteModal()}
+                  />
+                )}
                 {/* <div className="w-80">
                 <Multiselect
                   options={allUsers} // Options to display in the dropdown

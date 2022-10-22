@@ -13,10 +13,6 @@ type EditFormProps = {
 };
 const EditForm = ({ setEditing, valueName, entityName }: EditFormProps) => {
   const { store } = useContext(Context);
-  const editingEntity =
-    entityName === "project"
-      ? store.project.createdBy.id === store.user.id
-      : store.bug.createdBy.id === store.user.id;
 
   const [value, setValue] = useState(
     entityName === "project" ? store.project[valueName] : store.bug[valueName]

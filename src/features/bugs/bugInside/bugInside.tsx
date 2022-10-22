@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../..";
 import CreationInfo from "./creationInfo";
@@ -12,6 +12,8 @@ import CommentForm from "./commentForm";
 import CloseButton from "../../../components/controls/closeButton";
 import EditableField from "../../projects/editableField";
 import { IProject } from "../../../models/IProject";
+import Button from "../../../components/controls/button";
+import DeleteModal from "../../../components/deleteModal";
 
 const BugInside = () => {
   const { store } = useContext(Context);
@@ -105,10 +107,44 @@ const BugInside = () => {
     navigate("/bugs", { replace: true });
   };
 
+  const modalBgRef = useRef<HTMLDivElement>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleModal = (e: any) => {
+      if (modalBgRef.current?.contains(e.target)) {
+        setModalOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleModal);
+    return () => {
+      document.removeEventListener("mousedown", handleModal);
+    };
+  });
+
+  const handleDeleteModal = () => {
+    setModalOpen(true);
+  };
+
+  const deleteAction = () => {
+    setModalOpen(false);
+    store.deleteBug(store.bug.id);
+    navigate("/bugs", { replace: true });
+  };
+
+  const onChange = (e) => {
+    // console.log(123);
+    console.log(e);
+  };
+
   return (
-    <div className="h-screen w-full overflow-auto p-8">
+    <div className="relative h-screen w-full overflow-auto p-8">
       {store.bug.id && (
-        <div className="flex flex-col gap-4">
+        <div
+          className={`flex flex-col gap-4 ${modalOpen ? "blur" : ""}`}
+          ref={modalBgRef}
+        >
           <CloseButton onClick={onClose} />
           <div className="flex justify-between rounded-md border-b-2 p-4">
             <div>
@@ -136,13 +172,22 @@ const BugInside = () => {
                 />
               </div>
             </div>
-            <div className="flex w-60 flex-col items-end gap-2">
+            <div className="relative flex w-60 flex-col items-end gap-2">
+              <div className="absolute -top-12">
+                {store.bug?.createdBy?.id === store.user.id && (
+                  <Button
+                    name="Delete"
+                    color="bg-red-400 hover:bg-red-500"
+                    onClick={() => handleDeleteModal()}
+                  />
+                )}
+              </div>
               <div className="w-80">
                 <Multiselect
                   options={allUsers} // Options to display in the dropdown
                   selectedValues={assignedTo} // Preselected value to persist in dropdown
-                  // onSelect={this.onSelect} // Function will trigger on select event
-                  // onRemove={this.onRemove} // Function will trigger on remove event
+                  onSelect={(e) => onChange(e)} // Function will trigger on select event
+                  onRemove={(e) => onChange(e)} // Function will trigger on remove event
                   displayValue="name" // Property name to display in the dropdown options
                 />
               </div>
@@ -177,6 +222,11 @@ const BugInside = () => {
           </div>
 
           <CommentForm handleComment={handleComment} />
+        </div>
+      )}
+      {modalOpen && (
+        <div className="absolute top-1/2 left-1/2 z-40 m-0 w-1/2 -translate-y-1/2 -translate-x-1/2">
+          <DeleteModal deleteAction={deleteAction} entity={store.bug} />
         </div>
       )}
     </div>

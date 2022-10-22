@@ -418,6 +418,16 @@ export default class Store {
     }
   }
 
+  async deleteBug(id: number) {
+    try {
+      const response = await BugService.deleteBug(id);
+      await this.getUserProjects();
+      console.log(response);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   async getViewers() {
     try {
       const response = await UserService.getUsers();

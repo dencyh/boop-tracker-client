@@ -40,6 +40,10 @@ export class BugService {
     return api.patch(`bugs/${id}`, { field, newValue });
   }
 
+  static async deleteBug(id: number) {
+    return api.delete(`/bugs/${id}`);
+  }
+
   static async postComment({ text, userId, bugId, parentId }: ICommentClient) {
     return api.post("/comments", {
       text,
