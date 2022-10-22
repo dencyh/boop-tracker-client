@@ -243,6 +243,16 @@ export default class Store {
     }
   }
 
+  async deleteProject(id: number) {
+    try {
+      const response = await ProjectService.deleteProject(id);
+      await this.getUserProjects();
+      console.log(response);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   async createStage({
     text,
     projectId,

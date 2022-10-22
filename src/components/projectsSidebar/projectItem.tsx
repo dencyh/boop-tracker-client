@@ -17,13 +17,12 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
   const { store } = useContext(Context);
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
 
   const color = project.closed ? "text-violet-600" : "text-green-600";
 
   const handleEditProject = (e) => {
     e.stopPropagation();
-    navigate(`/projects/${project.id}`, { replace: true });
+    navigate(`/projects/${project.id}`);
   };
 
   const handleSetProject = () => {

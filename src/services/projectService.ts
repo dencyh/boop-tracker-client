@@ -48,6 +48,10 @@ export class ProjectService {
     return api.get<IProject>(`/projects/${id}`);
   }
 
+  static async deleteProject(id: number) {
+    return api.delete(`/projects/${id}`);
+  }
+
   static async createStage({
     text,
     projectId,

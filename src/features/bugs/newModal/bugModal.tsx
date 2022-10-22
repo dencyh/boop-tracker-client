@@ -181,7 +181,7 @@ const BugModal = ({ onClose }: BugModalProps) => {
           </div>
         </div>
         <div className="flex flex-col items-end gap-4">
-          <div className="mb-2">
+          <div>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <MuiPicker
                 label="Choose due date"

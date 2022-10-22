@@ -78,7 +78,8 @@ const CheckboxDropdown = ({
     setDisplayUsers(
       menuItems.filter(
         (user) =>
-          user.lastName.includes(query) || user.firstName.includes(query)
+          user.lastName.toLowerCase().includes(query.toLowerCase()) ||
+          user.firstName.toLowerCase().includes(query.toLowerCase())
       )
     );
   }, [query]);
@@ -87,7 +88,7 @@ const CheckboxDropdown = ({
   };
 
   return (
-    <div className="relative mb-2" ref={buttonRef}>
+    <div className="relative" ref={buttonRef}>
       <div className="w-fit">
         <DropdownButton
           name={label}
