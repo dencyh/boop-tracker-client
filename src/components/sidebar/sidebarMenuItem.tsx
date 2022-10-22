@@ -14,7 +14,10 @@ const SidebarMenuItem = ({ item }: SidebarMenuItemProps) => {
     <NavLink
       to={item.link}
       className={`flex items-center rounded-l-lg py-2 pl-2 text-base font-normal text-gray-200 hover:bg-primary-500 dark:text-white dark:hover:bg-gray-700 ${
-        linkName === item.link ? activeClass : ""
+        linkName.startsWith(item.link) ||
+        (linkName.startsWith("projects") && item.link === "bugs")
+          ? activeClass
+          : ""
       }`}
     >
       <span className="text-slate-200">

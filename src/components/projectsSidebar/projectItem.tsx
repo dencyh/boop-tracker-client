@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type ProjectItemProps = {
   project: IProject;
@@ -16,25 +16,32 @@ type ProjectItemProps = {
 const ProjectItem = ({ project }: ProjectItemProps) => {
   const { store } = useContext(Context);
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location);
 
   const color = project.closed ? "text-violet-600" : "text-green-600";
 
-  const handleEditProject = () => {
+  const handleEditProject = (e) => {
+    e.stopPropagation();
     navigate(`/projects/${project.id}`, { replace: true });
   };
 
+  const handleSetProject = () => {
+    store.setCurrentProject(project);
+    if (
+      location.pathname.startsWith("/bugs") ||
+      location.pathname.startsWith("/projects")
+    )
+      navigate("/bugs");
+  };
+
   return (
-    <li
-      onClick={() => {
-        store.setCurrentProject(project);
-      }}
-      className="relative"
-    >
+    <li onClick={() => handleSetProject()} className="relative">
       {project.id === store.currentProject.id &&
         project.createdBy.id === store.user.id && (
           <button
             className="absolute right-6 top-1/2 z-20 h-8 w-8 -translate-y-1/2 rounded-lg ring-1 ring-inset ring-gray-500 hover:bg-gray-600 hover:text-white"
-            onClick={() => handleEditProject()}
+            onClick={(e) => handleEditProject(e)}
           >
             <FontAwesomeIcon icon={faPenToSquare} />
           </button>

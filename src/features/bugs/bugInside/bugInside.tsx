@@ -7,9 +7,11 @@ import SimpleDropdown from "../newModal/simpleDropdown";
 import { BugValues, priorityData, statusData } from "../newModal/bugModal";
 import Multiselect from "multiselect-react-dropdown";
 import CommentList from "./commentList";
-import { IComment } from "../../../models/IBug";
+import { IBug, IComment } from "../../../models/IBug";
 import CommentForm from "./commentForm";
 import CloseButton from "../../../components/controls/closeButton";
+import EditableField from "../../projects/editableField";
+import { IProject } from "../../../models/IProject";
 
 const BugInside = () => {
   const { store } = useContext(Context);
@@ -83,7 +85,7 @@ const BugInside = () => {
   }, [store.bug]);
 
   const handleValues = (
-    option: string | string[] | Date | undefined,
+    option: keyof IBug | keyof IProject,
     value: keyof BugValues
   ) => {
     setBugValues({
@@ -91,7 +93,7 @@ const BugInside = () => {
       [value]: option
     });
 
-    store.updateBug(value, option);
+    store.updateBug({ field: value, newValue: option });
   };
   const handleComment = (e, value, parentId) => {
     e.preventDefault();
@@ -120,9 +122,19 @@ const BugInside = () => {
                 }}
               />
               <h2 className="mt-2 py-2 text-3xl font-semibold">
-                {store.bug.title}
+                <EditableField
+                  text={store.bug.title}
+                  valueName="title"
+                  entityName="bug"
+                />
               </h2>
-              <p className="py-2">{store.bug.description}</p>
+              <div className="py-2">
+                <EditableField
+                  text={store.bug.description}
+                  valueName="description"
+                  entityName="bug"
+                />
+              </div>
             </div>
             <div className="flex w-60 flex-col items-end gap-2">
               <div className="w-80">

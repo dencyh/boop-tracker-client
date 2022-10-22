@@ -3,15 +3,24 @@ import React, { useContext, useState } from "react";
 import { Context } from "../..";
 import Button from "../../components/controls/button";
 import Textarea from "../../components/inputs/textarea";
+import { IBug } from "../../models/IBug";
 import { IProject } from "../../models/IProject";
 
 type EditFormProps = {
   setEditing: (boolean) => void;
-  valueName: keyof IProject;
+  valueName: keyof IProject | keyof IBug;
+  entityName: "project" | "bug";
 };
-const EditForm = ({ setEditing, valueName }: EditFormProps) => {
+const EditForm = ({ setEditing, valueName, entityName }: EditFormProps) => {
   const { store } = useContext(Context);
-  const [value, setValue] = useState(store.project[valueName]);
+  const editingEntity =
+    entityName === "project"
+      ? store.project.createdBy.id === store.user.id
+      : store.bug.createdBy.id === store.user.id;
+
+  const [value, setValue] = useState(
+    entityName === "project" ? store.project[valueName] : store.bug[valueName]
+  );
 
   const onChange = (e) => {
     setValue(e.currentTarget.value);
@@ -19,11 +28,17 @@ const EditForm = ({ setEditing, valueName }: EditFormProps) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    store.updateProject({
-      projectId: store.project.id,
-      option: valueName,
-      newValue: value.toString()
-    });
+
+    if (entityName === "project") {
+      store.updateProject({
+        projectId: store.project.id,
+        option: valueName,
+        newValue: value.toString()
+      });
+    }
+    if (entityName === "bug") {
+      store.updateBug({ field: valueName, newValue: value.toString() });
+    }
     setEditing(false);
   };
 
@@ -44,7 +59,7 @@ const EditForm = ({ setEditing, valueName }: EditFormProps) => {
       <Button name="OK" type="submit" />
       <Button
         name="Cancel"
-        color="bg-sky-400 hover:bg-sky-500"
+        color="bg-gray-200 text-gray-800 hover:bg-gray-400 hover:text-white"
         onClick={() => setEditing(false)}
       />
     </form>

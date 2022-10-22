@@ -8,20 +8,27 @@ import EditForm from "./editForm";
 
 const EditableField = ({
   text,
-  valueName
+  valueName,
+  entityName
 }: {
   text?: string;
   valueName: keyof IProject;
+  entityName: "project" | "bug";
 }) => {
   const { store } = useContext(Context);
 
   useEffect(() => console.log("text changed"), [text]);
 
+  const editingEntity =
+    entityName === "project"
+      ? store.project.createdBy.id === store.user.id
+      : store.bug.createdBy.id === store.user.id;
+
   const [editing, setEditing] = useState(false);
   return (
     <>
       {text}
-      {store.project.createdBy.id === store.user.id && (
+      {editingEntity && (
         <>
           <button
             className="ml-2 text-gray-600"
@@ -30,7 +37,11 @@ const EditableField = ({
             <FontAwesomeIcon icon={faPenToSquare} />
           </button>
           {editing && (
-            <EditForm setEditing={setEditing} valueName={valueName} />
+            <EditForm
+              setEditing={setEditing}
+              valueName={valueName}
+              entityName={entityName}
+            />
           )}
         </>
       )}

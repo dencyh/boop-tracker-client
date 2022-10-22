@@ -2,6 +2,7 @@ import { IStage } from "./../models/IProject";
 import api from "../http";
 import { AxiosResponse } from "axios";
 import { IProject } from "../models/IProject";
+import { IBug } from "../models/IBug";
 
 export class ProjectService {
   static async getProjects(): Promise<AxiosResponse<IProject[]>> {
@@ -37,7 +38,7 @@ export class ProjectService {
     newValue
   }: {
     projectId: number;
-    option: keyof IProject;
+    option: keyof IProject | keyof IBug;
     newValue: string;
   }) {
     return api.patch(`/projects/${projectId}`, { option, newValue });

@@ -225,7 +225,7 @@ export default class Store {
     newValue
   }: {
     projectId: number;
-    option: keyof IProject;
+    option: keyof IProject | keyof IBug;
     newValue: string;
   }) {
     try {
@@ -336,7 +336,7 @@ export default class Store {
     due,
     assignedTo,
     createdBy,
-    project_id
+    projectId
   }: IBugClient) {
     try {
       const response = await BugService.createBug({
@@ -347,7 +347,7 @@ export default class Store {
         due,
         assignedTo,
         createdBy,
-        project_id
+        projectId
       });
       console.log(response);
       return response;
@@ -388,16 +388,20 @@ export default class Store {
     }
   }
 
-  async updateBug(
-    field: keyof BugValues,
-    newValue: string | string[] | Date | undefined
-  ) {
+  async updateBug({
+    field,
+    newValue
+  }: {
+    field: keyof IBug | keyof IProject;
+    newValue: string | string[] | Date | undefined;
+  }) {
     try {
       const response = await BugService.updateBug(
         Number(this.bug.id),
         field,
         newValue
       );
+      this.getBug(this.bug.id);
       console.log(response);
     } catch (e) {
       console.error(e);

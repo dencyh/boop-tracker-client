@@ -12,10 +12,6 @@ import Loader from "../../components/misc/loader";
 import EditForm from "./editForm";
 
 const ProjectView = () => {
-  const [editing, setEditing] = useState({
-    title: false,
-    description: false
-  });
   const { store } = useContext(Context);
 
   const { id } = useParams();
@@ -35,17 +31,10 @@ const ProjectView = () => {
 
   //     store.updateBug(value, option);
   //   };
-  const handleComment = (e, value, parentId) => {
-    e.preventDefault();
-    store.postComment(value, parentId);
-  };
-
   const navigate = useNavigate();
   const onClose = () => {
     navigate("/bugs", { replace: true });
   };
-
-  // const accessToProject = store.user.trackingProjects.find()
 
   return (
     <div className="h-screen w-full overflow-auto p-8">
@@ -65,25 +54,30 @@ const ProjectView = () => {
                 }}
               />
               <div className="mt-2 py-2 text-3xl font-semibold">
-                <EditableField text={store.project.title} valueName={"title"} />
+                <EditableField
+                  text={store.project.title}
+                  valueName="title"
+                  entityName="project"
+                />
               </div>
               <div className="py-2">
                 <EditableField
                   text={`Description: ${store.project.description}`}
-                  valueName={"description"}
+                  valueName="description"
+                  entityName="project"
                 />
               </div>
             </div>
             <div className="flex w-60 flex-col items-end gap-2">
-              <div className="w-80">
-                {/* <Multiselect
-                options={allUsers} // Options to display in the dropdown
-                selectedValues={assignedTo} // Preselected value to persist in dropdown
-                // onSelect={this.onSelect} // Function will trigger on select event
-                // onRemove={this.onRemove} // Function will trigger on remove event
-                displayValue="name" // Property name to display in the dropdown options
-              /> */}
-              </div>
+              {/* <div className="w-80">
+                <Multiselect
+                  options={allUsers} // Options to display in the dropdown
+                  selectedValues={assignedTo} // Preselected value to persist in dropdown
+                  // onSelect={this.onSelect} // Function will trigger on select event
+                  // onRemove={this.onRemove} // Function will trigger on remove event
+                  displayValue="name" // Property name to display in the dropdown options
+                /> 
+              </div> */}
             </div>
           </div>
         </div>

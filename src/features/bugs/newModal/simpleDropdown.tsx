@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Context } from "../../..";
 import DropdownButton from "../../../components/controls/dropdownButton";
+import { IBug } from "../../../models/IBug";
 import { BugValues } from "./bugModal";
 
 type SimpleDropdownProps = {
@@ -9,7 +10,7 @@ type SimpleDropdownProps = {
   name: keyof BugValues;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   menuItems: any;
-  handleValues: (option: string, value: keyof BugValues) => void;
+  handleValues: (option: keyof IBug, value: keyof BugValues) => void;
 };
 const SimpleDropdown = ({
   label,
@@ -49,8 +50,8 @@ const SimpleDropdown = ({
   }, [label]);
 
   return (
-    <div className="relative mb-2 w-fit">
-      <div className="mb-2 w-fit" ref={buttonRef}>
+    <div className="relative w-fit">
+      <div className="w-fit" ref={buttonRef}>
         <DropdownButton
           name={selectedItem || "Choose a project"}
           onClick={() => setOpen(!open)}
@@ -68,7 +69,7 @@ const SimpleDropdown = ({
             value={menuItems[key]}
             key={key}
             className="block py-2 px-4 text-sm uppercase hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            onClick={() => handleValues(key, name)}
+            onClick={() => handleValues(key as keyof IBug, name)}
           >
             {menuItems[key]}
           </li>

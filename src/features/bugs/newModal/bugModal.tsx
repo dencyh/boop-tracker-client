@@ -142,7 +142,7 @@ const BugModal = ({ onClose }: BugModalProps) => {
       due,
       assignedTo: userIds,
       createdBy: createdBy,
-      project_id: store.currentProject.id
+      projectId: store.currentProject.id
     });
 
     // to refresh store
