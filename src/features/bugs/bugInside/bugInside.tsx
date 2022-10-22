@@ -36,7 +36,26 @@ const BugInside = () => {
   useEffect(() => {
     store.getBug(Number(id));
     store.getViewers();
-  }, []);
+  }, [id]);
+
+  useEffect(() => {
+    store.bug.id
+      ? setAllUsers(
+          store.users.map((item) => ({
+            name: item.firstName + " " + item.lastName,
+            id: item.id.toString()
+          }))
+        )
+      : "";
+    store.bug.id
+      ? setAssignedTo(
+          store.bug.assignedTo.map((item) => ({
+            name: item.firstName + " " + item.lastName,
+            id: item.id.toString()
+          }))
+        )
+      : "";
+  }, [store.bug, store.users]);
 
   const commentByParentId = useMemo(() => {
     if (store.bug?.comments?.length) {
@@ -66,25 +85,6 @@ const BugInside = () => {
       rootComments: commentByParentId["root"]
     });
   }, [store.bug.comments]);
-
-  useEffect(() => {
-    store.bug.id
-      ? setAllUsers(
-          store.users.map((item) => ({
-            name: item.firstName + " " + item.lastName,
-            id: item.id.toString()
-          }))
-        )
-      : "";
-    store.bug.id
-      ? setAssignedTo(
-          store.bug.assignedTo.map((item) => ({
-            name: item.firstName + " " + item.lastName,
-            id: item.id.toString()
-          }))
-        )
-      : "";
-  }, [store.bug]);
 
   const handleValues = (
     option: keyof IBug | keyof IProject,

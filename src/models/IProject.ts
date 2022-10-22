@@ -11,6 +11,7 @@ export interface IProject {
   stages: IStage[];
   bugs: IBug[];
   createdBy: IUser;
+  viewers: IUser[];
 }
 
 export interface IStage {

@@ -20,19 +20,34 @@ const ProjectView = () => {
 
   useEffect(() => {
     store.getProjectById(Number(id));
+    store.getViewers();
   }, [id]);
+  const [allUsers, setAllUsers] = useState([{ name: "1", id: "1" }]);
+  const [viewers, setViewers] = useState([{ name: "1", id: "1" }]);
 
-  //   const handleValues = (
-  //     option: string | string[] | Date | undefined,
-  //     value: keyof BugValues
-  //   ) => {
-  //     setBugValues({
-  //       ...bugValues,
-  //       [value]: option
-  //     });
+  useEffect(() => {
+    console.log(store.project);
+  }, [store.project]);
 
-  //     store.updateBug(value, option);
-  //   };
+  useEffect(() => {
+    store.project.id
+      ? setAllUsers(
+          store.users.map((item) => ({
+            name: item.firstName + " " + item.lastName,
+            id: item.id.toString()
+          }))
+        )
+      : "";
+    store.project.id
+      ? setViewers(
+          store.project.viewers.map((item) => ({
+            name: item.firstName + " " + item.lastName,
+            id: item.id.toString()
+          }))
+        )
+      : "";
+  }, [store.project, store.users]);
+
   const navigate = useNavigate();
   const onClose = () => {
     navigate("/bugs", { replace: true });
@@ -62,6 +77,20 @@ const ProjectView = () => {
     setModalOpen(false);
     store.deleteProject(store.project.id);
     navigate("/bugs", { replace: true });
+  };
+
+  const onChange = (e) => {
+    const ids = e.map((option) => option.id);
+    const newViewers = store.users
+      .filter((user) => ids.includes(user.id.toString()))
+      .concat(store.user);
+
+    console.log(newViewers);
+    store.updateProject({
+      projectId: store.project.id,
+      option: "viewers",
+      newValue: newViewers
+    });
   };
 
   return (
@@ -110,15 +139,15 @@ const ProjectView = () => {
                     onClick={() => handleDeleteModal()}
                   />
                 )}
-                {/* <div className="w-80">
-                <Multiselect
-                  options={allUsers} // Options to display in the dropdown
-                  selectedValues={assignedTo} // Preselected value to persist in dropdown
-                  // onSelect={this.onSelect} // Function will trigger on select event
-                  // onRemove={this.onRemove} // Function will trigger on remove event
-                  displayValue="name" // Property name to display in the dropdown options
-                /> 
-              </div> */}
+                <div className="w-80">
+                  <Multiselect
+                    options={allUsers} // Options to display in the dropdown
+                    selectedValues={viewers} // Preselected value to persist in dropdown
+                    onSelect={(e) => onChange(e)} // Function will trigger on select event
+                    onRemove={(e) => onChange(e)} // Function will trigger on remove event
+                    displayValue="name" // Property name to display in the dropdown options
+                  />
+                </div>
               </div>
             </div>
           </div>

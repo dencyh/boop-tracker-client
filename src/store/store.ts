@@ -226,7 +226,7 @@ export default class Store {
   }: {
     projectId: number;
     option: keyof IProject | keyof IBug;
-    newValue: string;
+    newValue: string | string[] | Date | undefined | IUser[];
   }) {
     try {
       const response = await ProjectService.updateProject({

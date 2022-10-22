@@ -3,6 +3,7 @@ import api from "../http";
 import { AxiosResponse } from "axios";
 import { IProject } from "../models/IProject";
 import { IBug } from "../models/IBug";
+import { IUser } from "../models/IUser";
 
 export class ProjectService {
   static async getProjects(): Promise<AxiosResponse<IProject[]>> {
@@ -39,7 +40,7 @@ export class ProjectService {
   }: {
     projectId: number;
     option: keyof IProject | keyof IBug;
-    newValue: string;
+    newValue: string | string[] | Date | undefined | IUser[];
   }) {
     return api.patch(`/projects/${projectId}`, { option, newValue });
   }
