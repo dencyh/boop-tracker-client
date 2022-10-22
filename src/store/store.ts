@@ -403,7 +403,7 @@ export default class Store {
     newValue
   }: {
     field: keyof IBug | keyof IProject;
-    newValue: string | string[] | Date | undefined;
+    newValue: string | string[] | Date | undefined | IUser[];
   }) {
     try {
       const response = await BugService.updateBug(

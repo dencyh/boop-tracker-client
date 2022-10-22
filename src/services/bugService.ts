@@ -1,3 +1,4 @@
+import { IUser } from "./../models/IUser";
 import { IProject } from "./../models/IProject";
 import { IBugClient, ICommentClient } from "../models/IBug";
 import { AxiosResponse } from "axios";
@@ -35,7 +36,7 @@ export class BugService {
   static async updateBug(
     id: number,
     field: keyof IBug | keyof IProject,
-    newValue: string | string[] | Date | undefined
+    newValue: string | string[] | Date | undefined | IUser[]
   ) {
     return api.patch(`bugs/${id}`, { field, newValue });
   }

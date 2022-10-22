@@ -108,10 +108,11 @@ const BugInside = () => {
   };
 
   const modalBgRef = useRef<HTMLDivElement>(null);
+
   const [modalOpen, setModalOpen] = useState(false);
+
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleModal = (e: any) => {
+    const handleModal = (e) => {
       if (modalBgRef.current?.contains(e.target)) {
         setModalOpen(false);
       }
@@ -134,8 +135,12 @@ const BugInside = () => {
   };
 
   const onChange = (e) => {
-    // console.log(123);
-    console.log(e);
+    const ids = e.map((option) => option.id);
+    const assingedUsers = store.users.filter((user) => {
+      return ids.includes(user.id.toString());
+    });
+    console.log(assingedUsers);
+    store.updateBug({ field: "assignedTo", newValue: assingedUsers });
   };
 
   return (
