@@ -3,7 +3,7 @@ import { Auth } from "./pages/auth";
 import { Home } from "./pages/home";
 import { Context } from "./index";
 import { observer } from "mobx-react-lite";
-import Loader from "./components/misc/loader";
+import Loader from "./components/loader";
 
 function App() {
   const { store } = useContext(Context);

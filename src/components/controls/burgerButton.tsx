@@ -1,11 +1,14 @@
 import React from "react";
+import { IBaseControl } from "./interfaces/baseControl";
 
-const BurgerButton = () => {
+const BurgerButton = ({ name, ...rest }: IBaseControl) => {
   return (
     <button
       type="button"
       className="inline-flex h-fit items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-200  hover:bg-gray-300 hover:text-gray-600 dark:hover:bg-gray-600 dark:hover:text-white"
+      {...rest}
     >
+      {name}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 448 512"

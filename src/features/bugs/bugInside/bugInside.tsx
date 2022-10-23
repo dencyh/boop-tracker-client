@@ -14,6 +14,10 @@ import EditableField from "../../projects/editableField";
 import { IProject } from "../../../models/IProject";
 import Button from "../../../components/controls/button";
 import DeleteModal from "../../../components/deleteModal";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import MuiPicker from "../newModal/muiPicker";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import dayjs from "dayjs";
 
 const BugInside = () => {
   const { store } = useContext(Context);
@@ -139,7 +143,6 @@ const BugInside = () => {
     const assingedUsers = store.users.filter((user) => {
       return ids.includes(user.id.toString());
     });
-    console.log(assingedUsers);
     store.updateBug({ field: "assignedTo", newValue: assingedUsers });
   };
 
@@ -187,7 +190,8 @@ const BugInside = () => {
                   />
                 )}
               </div>
-              <div className="w-80">
+              <div className="w-4/5 2xl:w-80">
+                <h3>Assigned to:</h3>
                 <Multiselect
                   options={allUsers} // Options to display in the dropdown
                   selectedValues={assignedTo} // Preselected value to persist in dropdown

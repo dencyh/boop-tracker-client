@@ -1,12 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import SearchBar from "./seachBar";
 import ProjectFilters from "./projectFilters";
 import { Context } from "../..";
 import { observer } from "mobx-react-lite";
 import ProjectItem from "./projectItem";
 import HideArrowButton from "./hideButton";
 import { IProject } from "../../models/IProject";
-import { Link } from "react-router-dom";
 import Search from "../../features/bugs/newModal/search";
 
 export interface Filters {
@@ -62,7 +60,6 @@ const ProjectsList = () => {
   };
 
   useEffect(() => {
-    // On load
     store.setFilteredProjects(
       filterProjects(store.projects, selectedFilter) as IProject[]
     );
@@ -86,30 +83,39 @@ const ProjectsList = () => {
 
   return (
     <div
-      className="drop-shadow-green-outline z-20 flex h-screen w-310px shrink-0 flex-col border-gray-700 bg-[#ebe5e4] dark:border-l dark:bg-gray-800 xl:w-80"
+      className={`${
+        isHidden ? "w-0" : "w-310px xl:w-80"
+      } drop-shadow-green-outline relative z-20 flex h-screen shrink-0 flex-col border-gray-700 bg-[#ebe5e4] duration-200 dark:border-l dark:bg-gray-800`}
       tabIndex={-1}
     >
-      <div className="mt-4 px-4">
-        <div className="py-2.5">
-          {/* <SearchBar /> */}
-          <Search label="" placeholder="Search" onChange={handleSearch} />
+      {isHidden ? (
+        ""
+      ) : (
+        <div className={`${isHidden ? "scale-0" : "scale-100"} duration-300`}>
+          <div className="mt-4 px-4">
+            <div className="py-2.5">
+              <Search label="" placeholder="Search" onChange={handleSearch} />
+            </div>
+            <ProjectFilters handleFilters={handleFilters} filters={filters} />
+          </div>
+          <button
+            className={`ml-4 w-full rounded-l-2xl p-4 pr-0 text-left text-lg font-bold hover:bg-white ${
+              !store.currentProject.id ? "bg-white" : ""
+            }`}
+            onClick={resetCurrentProject}
+          >
+            All Project
+          </button>
+          <ul className="project-list ml-6 flex flex-col overflow-auto pl-4">
+            {store.filteredProjects.map((project) => (
+              <ProjectItem key={project.id} project={project} />
+            ))}
+          </ul>
         </div>
-        <ProjectFilters handleFilters={handleFilters} filters={filters} />
+      )}
+      <div className="absolute top-1/2 right-0">
+        <HideArrowButton onClick={handleHide} isHidden={isHidden} />
       </div>
-      <button
-        className={`ml-4 rounded-l-2xl p-4 pr-0 text-left text-lg font-bold hover:bg-white ${
-          !store.currentProject.id ? "bg-white" : ""
-        }`}
-        onClick={resetCurrentProject}
-      >
-        All Project
-      </button>
-      <ul className="project-list ml-6 flex flex-col overflow-auto pl-4">
-        {store.filteredProjects.map((project) => (
-          <ProjectItem key={project.id} project={project} />
-        ))}
-      </ul>
-      <HideArrowButton handleHide={handleHide} isHidden={isHidden} />
     </div>
   );
 };

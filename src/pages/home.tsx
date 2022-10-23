@@ -1,6 +1,6 @@
-import Sidebar from "../components/sidebar/sidebar";
+import Sidebar from "../components/sidebar";
 import Bugs from "../features/bugs";
-import ProjectsList from "../components/projectsSidebar/projectsList";
+import ProjectsList from "../components/projectsSidebar";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Settings from "../features/settings";

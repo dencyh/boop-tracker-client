@@ -2,19 +2,17 @@ import React from "react";
 
 interface HideButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  handleHide: () => void;
   isHidden: boolean;
 }
-const HideButton = ({ handleHide, isHidden, ...rest }: HideButtonProps) => {
+const HideButton = ({ isHidden, ...rest }: HideButtonProps) => {
   return (
     <button
       type="button"
       className={
-        "group absolute top-1/2 right-0 inline-flex h-16 w-5 items-center bg-gray-300 p-0.5 text-center text-sm font-medium text-white transition-all hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" +
-        (isHidden ? " translate-x-full rounded-r-lg" : " rounded-l-lg")
+        "group top-1/2 right-0 inline-flex h-16 w-5 items-center bg-gray-300 p-0.5 text-center text-sm font-medium text-white transition-all hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" +
+        (isHidden ? " translate-x-full rounded-r-2xl" : " rounded-l-2xl")
       }
       {...rest}
-      onClick={handleHide}
     >
       <svg
         aria-hidden="true"

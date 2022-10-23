@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Filters } from "./projectsList";
+import { Filters } from ".";
 
 interface ICompletionFilter {
   filter: Filters;

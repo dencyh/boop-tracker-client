@@ -1,7 +1,7 @@
 import React from "react";
-import { BaseControl } from "./interfaces/baseControl";
+import { IBaseControl } from "./interfaces/baseControl";
 
-const CloseButton = ({ onClick }: BaseControl) => {
+const CloseButton = ({ onClick }: IBaseControl) => {
   return (
     <button
       type="button"

@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { BaseControl } from "./interfaces/baseControl";
+import { IBaseControl } from "./interfaces/baseControl";
 import { statusPriorityColors as bgColors } from "../../data/statusBgColors";
 
-const DropdownButton = ({ name, ...rest }: BaseControl) => {
+const DropdownButton = ({ name, ...rest }: IBaseControl) => {
   const bgColor =
     bgColors[name?.toLowerCase() as keyof typeof bgColors] || "bg-primary-400";
 

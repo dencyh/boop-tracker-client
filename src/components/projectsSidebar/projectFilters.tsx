@@ -1,6 +1,6 @@
 import React from "react";
 import CompletionFilter from "./completionFilter";
-import { Filters } from "./projectsList";
+import { Filters } from ".";
 
 type ProjectFiltersProps = {
   handleFilters: (filterName: string, checked: boolean) => void;

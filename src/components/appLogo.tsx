@@ -1,4 +1,4 @@
-import shibaLogo from "../../assets/my-shiba-512.png";
+import shibaLogo from "../assets/my-shiba-512.png";
 import { Link } from "react-router-dom";
 import React from "react";
 

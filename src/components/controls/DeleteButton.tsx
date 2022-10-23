@@ -1,9 +1,9 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { BaseControl } from "./interfaces/baseControl";
+import { IBaseControl } from "./interfaces/baseControl";
 
-const DeleteButton = ({ name, ...rest }: BaseControl) => {
+const DeleteButton = ({ name, ...rest }: IBaseControl) => {
   return (
     <button
       {...rest}

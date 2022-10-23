@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from "react";
 
-export interface BaseControl
+export interface IBaseControl
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   name?: string;
   color?: string;

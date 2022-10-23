@@ -8,7 +8,7 @@ import CloseButton from "../../components/controls/closeButton";
 import { IComment } from "../../models/IBug";
 import { BugValues } from "../bugs/newModal/bugModal";
 import EditableField from "./editableField";
-import Loader from "../../components/misc/loader";
+import Loader from "../../components/loader";
 import EditForm from "./editForm";
 import Button from "../../components/controls/button";
 import DeleteModal from "../../components/deleteModal";
@@ -139,7 +139,8 @@ const ProjectView = () => {
                     onClick={() => handleDeleteModal()}
                   />
                 )}
-                <div className="w-80">
+                <div className="w-4/5 2xl:w-80">
+                  <h3>Viewers:</h3>
                   <Multiselect
                     options={allUsers} // Options to display in the dropdown
                     selectedValues={viewers} // Preselected value to persist in dropdown

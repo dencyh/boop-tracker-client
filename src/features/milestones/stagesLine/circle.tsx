@@ -1,7 +1,7 @@
 import React, { MutableRefObject, RefObject } from "react";
-import { BaseControl } from "../../../components/controls/interfaces/baseControl";
+import { IBaseControl } from "../../../components/controls/interfaces/baseControl";
 
-interface CircleProps extends BaseControl {
+interface CircleProps extends IBaseControl {
   selected: boolean;
 }
 const Circle = ({ name, selected, ...rest }: CircleProps) => {

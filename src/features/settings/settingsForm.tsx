@@ -87,7 +87,7 @@ const SettingsForm = () => {
   };
 
   const handleCancel = () => {
-    navigate("/");
+    navigate("/bugs");
   };
 
   const handleSubmit = async (e) => {
@@ -123,7 +123,7 @@ const SettingsForm = () => {
       <form className="mt-6" onSubmit={(e) => handleSubmit(e)}>
         <div className="flex flex-wrap">
           {userInfo.map((input) => (
-            <div key={input.name} className="mr-12">
+            <div key={input.name} className="mr-12 w-96">
               <Input
                 {...input}
                 value={values[input.name]}
@@ -135,7 +135,7 @@ const SettingsForm = () => {
         <div>
           {editingPassword ? (
             userPassword.map((input) => (
-              <div key={input.name} className="mr-12">
+              <div key={input.name} className="mr-12 w-96">
                 <Input
                   {...input}
                   value={values[input.name]}
@@ -151,7 +151,7 @@ const SettingsForm = () => {
                 onChange={onChange}
                 disabled
               />
-              <div className="translate-y-1">
+              <div className="ml-4 translate-y-1">
                 <Button name="Reset" onClick={handleEditPassword} />
               </div>
             </div>
