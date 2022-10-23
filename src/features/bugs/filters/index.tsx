@@ -6,36 +6,36 @@ import FilterMenu from "./filterMenu";
 
 const filterMenuItems = [
   {
+    active: false,
     name: "Status",
-    active: false,
     children: [
-      { name: "Open", active: false },
-      { name: "Closed", active: false },
-      { name: "Duplicate", active: false },
-      { name: "Won't do", active: false }
+      { active: false, name: "Open" },
+      { active: false, name: "Closed" },
+      { active: false, name: "Duplicate" },
+      { active: false, name: "Won't do" }
     ]
   },
   {
+    active: false,
     name: "Priority",
-    active: false,
     children: [
-      { name: "Highest", active: false },
-      { name: "High", active: false },
-      { name: "Medium", active: false },
-      { name: "Low", active: false },
-      { name: "Lowest", active: false }
+      { active: false, name: "Highest" },
+      { active: false, name: "High" },
+      { active: false, name: "Medium" },
+      { active: false, name: "Low" },
+      { active: false, name: "Lowest" }
     ]
   },
   {
-    name: "Due",
     active: false,
+    name: "Due",
     children: [
-      { name: "Today", active: false },
-      { name: "In 7 days", active: false },
-      { name: "Overdue", active: false }
+      { active: false, name: "Today" },
+      { active: false, name: "In 7 days" },
+      { active: false, name: "Overdue" }
     ]
   },
-  { name: "Assigned to me" }
+  { active: false, name: "Assigned to me" }
 ];
 
 const Filters = () => {
@@ -43,24 +43,59 @@ const Filters = () => {
 
   const [menuItems, setMenuItems] = useState(filterMenuItems);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [filters, setFilters] = useState<any>([]);
+  const [filterNames, setFilterNames] = useState<string[]>([]);
 
   const setActive = (name: string, parent = "") => {
-    console.log(parent);
-    // setFilters((prev) => {
-    //   const filterOn = prev[parent].indexOf(name);
+    if (!parent) return;
+    setMenuItems((prev) =>
+      prev.map((item) => {
+        if (item.name !== parent) return item;
+        if (!item.children) {
+          return { ...item, active: !item.active };
+        }
+        const updatedChildren = item.children.map((child) =>
+          child.name === name ? { ...child, active: !child.active } : child
+        );
 
-    //   if (filterOn >= 0) {
-    //     return prev[parent].filter((curr) => curr.name !== name);
-    //   } else {
-    //     return [...prev, parent: [...prev[parent], name]];
-    //   }
-    // });
+        const updatedItem = {
+          ...item,
+          children: updatedChildren
+        };
+        const isParentActive = updatedItem.children.some(
+          (child) => child.active === true
+        );
+        isParentActive
+          ? (updatedItem.active = true)
+          : (updatedItem.active = false);
+        return updatedItem;
+      })
+    );
   };
-  console.log(filters);
 
-  // console.log(filters);
+  const removeFilter = (name: string) => {
+    setMenuItems((prev) => {
+      return prev.map((item) => {
+        if (item.name === name && !item.children)
+          return { ...item, active: false };
+        if (item.name === name && item.children) {
+          const updatedChildren = item.children.map((child) => ({
+            ...child,
+            active: false
+          }));
+          return { ...item, active: false, children: updatedChildren };
+        } else {
+          return item;
+        }
+      });
+    });
+  };
+
+  useEffect(() => {
+    const names = menuItems
+      .filter((item) => item.active)
+      .map((item) => item.name);
+    setFilterNames(names);
+  }, [menuItems]);
 
   const filterRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -77,23 +112,27 @@ const Filters = () => {
 
   return (
     <div
-      className="relative flex w-fit rounded-md bg-gray-200 p-1 px-2 text-gray-700"
+      className="relative flex w-fit rounded-md bg-gray-200 p-1 px-2 font-semibold text-gray-700"
       ref={filterRef}
     >
       <div className="absolute top-12 left-0">
         {open && <FilterMenu menuItems={menuItems} setActive={setActive} />}
       </div>
       <button
-        className={`${filters.length ? "mr-2 text-primary-400" : ""}`}
+        className={`${filterNames.length ? "mr-2 text-primary-400" : ""}`}
         onClick={() => setOpen(!open)}
       >
         <FontAwesomeIcon icon={faFilter} />
       </button>
-      {/* <div className="flex font-semibold">
-        {filters.map((filter) => (
-          <SelectedItem key={filter} />
+      <div className="flex font-semibold">
+        {filterNames.map((filter) => (
+          <SelectedItem
+            key={filter}
+            name={filter}
+            removeFilter={removeFilter}
+          />
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };

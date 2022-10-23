@@ -17,11 +17,19 @@ const FilterItem = ({
   const [open, setOpen] = useState(false);
 
   return (
-    <li className="relative">
+    <li
+      className="relative px-2"
+      onMouseOver={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
       <button
-        className="flex w-full cursor-pointer items-center justify-between py-2 px-4 text-left hover:bg-gray-100 hover:text-blue-600 dark:hover:bg-gray-600 dark:hover:text-white"
-        onMouseOver={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
+        className={`mb-1 flex w-full cursor-pointer items-center justify-between rounded-lg py-2 px-4 text-left  dark:hover:bg-gray-600 dark:hover:text-white ${
+          item.active && item.children
+            ? "bg-gray-100 text-primary-400"
+            : item.active && !item.children
+            ? "bg-primary-400 text-white hover:bg-primary-500"
+            : "hover:bg-gray-100 hover:text-blue-600"
+        }`}
         onClick={children ? undefined : () => setActive(item.name, parent)}
       >
         <div>{item.name}</div>
