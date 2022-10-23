@@ -8,6 +8,7 @@ import { IBug } from "../../models/IBug";
 import BugTable from "./bugTable";
 import Table from "./bugTable/table";
 import TableHeaders from "./bugTable/tableHeaders";
+import Filters from "./filters";
 dayjs.extend(relativeTime);
 
 const headerColumns = [
@@ -143,6 +144,9 @@ const ProjectList = () => {
 
   return (
     <div>
+      <div className="mb-3">
+        <Filters />
+      </div>
       <div className="flex gap-8 border-b-2 pb-6">
         {Object.keys(bugStats).map((stat) => (
           <BugNumbers key={stat} {...bugStats[stat]} />
