@@ -1,3 +1,4 @@
+import { filter } from "./../features/bugs/filters/data";
 import { BugValues } from "../features/bugs/newModal/bugModal";
 import { BugService } from "../services/bugService";
 import { IBug, IBugClient } from "../models/IBug";
@@ -16,6 +17,8 @@ export default class Store {
   projects = [] as IProject[];
   project = {} as IProject;
   filteredProjects = [] as IProject[];
+  filteredProjectsWithBugs = [] as IProject[];
+  bugFilters = [] as filter[];
   currentProject = {} as IProject;
   bug = {} as IBug;
   users = [] as IUser[];
@@ -60,6 +63,15 @@ export default class Store {
 
   setFilteredProjects(projects: IProject[]) {
     this.filteredProjects = projects;
+    this.filterBugs();
+  }
+
+  setFilteredProjectsWithBugs(projects: IProject[]) {
+    this.filteredProjectsWithBugs = projects;
+  }
+
+  setBugFilters(filters: filter[]) {
+    this.bugFilters = filters;
   }
 
   setUsers(users: IUser[]) {
@@ -68,6 +80,54 @@ export default class Store {
 
   setLoading(value: boolean) {
     this.isLoading = value;
+  }
+
+  filterBugs() {
+    const activeFilters = this.bugFilters.filter(
+      (filter) => filter.active === true
+    );
+    // Reset current project
+    this.setCurrentProjectById(this.currentProject.id);
+
+    const runFilters = (project: IProject) => {
+      if (activeFilters.length === 0) {
+        this.setCurrentProjectById(this.currentProject.id);
+      }
+      activeFilters.forEach((filter) => {
+        const activeValues = filter.children
+          ?.filter((child) => child.active === true)
+          .map((child) => child.name.toLowerCase());
+
+        const updatedBugs = project.bugs.filter((bug) =>
+          activeValues?.includes(bug[filter.value as string])
+        );
+
+        project = { ...project, bugs: updatedBugs };
+      });
+      return project;
+    };
+
+    if (this.currentProject.id) {
+      this.setCurrentProject(runFilters(this.currentProject));
+    } else {
+      this.setFilteredProjectsWithBugs(
+        this.filteredProjects
+          .map((project) => {
+            return runFilters(project);
+          })
+          .filter((project) => project.bugs.length > 0)
+      );
+    }
+    console.log(this.filteredProjectsWithBugs);
+
+    // if (this.currentProject.id) {
+    //   this.filteredProjects = [
+    //     ...[],
+    //     { ...this.currentProject, bugs: updatedBugs }
+    //   ];
+    // }
+
+    // console.log(this.filteredProjects);
   }
 
   async signIn(email: string, password: string) {

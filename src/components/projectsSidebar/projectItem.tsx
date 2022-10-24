@@ -27,6 +27,7 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
 
   const handleSetProject = () => {
     store.setCurrentProject(project);
+    store.filterBugs();
     if (
       location.pathname.startsWith("/bugs") ||
       location.pathname.startsWith("/projects")

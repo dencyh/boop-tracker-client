@@ -54,7 +54,7 @@ const ProjectList = () => {
   const [visibleProjects, setVisibleProjects] = useState(
     store.currentProject.id
       ? [...[], store.currentProject]
-      : store.filteredProjects
+      : store.filteredProjectsWithBugs
   );
 
   const [bugStats, setBugStats] = useState({
@@ -116,9 +116,9 @@ const ProjectList = () => {
     setVisibleProjects(
       store.currentProject.id
         ? [...[], store.currentProject]
-        : store.filteredProjects
+        : store.filteredProjectsWithBugs
     );
-  }, [store.currentProject, store.filteredProjects]);
+  }, [store.currentProject, store.filteredProjectsWithBugs]);
 
   useEffect(() => {
     setBugStats((prev) => {
@@ -136,7 +136,7 @@ const ProjectList = () => {
       );
     });
   }, [
-    store.filteredProjects,
+    store.filteredProjectsWithBugs,
     store.currentProject,
     store.projects,
     visibleProjects

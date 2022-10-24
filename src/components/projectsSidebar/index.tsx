@@ -6,6 +6,7 @@ import ProjectItem from "./projectItem";
 import HideArrowButton from "./hideButton";
 import { IProject } from "../../models/IProject";
 import Search from "../../features/bugs/newModal/search";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export interface Filters {
   name: keyof selectedFilter;
@@ -16,6 +17,8 @@ type selectedFilter = { open: boolean; closed: boolean };
 
 const ProjectsList = () => {
   const { store } = useContext(Context);
+  const navigate = useNavigate();
+  const location = useLocation();
   const [query, setQuery] = useState("");
   const filters: Filters[] = [
     {
@@ -47,7 +50,6 @@ const ProjectsList = () => {
       store.setFilteredProjects([]);
       return;
     }
-
     const result = [
       ...projectsArr.filter(
         (project) =>
@@ -55,7 +57,6 @@ const ProjectsList = () => {
           (!project.closed && selectedFilter.open)
       )
     ].filter((item) => item.title.toLowerCase().includes(query));
-
     return result;
   };
 
@@ -75,6 +76,12 @@ const ProjectsList = () => {
 
   const resetCurrentProject = () => {
     store.setCurrentProject({} as IProject);
+    store.filterBugs();
+    if (
+      location.pathname.startsWith("/bugs") ||
+      location.pathname.startsWith("/projects")
+    )
+      navigate("/bugs");
   };
 
   const handleSearch = (e) => {

@@ -1,44 +1,13 @@
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import SelectedItem from "./selectedItem";
 import FilterMenu from "./filterMenu";
-
-const filterMenuItems = [
-  {
-    active: false,
-    name: "Status",
-    children: [
-      { active: false, name: "Open" },
-      { active: false, name: "Closed" },
-      { active: false, name: "Duplicate" },
-      { active: false, name: "Won't do" }
-    ]
-  },
-  {
-    active: false,
-    name: "Priority",
-    children: [
-      { active: false, name: "Highest" },
-      { active: false, name: "High" },
-      { active: false, name: "Medium" },
-      { active: false, name: "Low" },
-      { active: false, name: "Lowest" }
-    ]
-  },
-  {
-    active: false,
-    name: "Due",
-    children: [
-      { active: false, name: "Today" },
-      { active: false, name: "In 7 days" },
-      { active: false, name: "Overdue" }
-    ]
-  },
-  { active: false, name: "Assigned to me" }
-];
+import { filterMenuItems } from "./data";
+import { Context } from "../../..";
 
 const Filters = () => {
+  const { store } = useContext(Context);
   const [open, setOpen] = useState(false);
 
   const [menuItems, setMenuItems] = useState(filterMenuItems);
@@ -90,13 +59,18 @@ const Filters = () => {
     });
   };
 
+  // Title for filter groups
   useEffect(() => {
     const names = menuItems
       .filter((item) => item.active)
       .map((item) => item.name);
     setFilterNames(names);
+
+    store.setBugFilters(menuItems);
+    store.filterBugs();
   }, [menuItems]);
 
+  // To close on outside click. May as well send query to server for filtered results
   const filterRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleMenu = (e) => {
