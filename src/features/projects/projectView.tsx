@@ -26,10 +26,6 @@ const ProjectView = () => {
   const [viewers, setViewers] = useState([{ name: "1", id: "1" }]);
 
   useEffect(() => {
-    console.log(store.project);
-  }, [store.project]);
-
-  useEffect(() => {
     store.project.id
       ? setAllUsers(
           store.users.map((item) => ({
@@ -85,7 +81,6 @@ const ProjectView = () => {
       .filter((user) => ids.includes(user.id.toString()))
       .concat(store.user);
 
-    console.log(newViewers);
     store.updateProject({
       projectId: store.project.id,
       option: "viewers",

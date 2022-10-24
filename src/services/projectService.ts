@@ -23,7 +23,6 @@ export class ProjectService {
     deadline: Date;
     closed: boolean;
   }): Promise<AxiosResponse<IProject[]>> {
-    console.log(viewers);
     return api.post("/projects", {
       title,
       description,

@@ -20,7 +20,6 @@ const DeleteModal = ({ deleteAction, entity }: DeleteModalProps) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     setValue(target.value);
-    console.log(entity.title === value);
   };
 
   useEffect(() => {
@@ -31,7 +30,6 @@ const DeleteModal = ({ deleteAction, entity }: DeleteModalProps) => {
     e.preventDefault();
 
     if (entity.title === value) {
-      console.log("action");
       deleteAction();
     }
   };

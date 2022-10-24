@@ -104,9 +104,7 @@ export default class Store {
             }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           }) as any[];
-        console.log(typeof activeValues);
 
-        console.log(activeValues);
         let updatedBugs;
 
         if (activeValues) {
@@ -147,11 +145,9 @@ export default class Store {
   async signIn(email: string, password: string) {
     try {
       const response = await AuthService.signIn(email, password);
-      // console.log(response);
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
-      console.log(this.user);
       console.log(response);
       return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -174,7 +170,6 @@ export default class Store {
         email,
         password
       );
-      // console.log(response);
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
@@ -351,7 +346,7 @@ export default class Store {
       }
       console.log(response);
     } catch (e) {
-      console.log(e);
+      console.error(e);
       return e;
     }
   }
@@ -367,7 +362,7 @@ export default class Store {
       }
       console.log(response);
     } catch (e) {
-      console.log(e);
+      console.error(e);
       return e;
     }
   }
@@ -396,7 +391,7 @@ export default class Store {
       console.log(response);
       await this.getUserProjects();
     } catch (e) {
-      console.log(e);
+      console.error(e);
       return e;
     }
   }

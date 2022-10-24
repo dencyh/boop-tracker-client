@@ -17,8 +17,6 @@ const EditableField = ({
 }) => {
   const { store } = useContext(Context);
 
-  useEffect(() => console.log("text changed"), [text]);
-
   const editingEntity =
     entityName === "project"
       ? store.project.createdBy.id === store.user.id
