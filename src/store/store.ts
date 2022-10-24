@@ -1,4 +1,4 @@
-import { filter } from "./../features/bugs/filters/data";
+import { filter, filterMenuItems } from "./../features/bugs/filters/data";
 import { BugValues } from "../features/bugs/newModal/bugModal";
 import { BugService } from "../services/bugService";
 import { IBug, IBugClient } from "../models/IBug";
@@ -18,7 +18,7 @@ export default class Store {
   project = {} as IProject;
   filteredProjects = [] as IProject[];
   filteredProjectsWithBugs = [] as IProject[];
-  bugFilters = [] as filter[];
+  bugFilters = filterMenuItems;
   currentProject = {} as IProject;
   bug = {} as IBug;
   users = [] as IUser[];

@@ -1,9 +1,6 @@
 import { IUser } from "./../../../models/IUser";
-import { useContext } from "react";
-import { IProject } from "./../../../models/IProject";
 import { IBug } from "./../../../models/IBug";
 import { checkBugTime } from "../../../services/utils";
-import { Context } from "../../..";
 
 export interface filter {
   active: boolean;
@@ -68,9 +65,3 @@ export const filterMenuItems: filter[] = [
       bug.assignedTo.some((assignedTo) => assignedTo.id === user.id)
   }
 ];
-// overdue: (sum: number, bug: IBug) =>
-// checkBugTime(bug) < 0 ? sum + 1 : sum,
-// today: (sum: number, bug: IBug) =>
-// checkBugTime(bug) === 0 ? sum + 1 : sum,
-// week: (sum: number, bug: IBug) =>
-// checkBugTime(bug) > 0 && checkBugTime(bug) < 7 ? sum + 1 : sum

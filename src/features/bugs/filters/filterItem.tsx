@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import Filters from ".";
 import { ReactComponent as ArrowRight } from "../../../assets/icons/arrowRight.svg";
 
 const FilterItem = ({

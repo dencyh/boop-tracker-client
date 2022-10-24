@@ -10,7 +10,7 @@ const Filters = () => {
   const { store } = useContext(Context);
   const [open, setOpen] = useState(false);
 
-  const [menuItems, setMenuItems] = useState(filterMenuItems);
+  const [menuItems, setMenuItems] = useState(store.bugFilters);
 
   const [filterNames, setFilterNames] = useState<string[]>([]);
 
