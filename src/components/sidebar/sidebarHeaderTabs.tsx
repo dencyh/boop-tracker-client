@@ -21,7 +21,6 @@ const SidebarHeaderTabs = ({ open }: { open?: boolean }) => {
 
         {open && (
           <>
-            {" "}
             <li className={`mx-2`}>
               <a
                 href="#"

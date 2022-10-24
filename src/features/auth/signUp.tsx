@@ -83,11 +83,10 @@ const signUp = ({ onSignOption }: SignInProps) => {
 
   const { store } = useContext(Context);
 
-  const handleSignUn = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { firstName, lastName, email, password } = values;
     const response = await store.signUp(firstName, lastName, email, password);
-    // console.log(response);
   };
 
   const onChange = (e: FormEvent<HTMLInputElement>) => {
@@ -96,7 +95,7 @@ const signUp = ({ onSignOption }: SignInProps) => {
   };
 
   return (
-    <form onSubmit={(e) => handleSignUn(e)}>
+    <form onSubmit={(e) => handleSignUp(e)}>
       <SignHeader onSignOption={onSignOption} {...signUpHeader} />
       <div className="mb-6">
         {signUpInputs.map((input: SignUpInputs) => (

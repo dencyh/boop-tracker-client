@@ -4,6 +4,7 @@ import { Home } from "./pages/home";
 import { Context } from "./index";
 import { observer } from "mobx-react-lite";
 import Loader from "./components/loader";
+import ConfirmEmail from "./pages/confirmEmail";
 
 function App() {
   const { store } = useContext(Context);
@@ -20,6 +21,7 @@ function App() {
       </div>
     );
 
+  if (store.user?.emailConfirmed === false) return <ConfirmEmail />;
   return store.isAuth ? <Home /> : <Auth />;
 }
 

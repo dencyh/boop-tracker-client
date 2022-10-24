@@ -148,6 +148,7 @@ const BugModal = ({ onClose }: BugModalProps) => {
     // to refresh store
 
     await store.getUserProjects();
+    onClose();
   };
 
   useEffect(() => {
