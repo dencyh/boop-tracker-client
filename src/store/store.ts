@@ -96,11 +96,35 @@ export default class Store {
       activeFilters.forEach((filter) => {
         const activeValues = filter.children
           ?.filter((child) => child.active === true)
-          .map((child) => child.name.toLowerCase());
+          .map((child) => {
+            if (child.callback) {
+              return child.callback;
+            } else {
+              return child.name.toLowerCase();
+            }
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          }) as any[];
+        console.log(typeof activeValues);
 
-        const updatedBugs = project.bugs.filter((bug) =>
-          activeValues?.includes(bug[filter.value as string])
-        );
+        console.log(activeValues);
+        let updatedBugs;
+
+        if (activeValues) {
+          const isCallback = activeValues.every(
+            (value) => typeof value === "function"
+          );
+          if (isCallback) {
+            // If callback provided
+            updatedBugs = project.bugs.filter((bug) =>
+              activeValues.every((callback) => callback(bug))
+            );
+          } else if (typeof activeValues[0] === "string") {
+            // If plain string
+            updatedBugs = project.bugs.filter((bug) =>
+              activeValues?.includes(bug[filter.value as string])
+            );
+          }
+        }
 
         project = { ...project, bugs: updatedBugs };
       });
@@ -118,16 +142,6 @@ export default class Store {
           .filter((project) => project.bugs.length > 0)
       );
     }
-    console.log(this.filteredProjectsWithBugs);
-
-    // if (this.currentProject.id) {
-    //   this.filteredProjects = [
-    //     ...[],
-    //     { ...this.currentProject, bugs: updatedBugs }
-    //   ];
-    // }
-
-    // console.log(this.filteredProjects);
   }
 
   async signIn(email: string, password: string) {

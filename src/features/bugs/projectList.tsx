@@ -9,6 +9,7 @@ import BugTable from "./bugTable";
 import Table from "./bugTable/table";
 import TableHeaders from "./bugTable/tableHeaders";
 import Filters from "./filters";
+import { checkBugTime } from "../../services/utils";
 dayjs.extend(relativeTime);
 
 const headerColumns = [
@@ -42,6 +43,7 @@ const headerColumns = [
       "w-2/12 py-2 text-xs text-right font-semibold uppercase text-gray-600"
   }
 ];
+
 export interface BugStats {
   number: number;
   text: string;
@@ -61,32 +63,29 @@ const ProjectList = () => {
     open: {
       number: "-",
       text: "Open bugs",
-      color: "bg-green-300"
+      color: "bg-emerald-400"
     },
     done: {
       number: "-",
       text: "Closed bugs",
-      color: "bg-violet-200"
+      color: "bg-violet-400"
     },
     overdue: {
       number: "-",
       text: "Overdue",
-      color: "bg-rose-300"
+      color: "bg-rose-400"
     },
     today: {
       number: "-",
       text: "Due today",
-      color: "bg-lime-200"
+      color: "bg-amber-400"
     },
     week: {
       number: "-",
       text: "Due in 7 days",
-      color: "bg-teal-200"
+      color: "bg-sky-400"
     }
   });
-
-  const checkBugTime = (bug: IBug) =>
-    Math.floor(dayjs(bug.due).diff(dayjs(new Date()), "day", true));
 
   const reduceNumberFuncs = {
     open: (sum: number, bug: IBug) => (bug.status === "open" ? sum + 1 : sum),

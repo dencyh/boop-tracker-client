@@ -1,10 +1,11 @@
 import { IProject } from "./../../../models/IProject";
 import { IBug } from "./../../../models/IBug";
+import { checkBugTime } from "../../../services/utils";
 export interface filter {
   active: boolean;
   name: string;
   value?: keyof IBug;
-  callback?: (projectsArr: IProject[]) => void;
+  callback?: (arg) => void;
   children?: filter[];
 }
 
@@ -38,10 +39,28 @@ export const filterMenuItems: filter[] = [
     name: "Due",
     value: "due",
     children: [
-      { active: false, name: "Today" },
-      { active: false, name: "In 7 days" },
-      { active: false, name: "Overdue" }
+      {
+        active: false,
+        name: "Today",
+        callback: (bug: IBug) => checkBugTime(bug) === 0
+      },
+      {
+        active: false,
+        name: "In 7 days",
+        callback: (bug: IBug) => checkBugTime(bug) > 0 && checkBugTime(bug) < 7
+      },
+      {
+        active: false,
+        name: "Overdue",
+        callback: (bug: IBug) => checkBugTime(bug) < 0
+      }
     ]
   }
   // { active: false, name: "Assigned to me", value: "assignedTo" }
 ];
+// overdue: (sum: number, bug: IBug) =>
+// checkBugTime(bug) < 0 ? sum + 1 : sum,
+// today: (sum: number, bug: IBug) =>
+// checkBugTime(bug) === 0 ? sum + 1 : sum,
+// week: (sum: number, bug: IBug) =>
+// checkBugTime(bug) > 0 && checkBugTime(bug) < 7 ? sum + 1 : sum
