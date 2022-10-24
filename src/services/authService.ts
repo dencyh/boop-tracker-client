@@ -21,7 +21,10 @@ export class AuthService {
     email: string,
     password: string
   ): Promise<AxiosResponse<AuthResponse>> {
-    return api.post<AuthResponse>("/signin", { email, password });
+    return api.post<AuthResponse>("/signin", {
+      email,
+      password
+    });
   }
 
   static async signOut(): Promise<void> {

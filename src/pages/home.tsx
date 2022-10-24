@@ -1,15 +1,20 @@
 import Sidebar from "../components/sidebar";
 import Bugs from "../features/bugs";
 import ProjectsList from "../components/projectsSidebar";
-import React from "react";
+import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Settings from "../features/settings";
 import Milestones from "../features/milestones";
 import NotFound from "./notFound";
 import BugInside from "../features/bugs/bugInside/bugInside";
 import Project from "../features/projects";
+import { Context } from "..";
+import ConfirmEmail from "./confirmEmail";
+import { observer } from "mobx-react-lite";
 
-export function Home() {
+function Home() {
+  const { store } = useContext(Context);
+  if (store.user?.emailConfirmed === false) return <ConfirmEmail />;
   return (
     <div className="flex">
       <Sidebar />
@@ -26,3 +31,5 @@ export function Home() {
     </div>
   );
 }
+
+export default observer(Home);

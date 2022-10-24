@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Auth } from "./pages/auth";
-import { Home } from "./pages/home";
+import Home from "./pages/home";
 import { Context } from "./index";
 import { observer } from "mobx-react-lite";
 import Loader from "./components/loader";
@@ -21,8 +21,15 @@ function App() {
       </div>
     );
 
-  if (store.user?.emailConfirmed === false) return <ConfirmEmail />;
-  return store.isAuth ? <Home /> : <Auth />;
+  return store.isAuth ? (
+    store.user?.emailConfirmed ? (
+      <Home />
+    ) : (
+      <ConfirmEmail />
+    )
+  ) : (
+    <Auth />
+  );
 }
 
 export default observer(App);

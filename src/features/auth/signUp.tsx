@@ -83,10 +83,10 @@ const signUp = ({ onSignOption }: SignInProps) => {
 
   const { store } = useContext(Context);
 
-  const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSignUp = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { firstName, lastName, email, password } = values;
-    const response = await store.signUp(firstName, lastName, email, password);
+    store.signUp(firstName, lastName, email, password);
   };
 
   const onChange = (e: FormEvent<HTMLInputElement>) => {

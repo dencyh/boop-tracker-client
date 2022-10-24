@@ -53,23 +53,23 @@ const CheckboxDropdown = ({
   const listRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
 
-  // useEffect(() => {
-  //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //   const handleHide = (e: any) => {
-  //     if (
-  //       !buttonRef.current?.contains(e.target) &&
-  //       !listRef.current?.contains(e.target)
-  //     ) {
-  //       setOpen(false);
-  //     }
-  //   };
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleHide = (e: any) => {
+      if (
+        !buttonRef.current?.contains(e.target) &&
+        !listRef.current?.contains(e.target)
+      ) {
+        setOpen(false);
+      }
+    };
 
-  //   document.addEventListener("click", handleHide);
+    document.addEventListener("click", handleHide);
 
-  //   return () => {
-  //     document.removeEventListener("click", handleHide);
-  //   };
-  // }, []);
+    return () => {
+      document.removeEventListener("click", handleHide);
+    };
+  }, []);
 
   // Search
   const [query, setQuery] = useState("");

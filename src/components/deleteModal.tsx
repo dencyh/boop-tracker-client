@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { Context } from "..";
 import Input from "./inputs/input";
-import Button from "./controls/button";
 import { IProject } from "../models/IProject";
 import { IBug } from "../models/IBug";
 
@@ -52,13 +50,14 @@ const DeleteModal = ({ deleteAction, entity }: DeleteModalProps) => {
         <Input label="" onChange={onChange} value={value} />
       </div>
 
-      <Button
-        name="Delete permanently"
-        color={`font-bold ring-inset ring-2 ring-red-600  focus:ring-red-600 focus:ring-2 hover:bg-white ${
+      <button
+        className={`mr-2 mb-2 w-fit rounded-lg  px-5 py-2.5 text-sm font-bold text-white ring-2 ring-inset ring-red-600  focus:outline-none  focus:ring-2  focus:ring-red-600  ${
           buttonActive ? activeClass : disabledClass
         }`}
         disabled={buttonActive ? false : true}
-      />
+      >
+        Delete permanently
+      </button>
     </form>
   );
 };
