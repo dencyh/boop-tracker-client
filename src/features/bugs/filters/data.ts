@@ -1,11 +1,15 @@
+import { IUser } from "./../../../models/IUser";
+import { useContext } from "react";
 import { IProject } from "./../../../models/IProject";
 import { IBug } from "./../../../models/IBug";
 import { checkBugTime } from "../../../services/utils";
+import { Context } from "../../..";
+
 export interface filter {
   active: boolean;
   name: string;
   value?: keyof IBug;
-  callback?: (arg) => void;
+  callback?: (bug, user) => void;
   children?: filter[];
 }
 
@@ -55,8 +59,14 @@ export const filterMenuItems: filter[] = [
         callback: (bug: IBug) => checkBugTime(bug) < 0
       }
     ]
+  },
+  {
+    active: false,
+    name: "Assigned to me",
+    value: "assignedTo",
+    callback: (bug: IBug, user: IUser) =>
+      bug.assignedTo.some((assignedTo) => assignedTo.id === user.id)
   }
-  // { active: false, name: "Assigned to me", value: "assignedTo" }
 ];
 // overdue: (sum: number, bug: IBug) =>
 // checkBugTime(bug) < 0 ? sum + 1 : sum,

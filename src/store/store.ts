@@ -94,27 +94,36 @@ export default class Store {
         this.setCurrentProjectById(this.currentProject.id);
       }
       activeFilters.forEach((filter) => {
-        const activeValues = filter.children
-          ?.filter((child) => child.active === true)
-          .map((child) => {
-            if (child.callback) {
-              return child.callback;
-            } else {
-              return child.name.toLowerCase();
-            }
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          }) as any[];
+        let activeValues;
+        if (!filter.children) {
+          activeValues = filter.active
+            ? filter.callback
+              ? [filter.callback]
+              : [filter.name]
+            : [];
+        } else {
+          activeValues = filter.children
+            .filter((child) => child.active === true)
+            .map((child) => {
+              if (child.callback) {
+                return child.callback;
+              } else {
+                return child.name.toLowerCase();
+              }
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            }) as any[];
+        }
 
         let updatedBugs;
 
-        if (activeValues) {
+        if (activeValues[0]) {
           const isCallback = activeValues.every(
             (value) => typeof value === "function"
           );
           if (isCallback) {
             // If callback provided
             updatedBugs = project.bugs.filter((bug) =>
-              activeValues.every((callback) => callback(bug))
+              activeValues.every((callback) => callback(bug, this.user))
             );
           } else if (typeof activeValues[0] === "string") {
             // If plain string
@@ -126,6 +135,7 @@ export default class Store {
 
         project = { ...project, bugs: updatedBugs };
       });
+
       return project;
     };
 
@@ -500,8 +510,8 @@ export default class Store {
   async getViewers() {
     try {
       const response = await UserService.getUsers();
-      const users = response.data.filter((user) => user?.id !== this.user?.id);
-      this.setUsers(users);
+      // const users = response.data.filter((user) => user?.id !== this.user?.id);
+      this.setUsers(response.data);
     } catch (e: unknown) {
       console.error(e);
     }
