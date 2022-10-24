@@ -12,35 +12,50 @@ import Filters from "./filters";
 import { checkBugTime } from "../../services/utils";
 dayjs.extend(relativeTime);
 
-const headerColumns = [
+type SortKeys = keyof IBug;
+type SortOrder = "asc" | "desc";
+
+type Column = {
+  text: string;
+  class: string;
+  path: keyof IBug;
+};
+
+const headerColumns: Column[] = [
   {
     text: "Bug",
-    class: "w-4/12 py-2 text-xs font-semibold uppercase text-gray-600"
+    class: "w-4/12 py-2 text-xs font-semibold uppercase text-gray-600",
+    path: "title"
   },
   {
     text: "Status",
     class:
-      "w-1/12 py-2 text-xs text-center pr-4 font-semibold uppercase text-gray-600"
+      "w-1/12 py-2 text-xs text-center pr-4 font-semibold uppercase text-gray-600",
+    path: "status"
   },
   {
     text: "Priority",
     class:
-      "w-1/12 py-2 text-xs text-center pr-4 font-semibold uppercase text-gray-600"
+      "w-1/12 py-2 text-xs text-center font-semibold uppercase text-gray-600",
+    path: "priority"
   },
   {
     text: "Created",
     class:
-      "w-2/12 py-2 text-xs text-center font-semibold uppercase text-gray-600"
+      "w-2/12 py-2 text-xs text-center font-semibold uppercase text-gray-600",
+    path: "createdAt"
   },
   {
     text: "Due",
     class:
-      "w-2/12 py-2 text-xs text-center font-semibold uppercase text-gray-600"
+      "w-2/12 py-2 text-xs text-center font-semibold uppercase text-gray-600",
+    path: "due"
   },
   {
     text: "Reporter",
     class:
-      "w-2/12 py-2 text-xs text-right font-semibold uppercase text-gray-600"
+      "w-2/12 py-2 text-xs text-right font-semibold uppercase text-gray-600",
+    path: "createdBy"
   }
 ];
 
@@ -141,6 +156,15 @@ const ProjectList = () => {
     visibleProjects
   ]);
 
+  // Sorting
+  const [sortKey, setSortKey] = useState<SortKeys>("priority");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
+
+  const handleSort = (value: keyof IBug) => {
+    setSortKey(value);
+    setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+  };
+
   return (
     <div>
       <div className="mb-3">
@@ -152,14 +176,20 @@ const ProjectList = () => {
         ))}
       </div>
       <Table>
-        <TableHeaders {...{ columns: headerColumns }} />
+        <TableHeaders
+          {...{ columns: headerColumns, handleSort, sortKey, sortOrder }}
+        />
       </Table>
       {visibleProjects.map((project) => (
         <div key={project.id} className="pb-2">
           <h3 className="mt-4 border-b-2 pb-2 text-xl font-bold">
             {project.title}
           </h3>
-          <BugTable data={project.bugs} />
+          <BugTable
+            data={project.bugs}
+            sortKey={sortKey}
+            sortOrder={sortOrder}
+          />
         </div>
       ))}
     </div>

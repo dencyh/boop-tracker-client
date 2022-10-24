@@ -12,10 +12,11 @@ import Reporter from "./reporter";
 
 type TableProps = {
   data: IBug[];
+  sortKey: SortKeys;
+  sortOrder: SortOrder;
 };
 
 type SortKeys = keyof IBug;
-
 type SortOrder = "asc" | "desc";
 
 const sortData = ({
@@ -34,9 +35,7 @@ const sortData = ({
   return sortedData;
 };
 
-const BugTable = ({ data }: TableProps) => {
-  const [sortKey, setSortKey] = useState<SortKeys>("id");
-  const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
+const BugTable = ({ data, sortKey, sortOrder }: TableProps) => {
   const columns = [
     {
       text: "Bug",
@@ -52,7 +51,7 @@ const BugTable = ({ data }: TableProps) => {
     },
     {
       text: "Priority",
-      class: "w-1/12 py-2 text-sm pr-4 text-center",
+      class: "w-1/12 py-2 text-sm text-center",
       path: "priority",
       component: (bug) => <StatusBadge {...{ bug, path: "priority" }} />
     },
@@ -83,7 +82,7 @@ const BugTable = ({ data }: TableProps) => {
   return (
     <Table>
       {/* <TableHeaders {...{ columns }} /> */}
-      <TableBody {...{ columns, data: data }} />
+      <TableBody {...{ columns, data: sortedData() }} />
     </Table>
   );
 };

@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import SelectedItem from "./selectedItem";
 import FilterMenu from "./filterMenu";
-import { filterMenuItems } from "./data";
 import { Context } from "../../..";
 
 const Filters = () => {
