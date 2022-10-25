@@ -163,7 +163,7 @@ export default class Store {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.error(e);
-      return e.response.status;
+      return e.response?.status;
     }
   }
 
