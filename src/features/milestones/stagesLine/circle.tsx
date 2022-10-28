@@ -1,4 +1,4 @@
-import React, { MutableRefObject, RefObject } from "react";
+import React from "react";
 import { IBaseControl } from "../../../components/controls/interfaces/baseControl";
 
 interface CircleProps extends IBaseControl {

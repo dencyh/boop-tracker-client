@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { IBug } from "../../../models/IBug";
 import Table from "./table";
 import TableBody from "./tableBody";
-import TableHeaders from "./tableHeaders";
 import _ from "lodash";
 import StatusBadge from "./statusBadge";
 import CreatedAt from "./createdAt";

@@ -1,6 +1,5 @@
 import React from "react";
 import SettingsHeader from "./settingsHeader";
-import { observer } from "mobx-react-lite";
 import SettingsForm from "./settingsForm";
 
 const Settings = () => {

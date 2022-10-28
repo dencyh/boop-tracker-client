@@ -1,5 +1,5 @@
 import * as React from "react";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import "dayjs/locale/ru";
 import "dayjs/locale/ar-sa";
 import TextField from "@mui/material/TextField";

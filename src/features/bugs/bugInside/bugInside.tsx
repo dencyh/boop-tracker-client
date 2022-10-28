@@ -14,10 +14,6 @@ import EditableField from "../../projects/editableField";
 import { IProject } from "../../../models/IProject";
 import Button from "../../../components/controls/button";
 import DeleteModal from "../../../components/deleteModal";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import MuiPicker from "../newModal/muiPicker";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import dayjs from "dayjs";
 
 const BugInside = () => {
   const { store } = useContext(Context);

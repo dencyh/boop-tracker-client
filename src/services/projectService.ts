@@ -1,7 +1,6 @@
-import { IStage } from "./../models/IProject";
+import { IStage, IProject } from "./../models/IProject";
 import api from "../http";
 import { AxiosResponse } from "axios";
-import { IProject } from "../models/IProject";
 import { IBug } from "../models/IBug";
 import { IUser } from "../models/IUser";
 

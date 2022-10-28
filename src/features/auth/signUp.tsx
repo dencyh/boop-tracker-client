@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useRef, useState } from "react";
+import React, { FormEvent, useContext, useState } from "react";
 import { Context } from "../../index";
 import Button from "../../components/controls/button";
 import Input from "../../components/inputs/input";
@@ -68,7 +68,7 @@ const signUp = ({ onSignOption }: SignInProps) => {
       errorMessage:
         "Must be minimum six characters, at least one letter and one number",
       label: "Password",
-      pattern: "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$",
+      pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}",
       required: true
     },
     {

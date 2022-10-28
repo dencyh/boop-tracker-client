@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { IBaseControl } from "./interfaces/baseControl";
 
-const DeleteButton = ({ name, ...rest }: IBaseControl) => {
+const DeleteButton = ({ ...rest }: IBaseControl) => {
   return (
     <button
       {...rest}

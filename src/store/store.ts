@@ -1,5 +1,4 @@
 import { filter, filterMenuItems } from "./../features/bugs/filters/data";
-import { BugValues } from "../features/bugs/newModal/bugModal";
 import { BugService } from "../services/bugService";
 import { IBug, IBugClient } from "../models/IBug";
 import { UserService } from "../services/userService";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { IBaseInput } from "../../../components/inputs/interfaces/IBaseInput";
 
 const StepInput = ({ value, ...rest }: IBaseInput) => {

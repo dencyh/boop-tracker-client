@@ -1,15 +1,12 @@
 import { observer } from "mobx-react-lite";
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Multiselect from "multiselect-react-dropdown";
 import CreationInfo from "../bugs/bugInside/creationInfo";
 import { Context } from "../..";
 import CloseButton from "../../components/controls/closeButton";
-import { IComment } from "../../models/IBug";
-import { BugValues } from "../bugs/newModal/bugModal";
 import EditableField from "./editableField";
 import Loader from "../../components/loader";
-import EditForm from "./editForm";
 import Button from "../../components/controls/button";
 import DeleteModal from "../../components/deleteModal";
 

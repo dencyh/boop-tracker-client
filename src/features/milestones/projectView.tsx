@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { IProject } from "../../models/IProject";
 import StagesLine from "./stagesLine";
 import Timeline from "./timeline/timeline";

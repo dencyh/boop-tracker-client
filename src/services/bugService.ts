@@ -1,10 +1,8 @@
 import { IUser } from "./../models/IUser";
 import { IProject } from "./../models/IProject";
-import { IBugClient, ICommentClient } from "../models/IBug";
+import { IBugClient, ICommentClient, IBug } from "../models/IBug";
 import { AxiosResponse } from "axios";
 import api from "../http";
-import { IBug } from "../models/IBug";
-import { BugValues } from "../features/bugs/newModal/bugModal";
 
 export class BugService {
   static async getBug(id: number): Promise<AxiosResponse<IBug>> {

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { IProject, IStage } from "../../../models/IProject";
+import { IStage } from "../../../models/IProject";
 import CheckButton from "../../../components/controls/checkButton";
 import Circle from "./circle";
 import StepButton from "./stepButton";
