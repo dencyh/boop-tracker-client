@@ -314,22 +314,23 @@ export default class Store {
 
   async updateProject({
     projectId,
-    option,
+    key,
     newValue
   }: {
     projectId: number;
-    option: keyof IProject | keyof IBug;
+    key: keyof IProject | keyof IBug;
     newValue: string | string[] | Date | undefined | IUser[];
   }) {
     try {
       this.setLoading(true);
       const response = await ProjectService.updateProject({
         projectId,
-        option,
+        key,
         newValue
       });
       await this.getUserProjects();
       await this.getProjectById(Number(projectId));
+      this.setCurrentProjectById(projectId);
       console.log(response);
     } catch (e) {
       console.error(e);
@@ -519,19 +520,19 @@ export default class Store {
   }
 
   async updateBug({
-    field,
+    key,
     newValue
   }: {
-    field: keyof IBug | keyof IProject;
+    key: keyof IBug | keyof IProject;
     newValue: string | string[] | Date | undefined | IUser[];
   }) {
     this.setLoading(true);
     try {
-      const response = await BugService.updateBug(
-        Number(this.bug.id),
-        field,
+      const response = await BugService.updateBug({
+        id: Number(this.bug.id),
+        key: key,
         newValue
-      );
+      });
       await this.getBug(this.bug.id);
       console.log(response);
     } catch (e) {
@@ -558,7 +559,6 @@ export default class Store {
     this.setLoading(true);
     try {
       const response = await UserService.getUsers();
-      // const users = response.data.filter((user) => user?.id !== this.user?.id);
       this.setUsers(response.data);
     } catch (e: unknown) {
       console.error(e);

@@ -33,14 +33,14 @@ export class ProjectService {
 
   static async updateProject({
     projectId,
-    option,
+    key,
     newValue
   }: {
     projectId: number;
-    option: keyof IProject | keyof IBug;
+    key: keyof IProject | keyof IBug;
     newValue: string | string[] | Date | undefined | IUser[];
   }) {
-    return api.patch(`/projects/${projectId}`, { option, newValue });
+    return api.patch(`/projects/${projectId}`, { key, newValue });
   }
 
   static async getProjectById(id: number) {

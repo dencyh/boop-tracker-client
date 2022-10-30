@@ -5,7 +5,6 @@ import { Context } from "../../..";
 import CreationInfo from "./creationInfo";
 import SimpleDropdown from "../newModal/simpleDropdown";
 import { BugValues, priorityData, statusData } from "../newModal/bugModal";
-import Multiselect from "multiselect-react-dropdown";
 import CommentList from "./commentList";
 import { IBug, IComment } from "../../../models/IBug";
 import CommentForm from "./commentForm";
@@ -14,6 +13,12 @@ import EditableField from "../../projects/editableField";
 import Button from "../../../components/controls/button";
 import DeleteModal from "../../../components/deleteModal";
 import Loader from "../../../components/loader";
+import MultiSelect from "../../../components/inputs/multiSelect";
+
+type Option = {
+  label: string;
+  value: string;
+};
 
 const BugInside = () => {
   const { store } = useContext(Context);
@@ -30,32 +35,32 @@ const BugInside = () => {
   };
 
   const [bugValues, setBugValues] = useState<BugValues>(initialBugValues);
-  const [allUsers, setAllUsers] = useState([{ name: "1", id: "1" }]);
-  const [assignedTo, setAssignedTo] = useState([{ name: "1", id: "1" }]);
+  const [allUsers, setAllUsers] = useState<Option[]>([]);
+  const [viewers, setViewers] = useState<Option[]>([]);
+
+  useEffect(() => {
+    store.project.id
+      ? setAllUsers(
+          store.users.map((item) => ({
+            label: item.firstName + " " + item.lastName,
+            value: item.id.toString()
+          }))
+        )
+      : "";
+    store.project.id
+      ? setViewers(
+          store.project.viewers.map((item) => ({
+            label: item.firstName + " " + item.lastName,
+            value: item.id.toString()
+          }))
+        )
+      : "";
+  }, [store.project, store.users]);
 
   useEffect(() => {
     store.getBug(Number(id));
     store.getViewers();
   }, [id]);
-
-  useEffect(() => {
-    store.bug.id
-      ? setAllUsers(
-          store.users.map((item) => ({
-            name: item.firstName + " " + item.lastName,
-            id: item.id.toString()
-          }))
-        )
-      : "";
-    store.bug.id
-      ? setAssignedTo(
-          store.bug.assignedTo.map((item) => ({
-            name: item.firstName + " " + item.lastName,
-            id: item.id.toString()
-          }))
-        )
-      : "";
-  }, [store.bug, store.users]);
 
   const commentByParentId = useMemo(() => {
     if (store.bug?.comments?.length) {
@@ -95,7 +100,7 @@ const BugInside = () => {
   }) => {
     setBugValues({ ...bugValues, [name]: value });
 
-    store.updateBug({ field: name as keyof IBug, newValue: value });
+    store.updateBug({ key: name as keyof IBug, newValue: value });
   };
 
   const handleComment = (e, value, parentId) => {
@@ -135,12 +140,12 @@ const BugInside = () => {
     navigate("/bugs", { replace: true });
   };
 
-  const onChange = (e) => {
-    const ids = e.map((option) => option.id);
+  const onViewersChange = ({ name, value }: { name: string; value }) => {
+    const ids = value.map((option) => option.id);
     const assingedUsers = store.users.filter((user) => {
       return ids.includes(user.id.toString());
     });
-    store.updateBug({ field: "assignedTo", newValue: assingedUsers });
+    store.updateBug({ key: name as keyof IBug, newValue: assingedUsers });
   };
 
   return (
@@ -173,14 +178,14 @@ const BugInside = () => {
                 <h2 className="mt-2 py-2 text-3xl font-semibold">
                   <EditableField
                     text={store.bug.title}
-                    valueName="title"
+                    name="title"
                     entityName="bug"
                   />
                 </h2>
                 <div className="py-2">
                   <EditableField
                     text={store.bug.description}
-                    valueName="description"
+                    name="description"
                     entityName="bug"
                   />
                 </div>
@@ -197,12 +202,11 @@ const BugInside = () => {
                 </div>
                 <div className="w-4/5 2xl:w-80">
                   <h3>Assigned to:</h3>
-                  <Multiselect
-                    options={allUsers} // Options to display in the dropdown
-                    selectedValues={assignedTo} // Preselected value to persist in dropdown
-                    onSelect={(e) => onChange(e)} // Function will trigger on select event
-                    onRemove={(e) => onChange(e)} // Function will trigger on remove event
-                    displayValue="name" // Property name to display in the dropdown options
+                  <MultiSelect
+                    name="assignedTo"
+                    options={allUsers}
+                    value={viewers}
+                    handleChange={onViewersChange}
                   />
                 </div>
 

@@ -7,11 +7,11 @@ import EditForm from "./editForm";
 
 const EditableField = ({
   text,
-  valueName,
+  name,
   entityName
 }: {
   text?: string;
-  valueName: keyof IProject;
+  name: keyof IProject;
   entityName: "project" | "bug";
 }) => {
   const { store } = useContext(Context);
@@ -36,7 +36,7 @@ const EditableField = ({
           {editing && (
             <EditForm
               setEditing={setEditing}
-              valueName={valueName}
+              name={name}
               entityName={entityName}
             />
           )}

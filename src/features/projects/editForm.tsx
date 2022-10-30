@@ -7,14 +7,14 @@ import { IProject } from "../../models/IProject";
 
 type EditFormProps = {
   setEditing: (boolean) => void;
-  valueName: keyof IProject | keyof IBug;
+  name: keyof IProject | keyof IBug;
   entityName: "project" | "bug";
 };
-const EditForm = ({ setEditing, valueName, entityName }: EditFormProps) => {
+const EditForm = ({ setEditing, name, entityName }: EditFormProps) => {
   const { store } = useContext(Context);
 
   const [value, setValue] = useState(
-    entityName === "project" ? store.project[valueName] : store.bug[valueName]
+    entityName === "project" ? store.project[name] : store.bug[name]
   );
 
   const onChange = ({ value }: { value: string }) => {
@@ -27,12 +27,12 @@ const EditForm = ({ setEditing, valueName, entityName }: EditFormProps) => {
     if (entityName === "project") {
       store.updateProject({
         projectId: store.project.id,
-        option: valueName,
+        key: name,
         newValue: value.toString()
       });
     }
     if (entityName === "bug") {
-      store.updateBug({ field: valueName, newValue: value.toString() });
+      store.updateBug({ key: name, newValue: value.toString() });
     }
     setEditing(false);
   };

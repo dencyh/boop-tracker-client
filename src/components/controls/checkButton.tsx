@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { IBaseControl } from "./interfaces/baseControl";
 
-const CheckButton = ({ name, ...rest }: IBaseControl) => {
+const CheckButton = ({ ...rest }: IBaseControl) => {
   return (
     <button
       {...rest}

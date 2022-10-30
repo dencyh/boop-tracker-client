@@ -84,7 +84,12 @@ const ProjectModal = ({ onClose }: ProjetModalProps) => {
           handleChange={handleChange}
         />
         <div className="mt-4">
-          <Toggle label="Closed" name="closed" handleChange={handleChange} />
+          <Toggle
+            label="Closed"
+            name="closed"
+            handleChange={handleChange}
+            checked={projectValues.closed}
+          />
         </div>
         <div className="mt-5 w-fit">
           <Button name="Create" />

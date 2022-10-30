@@ -6,9 +6,6 @@ import { Context } from "../../..";
 import { IComment } from "../../../models/IBug";
 import CommentForm from "./commentForm";
 import CommentList from "./commentList";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faHeart } from "@fortawesome/free-solid-svg-icons";
-// import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import InitialsAvatar from "./initialsAvatar";
 
 type CommentPorps = {
@@ -30,7 +27,7 @@ const Comment = ({ comment, getReplies }: CommentPorps) => {
     setIsReplying(false);
   };
 
-  const updateComment = (e, value, parentId) => {
+  const updateComment = (e, value) => {
     e.preventDefault();
     store.updateComment(value, comment.id);
     setIsEditing(false);

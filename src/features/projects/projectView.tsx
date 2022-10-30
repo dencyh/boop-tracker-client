@@ -1,7 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Multiselect from "multiselect-react-dropdown";
 import CreationInfo from "../bugs/bugInside/creationInfo";
 import { Context } from "../..";
 import CloseButton from "../../components/controls/closeButton";
@@ -9,6 +8,14 @@ import EditableField from "./editableField";
 import Loader from "../../components/loader";
 import Button from "../../components/controls/button";
 import DeleteModal from "../../components/deleteModal";
+import MultiSelect from "../../components/inputs/multiSelect";
+import Toggle from "../../components/inputs/toggle";
+import { IProject } from "../../models/IProject";
+
+type Option = {
+  label: string;
+  value: string;
+};
 
 const ProjectView = () => {
   const { store } = useContext(Context);
@@ -19,26 +26,28 @@ const ProjectView = () => {
     store.getProjectById(Number(id));
     store.getViewers();
   }, [id]);
-  const [allUsers, setAllUsers] = useState([{ name: "1", id: "1" }]);
-  const [viewers, setViewers] = useState([{ name: "1", id: "1" }]);
+  const [allUsers, setAllUsers] = useState<Option[]>([]);
+  const [viewers, setViewers] = useState<Option[]>([]);
 
   useEffect(() => {
     store.project.id
       ? setAllUsers(
           store.users.map((item) => ({
-            name: item.firstName + " " + item.lastName,
-            id: item.id.toString()
+            label: item.firstName + " " + item.lastName,
+            value: item.id.toString()
           }))
         )
       : "";
     store.project.id
       ? setViewers(
           store.project.viewers.map((item) => ({
-            name: item.firstName + " " + item.lastName,
-            id: item.id.toString()
+            label: item.firstName + " " + item.lastName,
+            value: item.id.toString()
           }))
         )
       : "";
+
+    setProjectClosed(store.project.closed);
   }, [store.project, store.users]);
 
   const navigate = useNavigate();
@@ -72,18 +81,32 @@ const ProjectView = () => {
     navigate("/bugs", { replace: true });
   };
 
-  const onChange = (e) => {
-    const ids = e.map((option) => option.id);
-    const newViewers = store.users
-      .filter((user) => ids.includes(user.id.toString()))
-      .concat(store.user);
+  const handleChange = ({ name, value }: { name: string; value }) => {
+    if (name === "viewers") {
+      const ids = value.map((item) => item.value);
+      setViewers(value);
+      const newViewers = store.users
+        .filter((user) => ids.includes(user.id.toString()))
+        .concat(store.user);
 
-    store.updateProject({
-      projectId: store.project.id,
-      option: "viewers",
-      newValue: newViewers
-    });
+      store.updateProject({
+        projectId: store.project.id,
+        key: name as keyof IProject,
+        newValue: newViewers
+      });
+    } else if (name === "closed") {
+      setProjectClosed(value);
+      store.updateProject({
+        projectId: store.project.id,
+        key: name as keyof IProject,
+        newValue: value
+      });
+    }
   };
+
+  const [projectClosed, setProjectClosed] = useState(
+    store.project.closed || false
+  );
 
   return (
     <>
@@ -116,15 +139,23 @@ const ProjectView = () => {
                 <div className="mt-2 py-2 text-3xl font-semibold">
                   <EditableField
                     text={store.project.title}
-                    valueName="title"
+                    name="title"
                     entityName="project"
                   />
                 </div>
                 <div className="py-2">
                   <EditableField
                     text={`Description: ${store.project.description}`}
-                    valueName="description"
+                    name="description"
                     entityName="project"
+                  />
+                </div>
+                <div className="mt-4 flex gap-2">
+                  <h3>Closed:</h3>
+                  <Toggle
+                    handleChange={handleChange}
+                    name="closed"
+                    checked={projectClosed}
                   />
                 </div>
               </div>
@@ -138,13 +169,14 @@ const ProjectView = () => {
                 )}
                 <div className="w-4/5 2xl:w-80">
                   <h3>Viewers:</h3>
-                  <Multiselect
-                    options={allUsers} // Options to display in the dropdown
-                    selectedValues={viewers} // Preselected value to persist in dropdown
-                    onSelect={(e) => onChange(e)} // Function will trigger on select event
-                    onRemove={(e) => onChange(e)} // Function will trigger on remove event
-                    displayValue="name" // Property name to display in the dropdown options
-                  />
+                  <div>
+                    <MultiSelect
+                      name="viewers"
+                      options={allUsers}
+                      value={viewers}
+                      handleChange={handleChange}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

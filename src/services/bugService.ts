@@ -31,12 +31,16 @@ export class BugService {
     });
   }
 
-  static async updateBug(
-    id: number,
-    field: keyof IBug | keyof IProject,
-    newValue: string | string[] | Date | undefined | IUser[]
-  ) {
-    return api.patch(`bugs/${id}`, { field, newValue });
+  static async updateBug({
+    id,
+    key,
+    newValue
+  }: {
+    id: number;
+    key: keyof IBug | keyof IProject;
+    newValue: string | string[] | Date | undefined | IUser[];
+  }) {
+    return api.patch(`bugs/${id}`, { key, newValue });
   }
 
   static async deleteBug(id: number) {

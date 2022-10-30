@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import SidebarMenuItem from "./sidebarMenuItem";
 import { ISidebarMenuItem } from "../../data/sidebarItems";
-import { useLocation } from "react-router-dom";
 
 const SidebarContents = ({
   sidebarItems,

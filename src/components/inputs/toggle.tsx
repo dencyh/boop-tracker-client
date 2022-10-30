@@ -5,13 +5,19 @@ interface ToggleProps extends Omit<IBaseInput, "handleChange"> {
   handleChange({ name, value }: { name: string; value: boolean });
 }
 
-const Toggle = ({ label, name, handleChange, ...rest }: ToggleProps) => {
+const Toggle = ({
+  label,
+  name,
+  checked = false,
+  handleChange,
+  ...rest
+}: ToggleProps) => {
   return (
     <label className="relative inline-flex cursor-pointer items-center">
       <input
         type="checkbox"
-        value=""
         className="peer sr-only"
+        checked={checked}
         {...rest}
         onChange={(e) => handleChange({ name, value: e.target.checked })}
       />
