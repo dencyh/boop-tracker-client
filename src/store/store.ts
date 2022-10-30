@@ -152,6 +152,7 @@ export default class Store {
   }
 
   async signIn(email: string, password: string) {
+    this.setLoading(true);
     try {
       const response = await AuthService.signIn(email, password);
       localStorage.setItem("token", response.data.tokens.accessToken);
@@ -163,6 +164,8 @@ export default class Store {
     } catch (e: any) {
       console.error(e);
       return e.response?.status;
+    } finally {
+      this.setLoading(false);
     }
   }
 
@@ -192,6 +195,7 @@ export default class Store {
   }
 
   async signOut() {
+    this.setLoading(true);
     try {
       const response = await AuthService.signOut();
       localStorage.removeItem("token");
@@ -200,6 +204,8 @@ export default class Store {
       console.log(response);
     } catch (e: unknown) {
       console.error(e);
+    } finally {
+      this.setLoading(false);
     }
   }
 
@@ -214,6 +220,7 @@ export default class Store {
     email: string;
     password?: string;
   }) {
+    this.setLoading(true);
     try {
       const response = await UserService.updateUser({
         id: this.user.id,
@@ -230,6 +237,8 @@ export default class Store {
     } catch (e: any) {
       console.error(e);
       return e.response;
+    } finally {
+      this.setLoading(false);
     }
   }
 
@@ -260,6 +269,7 @@ export default class Store {
   }
 
   async getProjectById(id: number) {
+    this.setLoading(true);
     try {
       const response = await ProjectService.getProjectById(id);
       console.log(response);
@@ -267,6 +277,8 @@ export default class Store {
     } catch (e) {
       console.error(e);
       return e;
+    } finally {
+      this.setLoading(false);
     }
   }
 
@@ -283,6 +295,7 @@ export default class Store {
     deadline: Date;
     closed: boolean;
   }) {
+    this.setLoading(true);
     try {
       const response = await ProjectService.createProject({
         title,
@@ -294,6 +307,8 @@ export default class Store {
       console.log(response);
     } catch (e: unknown) {
       console.error(e);
+    } finally {
+      this.setLoading(false);
     }
   }
 
@@ -307,6 +322,7 @@ export default class Store {
     newValue: string | string[] | Date | undefined | IUser[];
   }) {
     try {
+      this.setLoading(true);
       const response = await ProjectService.updateProject({
         projectId,
         option,
@@ -318,16 +334,21 @@ export default class Store {
     } catch (e) {
       console.error(e);
       return e;
+    } finally {
+      this.setLoading(false);
     }
   }
 
   async deleteProject(id: number) {
+    this.setLoading(true);
     try {
       const response = await ProjectService.deleteProject(id);
       await this.getUserProjects();
       console.log(response);
     } catch (e) {
       console.error(e);
+    } finally {
+      this.setLoading(false);
     }
   }
 
@@ -340,6 +361,7 @@ export default class Store {
     projectId: number;
     nextId: number | null;
   }) {
+    this.setLoading(true);
     try {
       const response = await ProjectService.createStage({
         text,
@@ -357,10 +379,13 @@ export default class Store {
     } catch (e) {
       console.error(e);
       return e;
+    } finally {
+      this.setLoading(false);
     }
   }
 
   async deleteStage(stage: IStage) {
+    this.setLoading(true);
     try {
       const response = await ProjectService.deleteStage(stage);
       await this.getUserProjects();
@@ -373,6 +398,8 @@ export default class Store {
     } catch (e) {
       console.error(e);
       return e;
+    } finally {
+      this.setLoading(false);
     }
   }
 
@@ -385,6 +412,7 @@ export default class Store {
     stageId: number;
     projectId: number;
   }) {
+    this.setLoading(true);
     try {
       const response = await ProjectService.updateStage({
         text,
@@ -402,10 +430,13 @@ export default class Store {
     } catch (e) {
       console.error(e);
       return e;
+    } finally {
+      this.setLoading(false);
     }
   }
 
   async getBug(id: number) {
+    this.setLoading(true);
     try {
       const response = await BugService.getBug(id);
 
@@ -413,6 +444,8 @@ export default class Store {
       this.setBug(response.data);
     } catch (e: unknown) {
       console.error(e);
+    } finally {
+      this.setLoading(false);
     }
   }
 
@@ -426,6 +459,7 @@ export default class Store {
     createdBy,
     projectId
   }: IBugClient) {
+    this.setLoading(true);
     try {
       const response = await BugService.createBug({
         title,
@@ -441,10 +475,13 @@ export default class Store {
       return response;
     } catch (e) {
       console.error(e);
+    } finally {
+      this.setLoading(false);
     }
   }
 
   async postComment(text: string, parentId: number | null) {
+    this.setLoading(true);
     try {
       const userId = Number(this.user.id);
       const bugId = Number(this.bug.id);
@@ -454,15 +491,18 @@ export default class Store {
         bugId,
         parentId
       });
-      this.getBug(bugId);
+      await this.getBug(bugId);
       console.log(response);
       return response;
     } catch (e) {
       console.error(e);
+    } finally {
+      this.setLoading(false);
     }
   }
 
   async updateComment(text: string, commentId: number) {
+    this.setLoading(true);
     try {
       const response = await BugService.updateComment({
         text,
@@ -473,6 +513,8 @@ export default class Store {
       console.log(response);
     } catch (e) {
       console.error(e);
+    } finally {
+      this.setLoading(false);
     }
   }
 
@@ -483,36 +525,45 @@ export default class Store {
     field: keyof IBug | keyof IProject;
     newValue: string | string[] | Date | undefined | IUser[];
   }) {
+    this.setLoading(true);
     try {
       const response = await BugService.updateBug(
         Number(this.bug.id),
         field,
         newValue
       );
-      this.getBug(this.bug.id);
+      await this.getBug(this.bug.id);
       console.log(response);
     } catch (e) {
       console.error(e);
+    } finally {
+      this.setLoading(false);
     }
   }
 
   async deleteBug(id: number) {
+    this.setLoading(true);
     try {
       const response = await BugService.deleteBug(id);
       await this.getUserProjects();
       console.log(response);
     } catch (e) {
       console.error(e);
+    } finally {
+      this.setLoading(false);
     }
   }
 
   async getViewers() {
+    this.setLoading(true);
     try {
       const response = await UserService.getUsers();
       // const users = response.data.filter((user) => user?.id !== this.user?.id);
       this.setUsers(response.data);
     } catch (e: unknown) {
       console.error(e);
+    } finally {
+      this.setLoading(false);
     }
   }
 }

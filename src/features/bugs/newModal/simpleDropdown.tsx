@@ -67,7 +67,7 @@ const SimpleDropdown = ({
             role="button"
             value={menuItems[key]}
             key={key}
-            className="block py-2 px-4 text-sm uppercase hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            className="block w-48 py-2 px-4 text-sm uppercase hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             onClick={() => handleValues(key as keyof IBug, name)}
           >
             {menuItems[key]}

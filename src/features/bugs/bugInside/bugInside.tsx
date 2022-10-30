@@ -14,9 +14,11 @@ import EditableField from "../../projects/editableField";
 import { IProject } from "../../../models/IProject";
 import Button from "../../../components/controls/button";
 import DeleteModal from "../../../components/deleteModal";
+import Loader from "../../../components/loader";
 
 const BugInside = () => {
   const { store } = useContext(Context);
+  const { id } = useParams();
 
   const initialBugValues: BugValues = {
     title: "",
@@ -29,7 +31,6 @@ const BugInside = () => {
   };
 
   const [bugValues, setBugValues] = useState<BugValues>(initialBugValues);
-  const { id } = useParams();
   const [allUsers, setAllUsers] = useState([{ name: "1", id: "1" }]);
   const [assignedTo, setAssignedTo] = useState([{ name: "1", id: "1" }]);
 
@@ -144,91 +145,103 @@ const BugInside = () => {
 
   return (
     <div className="relative h-screen w-full overflow-auto p-8">
-      {store.bug.id && (
+      {store.bug.id !== Number(id) ? (
+        <Loader />
+      ) : (
         <div
           className={`flex flex-col gap-4 ${modalOpen ? "blur" : ""}`}
           ref={modalBgRef}
         >
-          <CloseButton onClick={onClose} />
-          <div className="flex justify-between rounded-md border-b-2 p-4">
-            <div>
-              <CreationInfo
-                {...{
-                  firstName: store.bug.createdBy.firstName,
-                  lastName: store.bug.createdBy.lastName,
-                  projectTitle: store.bug.project.title,
-                  createdAt: store.bug.createdAt,
-                  updatedAt: store.bug.updatedAt
-                }}
-              />
-              <h2 className="mt-2 py-2 text-3xl font-semibold">
-                <EditableField
-                  text={store.bug.title}
-                  valueName="title"
-                  entityName="bug"
-                />
-              </h2>
-              <div className="py-2">
-                <EditableField
-                  text={store.bug.description}
-                  valueName="description"
-                  entityName="bug"
-                />
-              </div>
+          {store.isLoading && (
+            <div className="fixed top-6 right-6 z-40 flex items-center justify-center text-white">
+              <Loader noText />
             </div>
-            <div className="relative flex w-60 flex-col items-end gap-2">
-              <div className="absolute -top-12">
-                {store.bug?.createdBy?.id === store.user.id && (
-                  <Button
-                    name="Delete"
-                    color="bg-red-400 hover:bg-red-500"
-                    onClick={() => handleDeleteModal()}
-                  />
-                )}
-              </div>
-              <div className="w-4/5 2xl:w-80">
-                <h3>Assigned to:</h3>
-                <Multiselect
-                  options={allUsers} // Options to display in the dropdown
-                  selectedValues={assignedTo} // Preselected value to persist in dropdown
-                  onSelect={(e) => onChange(e)} // Function will trigger on select event
-                  onRemove={(e) => onChange(e)} // Function will trigger on remove event
-                  displayValue="name" // Property name to display in the dropdown options
-                />
-              </div>
-
-              <SimpleDropdown
-                label={store.bug.status.toUpperCase()}
-                name="status"
-                menuItems={statusData}
-                handleValues={handleValues}
-              />
-              <SimpleDropdown
-                label={store.bug.priority.toUpperCase()}
-                name="priority"
-                menuItems={priorityData}
-                handleValues={handleValues}
-              />
-            </div>
-          </div>
-
+          )}
           <div>
-            <div className="mb-6">Comments({store.bug.comments?.length}):</div>
-            <ul>
-              {comments.rootComments?.length > 0 && (
-                <CommentList
+            <CloseButton onClick={onClose} />
+            <div className="flex justify-between border-b-2 p-4">
+              <div>
+                <CreationInfo
                   {...{
-                    comments: comments.rootComments,
-                    getReplies
+                    firstName: store.bug.createdBy.firstName,
+                    lastName: store.bug.createdBy.lastName,
+                    projectTitle: store.bug.project.title,
+                    createdAt: store.bug.createdAt,
+                    updatedAt: store.bug.updatedAt
                   }}
                 />
-              )}
-            </ul>
-          </div>
+                <h2 className="mt-2 py-2 text-3xl font-semibold">
+                  <EditableField
+                    text={store.bug.title}
+                    valueName="title"
+                    entityName="bug"
+                  />
+                </h2>
+                <div className="py-2">
+                  <EditableField
+                    text={store.bug.description}
+                    valueName="description"
+                    entityName="bug"
+                  />
+                </div>
+              </div>
+              <div className="relative flex w-60 flex-col items-end gap-2">
+                <div className="absolute -top-12">
+                  {store.bug?.createdBy?.id === store.user.id && (
+                    <Button
+                      name="Delete"
+                      color="bg-red-400 hover:bg-red-500"
+                      onClick={() => handleDeleteModal()}
+                    />
+                  )}
+                </div>
+                <div className="w-4/5 2xl:w-80">
+                  <h3>Assigned to:</h3>
+                  <Multiselect
+                    options={allUsers} // Options to display in the dropdown
+                    selectedValues={assignedTo} // Preselected value to persist in dropdown
+                    onSelect={(e) => onChange(e)} // Function will trigger on select event
+                    onRemove={(e) => onChange(e)} // Function will trigger on remove event
+                    displayValue="name" // Property name to display in the dropdown options
+                  />
+                </div>
 
-          <CommentForm handleComment={handleComment} />
+                <SimpleDropdown
+                  label={store.bug.status.toUpperCase()}
+                  name="status"
+                  menuItems={statusData}
+                  handleValues={handleValues}
+                />
+                <SimpleDropdown
+                  label={store.bug.priority.toUpperCase()}
+                  name="priority"
+                  menuItems={priorityData}
+                  handleValues={handleValues}
+                />
+              </div>
+            </div>
+
+            <div>
+              <div className="mb-6">
+                Comments({store.bug.comments?.length}):
+              </div>
+              <ul>
+                {comments.rootComments?.length > 0 && (
+                  <CommentList
+                    {...{
+                      comments: comments.rootComments,
+                      getReplies
+                    }}
+                  />
+                )}
+              </ul>
+            </div>
+
+            <CommentForm handleComment={handleComment} />
+          </div>
         </div>
       )}
+
       {modalOpen && (
         <div className="absolute top-1/2 left-1/2 z-40 m-0 w-1/2 -translate-y-1/2 -translate-x-1/2">
           <DeleteModal deleteAction={deleteAction} entity={store.bug} />

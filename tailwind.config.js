@@ -11,7 +11,8 @@ module.exports = {
         primary: {
           400: "#ec9128",
           500: "#d58120"
-        }
+        },
+        "dark-transparent": "#000000B5"
       },
       dropShadow: {
         pop: "0 0 12px #41212B50"

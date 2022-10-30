@@ -56,7 +56,7 @@ const ProjectsList = () => {
           (project.closed && selectedFilter.closed) ||
           (!project.closed && selectedFilter.open)
       )
-    ].filter((item) => item.title.toLowerCase().includes(query));
+    ].filter((item) => item.title.toLowerCase().includes(query.toLowerCase()));
     return result;
   };
 

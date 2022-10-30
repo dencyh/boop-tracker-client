@@ -14,21 +14,23 @@ function App() {
     }
   }, []);
 
-  if (store.isLoading)
-    return (
-      <div className="contianer flex h-screen items-center justify-center">
-        <Loader />
-      </div>
-    );
-
-  return store.isAuth ? (
-    store.user?.emailConfirmed ? (
-      <Home />
-    ) : (
-      <ConfirmEmail />
-    )
-  ) : (
-    <Auth />
+  return (
+    <>
+      {store.isLoading && !store.user.id && (
+        <div className="contianer bg-black- fixed flex h-screen w-full items-center justify-center bg-dark-transparent text-white">
+          <Loader />
+        </div>
+      )}
+      {store.isAuth ? (
+        store.user?.emailConfirmed ? (
+          <Home />
+        ) : (
+          <ConfirmEmail />
+        )
+      ) : (
+        <Auth />
+      )}
+    </>
   );
 }
 

@@ -97,6 +97,11 @@ const ProjectView = () => {
           <Loader />
         ) : (
           <div className="flex flex-col gap-4">
+            {store.isLoading && (
+              <div className="absolute right-12">
+                <Loader noText={true} />
+              </div>
+            )}
             <CloseButton onClick={onClose} />
             <div className="flex justify-between rounded-md border-b-2 p-4">
               <div>

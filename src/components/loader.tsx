@@ -1,11 +1,11 @@
 import React from "react";
 
-const Loader = () => {
+const Loader = ({ noText }: { noText?: boolean }) => {
   return (
-    <div role="status">
+    <div role="status" className="flex items-center justify-center">
       <svg
         aria-hidden="true"
-        className="mr-2 h-8 w-8 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
+        className="mr-2 h-8 w-8 animate-spin fill-primary-400 text-gray-200 dark:text-gray-600"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +19,7 @@ const Loader = () => {
           fill="currentFill"
         />
       </svg>
-      <span>Loading...</span>
+      {!noText && <div>Loading...</div>}
     </div>
   );
 };

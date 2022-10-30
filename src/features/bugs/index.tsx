@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Button from "../../components/controls/button";
 import BugView from "./projectList";
-import ModalSelection from "./newModal/modalSelection";
+import ModalSelection from "./newModal";
 
 const Bugs = () => {
   const [modalOpen, setModalOpen] = useState(false);
