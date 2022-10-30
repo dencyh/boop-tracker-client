@@ -81,6 +81,19 @@ export default class Store {
     this.isLoading = value;
   }
 
+  async refreshOnUpdate() {
+    const projectId = this.currentProject.id;
+    console.log(projectId);
+    if (projectId) {
+      await this.getUserProjects();
+      this.setCurrentProjectById(projectId);
+      console.log(this.currentProject.id);
+    } else {
+      await this.getUserProjects();
+      this.setCurrentProject({} as IProject);
+    }
+  }
+
   filterBugs() {
     const activeFilters = this.bugFilters.filter(
       (filter) => filter.active === true
@@ -262,6 +275,7 @@ export default class Store {
     try {
       const response = await ProjectService.getProjects();
       this.setProjects(response.data);
+      // ???
       this.setCurrentProject({ ...{} } as IProject);
     } catch (e: unknown) {
       console.error(e);
@@ -305,6 +319,7 @@ export default class Store {
         closed
       });
       console.log(response);
+      this.getUserProjects();
     } catch (e: unknown) {
       console.error(e);
     } finally {
@@ -328,9 +343,8 @@ export default class Store {
         key,
         newValue
       });
-      await this.getUserProjects();
-      await this.getProjectById(Number(projectId));
-      this.setCurrentProjectById(projectId);
+      await this.refreshOnUpdate();
+
       console.log(response);
     } catch (e) {
       console.error(e);
@@ -370,12 +384,8 @@ export default class Store {
         userId: this.user.id,
         nextId
       });
-      await this.getUserProjects();
-      if (this.currentProject.id) {
-        this.setCurrentProjectById(projectId);
-      } else {
-        this.setCurrentProject({} as IProject);
-      }
+
+      await this.refreshOnUpdate();
       console.log(response);
     } catch (e) {
       console.error(e);
@@ -389,12 +399,8 @@ export default class Store {
     this.setLoading(true);
     try {
       const response = await ProjectService.deleteStage(stage);
-      await this.getUserProjects();
-      if (this.currentProject.id) {
-        this.setCurrentProjectById(stage.project.id);
-      } else {
-        this.setCurrentProject({} as IProject);
-      }
+      await this.refreshOnUpdate();
+
       console.log(response);
     } catch (e) {
       console.error(e);
@@ -421,13 +427,8 @@ export default class Store {
         projectId,
         userId: this.user.id
       });
-      if (this.currentProject.id) {
-        this.setCurrentProjectById(projectId);
-      } else {
-        this.setCurrentProject({} as IProject);
-      }
+      await this.refreshOnUpdate();
       console.log(response);
-      await this.getUserProjects();
     } catch (e) {
       console.error(e);
       return e;
@@ -473,6 +474,7 @@ export default class Store {
         projectId
       });
       console.log(response);
+      await this.refreshOnUpdate();
       return response;
     } catch (e) {
       console.error(e);

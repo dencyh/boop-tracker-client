@@ -9,7 +9,7 @@ export interface IBugClient {
   due: Date;
   assignedTo: number[];
   createdBy: IUser;
-  projectId?: number;
+  projectId: number;
 }
 
 export interface ICommentClient {

@@ -138,9 +138,6 @@ const BugModal = ({ onClose }: BugModalProps) => {
       projectId: store.currentProject.id
     });
 
-    // to refresh store
-
-    await store.getUserProjects();
     onClose();
   };
 

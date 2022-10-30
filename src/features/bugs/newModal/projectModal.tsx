@@ -64,8 +64,6 @@ const ProjectModal = ({ onClose }: ProjetModalProps) => {
       closed
     });
 
-    // to refresh projects sidebar
-    await store.getUserProjects();
     onClose();
   };
   return (
