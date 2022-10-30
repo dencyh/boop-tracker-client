@@ -11,7 +11,6 @@ import { IBug, IComment } from "../../../models/IBug";
 import CommentForm from "./commentForm";
 import CloseButton from "../../../components/controls/closeButton";
 import EditableField from "../../projects/editableField";
-import { IProject } from "../../../models/IProject";
 import Button from "../../../components/controls/button";
 import DeleteModal from "../../../components/deleteModal";
 import Loader from "../../../components/loader";
@@ -87,17 +86,18 @@ const BugInside = () => {
     });
   }, [store.bug.comments]);
 
-  const handleValues = (
-    option: keyof IBug | keyof IProject,
-    value: keyof BugValues
-  ) => {
-    setBugValues({
-      ...bugValues,
-      [value]: option
-    });
+  const handleChange = ({
+    name,
+    value
+  }: {
+    name: string;
+    value: string | string[] | Date | undefined;
+  }) => {
+    setBugValues({ ...bugValues, [name]: value });
 
-    store.updateBug({ field: value, newValue: option });
+    store.updateBug({ field: name as keyof IBug, newValue: value });
   };
+
   const handleComment = (e, value, parentId) => {
     e.preventDefault();
     store.postComment(value, parentId);
@@ -210,13 +210,13 @@ const BugInside = () => {
                   label={store.bug.status.toUpperCase()}
                   name="status"
                   menuItems={statusData}
-                  handleValues={handleValues}
+                  handleChange={handleChange}
                 />
                 <SimpleDropdown
                   label={store.bug.priority.toUpperCase()}
                   name="priority"
                   menuItems={priorityData}
-                  handleValues={handleValues}
+                  handleChange={handleChange}
                 />
               </div>
             </div>

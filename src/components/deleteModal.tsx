@@ -15,9 +15,8 @@ const DeleteModal = ({ deleteAction, entity }: DeleteModalProps) => {
   const activeClass = "text-white bg-red-500 hover:bg-red-600";
 
   const [value, setValue] = useState("");
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.target;
-    setValue(target.value);
+  const onChange = ({ value }: { value: string }) => {
+    setValue(value);
   };
 
   useEffect(() => {
@@ -47,7 +46,12 @@ const DeleteModal = ({ deleteAction, entity }: DeleteModalProps) => {
         confirm.
       </p>
       <div className="my-4">
-        <Input label="" onChange={onChange} value={value} />
+        <Input
+          label=""
+          handleChange={onChange}
+          name="projectName"
+          value={value}
+        />
       </div>
 
       <button

@@ -43,8 +43,8 @@ const Step = ({
 
   const [inputValue, setInputValue] = useState(stage?.text || defaultText);
 
-  const handleInput = (e) => {
-    setInputValue(e.target.value);
+  const handleInput = ({ value }: { value: string }) => {
+    setInputValue(value);
   };
 
   const handleEditStage = (text: string) => {
@@ -92,7 +92,11 @@ const Step = ({
         >
           {!first && !last && (
             <>
-              <StepInput value={inputValue} onChange={handleInput} />
+              <StepInput
+                value={inputValue}
+                handleChange={handleInput}
+                name="step"
+              />
               <div className="ml-1 flex">
                 <CheckButton
                   onClick={() => handleEditStage(inputValue.toString())}

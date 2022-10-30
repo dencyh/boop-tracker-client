@@ -14,8 +14,8 @@ const CommentForm = ({
 }: CommentFormProps) => {
   const [value, setValue] = useState(initialValue);
 
-  const onChange = (e) => {
-    setValue(e.currentTarget.value);
+  const onChange = ({ value }: { value: string }) => {
+    setValue(value);
   };
 
   return (
@@ -25,7 +25,7 @@ const CommentForm = ({
         setValue("");
       }}
     >
-      <Textarea rows={3} onChange={onChange} value={value} required />
+      <Textarea rows={3} handleChange={onChange} value={value} required />
       <Button name="Send" type="submit" />
     </form>
   );

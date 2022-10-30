@@ -8,7 +8,6 @@ import Button from "../../../components/controls/button";
 import Input from "../../../components/inputs/input";
 import Textarea from "../../../components/inputs/textarea";
 import Toggle from "../../../components/inputs/toggle";
-import { BugValues } from "./bugModal";
 import CheckboxDropdown from "./checkboxDropdown";
 import MuiPicker from "./muiPicker";
 
@@ -39,25 +38,17 @@ const ProjectModal = ({ onClose }: ProjetModalProps) => {
   };
   const [projectValues, setProjectValues] =
     useState<ProjectValues>(initialProjectValues);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onChange = (e: any) => {
-    const target = e.target as HTMLInputElement;
-    setProjectValues({ ...projectValues, [target.name]: target.value });
-  };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleCheck = (e: any) => {
-    const checked = e.target.checked;
-    setProjectValues({ ...projectValues, [e.target.name]: checked });
-  };
-
-  const handleValues = (
-    option: string | string[] | Date | undefined,
-    value: keyof ProjectValues | keyof BugValues
-  ) => {
+  const handleChange = ({
+    name,
+    value
+  }: {
+    name: string;
+    value: string | string[] | Date | undefined | boolean;
+  }) => {
     setProjectValues({
       ...projectValues,
-      [value]: option
+      [name]: value
     });
   };
 
@@ -80,15 +71,20 @@ const ProjectModal = ({ onClose }: ProjetModalProps) => {
   return (
     <form className="mx-auto flex gap-4" onSubmit={handleSumbit}>
       <div className="w-3/5">
-        <Input label="Title" onChange={onChange} name="title" required />
+        <Input
+          label="Title"
+          handleChange={handleChange}
+          name="title"
+          required
+        />
         <Textarea
           label="Description"
           name="description"
           rows={5}
-          onChange={onChange}
+          handleChange={handleChange}
         />
         <div className="mt-4">
-          <Toggle label="Closed" name="closed" onChange={handleCheck} />
+          <Toggle label="Closed" name="closed" handleChange={handleChange} />
         </div>
         <div className="mt-5 w-fit">
           <Button name="Create" />
@@ -100,7 +96,7 @@ const ProjectModal = ({ onClose }: ProjetModalProps) => {
             <MuiPicker
               label="Estimate deadline"
               name="deadline"
-              handleValues={handleValues}
+              handleChange={handleChange}
               initValue={dayjs(projectValues.deadline)}
             />
           </LocalizationProvider>
@@ -109,7 +105,7 @@ const ProjectModal = ({ onClose }: ProjetModalProps) => {
           label="Add viewers"
           name="viewers"
           menuItems={store.users}
-          handleValues={handleValues}
+          handleChange={handleChange}
         />
       </div>
     </form>

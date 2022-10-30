@@ -9,7 +9,6 @@ import SimpleDropdown from "./simpleDropdown";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { observer } from "mobx-react-lite";
-import { ProjectValues } from "./projectModal";
 import BugModalError from "./bugModalError";
 import dayjs from "dayjs";
 
@@ -88,24 +87,18 @@ const BugModal = ({ onClose }: BugModalProps) => {
     }
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onChange = (e: any) => {
-    const target = e.target as HTMLInputElement;
-    setBugValues({ ...bugValues, [target.name]: target.value });
-  };
+  const handleChange = ({
+    name,
+    value
+  }: {
+    name: string;
+    value: string | string[] | Date | undefined;
+  }) => {
+    setBugValues({ ...bugValues, [name]: value });
 
-  const handleValues = (
-    option: string | string[] | Date | undefined,
-    value: keyof BugValues | keyof ProjectValues
-  ) => {
-    setBugValues({
-      ...bugValues,
-      [value]: option
-    });
-
-    if (value === "projectId") {
+    if (name === "projectId") {
       store.projects.forEach((project) => {
-        if (Number(project.id) === Number(option)) {
+        if (Number(project.id) === Number(value)) {
           store.setCurrentProject(project);
         }
       });
@@ -166,16 +159,16 @@ const BugModal = ({ onClose }: BugModalProps) => {
             label={store.currentProject.title}
             name="projectId"
             menuItems={availableProjects}
-            handleValues={handleValues}
+            handleChange={handleChange}
           />
           <BugModalError {...validationErrors.emptyProject} />
-          <Input label="Title" onChange={onChange} name="title" />
+          <Input label="Title" handleChange={handleChange} name="title" />
           <BugModalError {...validationErrors.emptyTitle} />
           <Textarea
             label="Description"
             name="description"
             rows={5}
-            onChange={onChange}
+            handleChange={handleChange}
           />
           <div className="mt-5 w-fit">
             <Button name="Create" />
@@ -187,7 +180,7 @@ const BugModal = ({ onClose }: BugModalProps) => {
               <MuiPicker
                 label="Choose due date"
                 name="due"
-                handleValues={handleValues}
+                handleChange={handleChange}
                 initValue={dayjs(bugValues.due)}
               />
             </LocalizationProvider>
@@ -196,19 +189,19 @@ const BugModal = ({ onClose }: BugModalProps) => {
             label="Assign to"
             name="assignedTo"
             menuItems={store.users}
-            handleValues={handleValues}
+            handleChange={handleChange}
           />
           <SimpleDropdown
             label="Status"
             name="status"
             menuItems={statusData}
-            handleValues={handleValues}
+            handleChange={handleChange}
           />
           <SimpleDropdown
             label="Priority"
             name="priority"
             menuItems={priorityData}
-            handleValues={handleValues}
+            handleChange={handleChange}
           />
         </div>
       </div>

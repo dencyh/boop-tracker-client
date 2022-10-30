@@ -12,23 +12,26 @@ import { ProjectValues } from "./projectModal";
 type TimePickerProps = {
   label: string;
   name: keyof BugValues | keyof ProjectValues;
-  handleValues: (
-    option: Date | undefined,
-    value: keyof BugValues | keyof ProjectValues
-  ) => void;
+  handleChange: ({
+    name,
+    value
+  }: {
+    name: string;
+    value: string | string[] | Date | undefined;
+  }) => void;
   initValue?: Dayjs | null;
 };
 export default function MuiPicker({
   label,
   name,
-  handleValues,
+  handleChange,
   initValue
 }: TimePickerProps) {
   const locale = "ru";
   const [value, setValue] = React.useState<Dayjs | null | undefined>(initValue);
 
   React.useEffect(() => {
-    handleValues(value?.toDate(), name);
+    handleChange({ name, value: value?.toDate() });
   }, []);
 
   return (
@@ -37,7 +40,7 @@ export default function MuiPicker({
         label={label}
         value={value}
         onChange={(newValue) => {
-          handleValues(newValue?.toDate(), name);
+          handleChange({ name, value: newValue?.toDate() });
           setValue(newValue);
         }}
         renderInput={(params) => <TextField {...params} />}

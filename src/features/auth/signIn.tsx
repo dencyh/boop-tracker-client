@@ -57,9 +57,8 @@ const SignIn = ({ onSignOption }: SignInProps) => {
     }
   ];
 
-  const onChange = (e: FormEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLInputElement;
-    setValues({ ...values, [target.name]: target.value });
+  const handleChange = ({ name, value }: { name: string; value: string }) => {
+    setValues({ ...values, [name]: value });
   };
 
   const handleSignIn = async (e: FormEvent<HTMLFormElement>) => {
@@ -86,7 +85,7 @@ const SignIn = ({ onSignOption }: SignInProps) => {
             <Input
               key={input.name}
               {...input}
-              onChange={onChange}
+              handleChange={handleChange}
               value={values[input.name]}
             />
           ))}

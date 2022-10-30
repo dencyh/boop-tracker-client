@@ -9,13 +9,13 @@ type SimpleDropdownProps = {
   name: keyof BugValues;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   menuItems: any;
-  handleValues: (option: keyof IBug, value: keyof BugValues) => void;
+  handleChange: ({ name, value }: { name: keyof IBug; value: string }) => void;
 };
 const SimpleDropdown = ({
   label,
   name,
   menuItems,
-  handleValues
+  handleChange
 }: SimpleDropdownProps) => {
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(label);
@@ -62,15 +62,17 @@ const SimpleDropdown = ({
         }`}
         ref={listRef}
       >
-        {Object.keys(menuItems).map((key) => (
+        {Object.keys(menuItems).map((value) => (
           <li
             role="button"
-            value={menuItems[key]}
-            key={key}
+            value={menuItems[value]}
+            key={value}
             className="block w-48 py-2 px-4 text-sm uppercase hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            onClick={() => handleValues(key as keyof IBug, name)}
+            onClick={() => {
+              handleChange({ name, value });
+            }}
           >
-            {menuItems[key]}
+            {menuItems[value]}
           </li>
         ))}
       </ul>

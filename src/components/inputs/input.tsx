@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IBaseInput } from "./interfaces/IBaseInput";
 
-const Input = ({ label, errorMessage, ...rest }: IBaseInput) => {
+const Input = ({
+  label,
+  errorMessage,
+  name,
+  handleChange,
+  ...rest
+}: IBaseInput) => {
   const [focusLoss, setFocusLoss] = useState(false);
   return (
     <label
@@ -17,6 +23,7 @@ const Input = ({ label, errorMessage, ...rest }: IBaseInput) => {
         onFocus={() => {
           label === "Confirm password" && setFocusLoss(true);
         }}
+        onChange={(e) => handleChange({ name, value: e.target.value })}
       />
       <p
         className={`${

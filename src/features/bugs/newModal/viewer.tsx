@@ -5,13 +5,16 @@ interface ViewerProps extends Omit<IBaseInput, "label"> {
   id: string;
   firstName: string;
   lastName: string;
+  name: string;
+  handleChange: ({ name, value }: { name: string; value: string }) => void;
   //   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 const Viewer = ({
   id,
   firstName,
   lastName,
-  onChange,
+  name,
+  handleChange,
   ...rest
 }: ViewerProps) => {
   return (
@@ -19,7 +22,7 @@ const Viewer = ({
       <div className="">
         <label className="flex items-center rounded p-1.5 hover:bg-gray-100 dark:hover:bg-gray-600">
           <input
-            onChange={onChange}
+            onChange={(e) => handleChange({ name, value: e.target.value })}
             type="checkbox"
             value={id}
             {...rest}

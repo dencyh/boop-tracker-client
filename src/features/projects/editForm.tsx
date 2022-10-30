@@ -17,8 +17,8 @@ const EditForm = ({ setEditing, valueName, entityName }: EditFormProps) => {
     entityName === "project" ? store.project[valueName] : store.bug[valueName]
   );
 
-  const onChange = (e) => {
-    setValue(e.currentTarget.value);
+  const onChange = ({ value }: { value: string }) => {
+    setValue(value);
   };
 
   const handleSubmit = (e) => {
@@ -40,14 +40,14 @@ const EditForm = ({ setEditing, valueName, entityName }: EditFormProps) => {
   return (
     <form
       onSubmit={(e) => {
-        // handleComment(e, value, parentId);
         handleSubmit(e);
         setValue("");
       }}
     >
       <Textarea
         rows={3}
-        onChange={onChange}
+        name="projectField"
+        handleChange={onChange}
         value={value.toString()}
         required
       />

@@ -12,16 +12,13 @@ type CheckboxDropdown = {
   label: string;
   name: keyof BugValues | keyof ProjectValues;
   menuItems: IUser[];
-  handleValues: (
-    option: string[],
-    value: keyof BugValues | keyof ProjectValues
-  ) => void;
+  handleChange: ({ name, value }: { name: string; value: string[] }) => void;
 };
 const CheckboxDropdown = ({
   label,
   name,
   menuItems,
-  handleValues
+  handleChange
 }: CheckboxDropdown) => {
   const { store } = useContext(Context);
   useEffect(() => {
@@ -31,9 +28,7 @@ const CheckboxDropdown = ({
 
   const [users, setUsers] = useState({});
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
+  const handleSelectedId = ({ value }: { value: string }) => {
     if (users[value as keyof typeof users]) {
       setUsers({ ...users, [value]: false });
       return;
@@ -47,7 +42,7 @@ const CheckboxDropdown = ({
         return userId;
       }
     });
-    handleValues(selectedUserIds, name);
+    handleChange({ name, value: selectedUserIds });
   }, [users]);
 
   const listRef = useRef<HTMLDivElement>(null);
@@ -83,8 +78,8 @@ const CheckboxDropdown = ({
       )
     );
   }, [query]);
-  const handleQuery = (e) => {
-    setQuery(e.currentTarget.value);
+  const handleQuery = ({ value }: { value: string }) => {
+    setQuery(value);
   };
 
   return (
@@ -103,7 +98,7 @@ const CheckboxDropdown = ({
         }`}
         ref={listRef}
       >
-        <Search label="" onChange={handleQuery} />
+        <Search label="" handleChange={handleQuery} name="viewerQuery" />
         <ul className="absolute h-40 w-full overflow-y-auto px-3 pb-3 text-sm text-gray-700 dark:text-gray-200">
           {displayUsers.map((user) => (
             <Viewer
@@ -111,7 +106,8 @@ const CheckboxDropdown = ({
               id={user.id.toString()}
               firstName={user.firstName}
               lastName={user.lastName}
-              onChange={handleChange}
+              name="viewer"
+              handleChange={handleSelectedId}
             />
           ))}
         </ul>

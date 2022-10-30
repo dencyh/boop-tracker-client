@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import Button from "../../components/controls/button";
 import Input from "../../components/inputs/input";
 import ServerMessage from "../../components/ServerMessage";
@@ -76,9 +76,8 @@ const SettingsForm = () => {
     }
   ];
 
-  const onChange = (e: FormEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLInputElement;
-    setValues({ ...values, [target.name]: target.value });
+  const handleChange = ({ name, value }: { name: string; value: string }) => {
+    setValues({ ...values, [name]: value });
   };
 
   const handleEditPassword = () => {
@@ -127,7 +126,7 @@ const SettingsForm = () => {
               <Input
                 {...input}
                 value={values[input.name]}
-                onChange={onChange}
+                handleChange={handleChange}
               />
             </div>
           ))}
@@ -139,7 +138,7 @@ const SettingsForm = () => {
                 <Input
                   {...input}
                   value={values[input.name]}
-                  onChange={onChange}
+                  handleChange={handleChange}
                 />
               </div>
             ))
@@ -148,7 +147,7 @@ const SettingsForm = () => {
               <Input
                 {...userPassword[0]}
                 value={values[userPassword[0].name]}
-                onChange={onChange}
+                handleChange={handleChange}
                 disabled
               />
               <div className="ml-4 translate-y-1">

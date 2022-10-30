@@ -89,9 +89,8 @@ const signUp = ({ onSignOption }: SignInProps) => {
     store.signUp(firstName, lastName, email, password);
   };
 
-  const onChange = (e: FormEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLInputElement;
-    setValues({ ...values, [target.name]: target.value });
+  const handleChange = ({ name, value }: { name: string; value: string }) => {
+    setValues({ ...values, [name]: value });
   };
 
   return (
@@ -103,7 +102,7 @@ const signUp = ({ onSignOption }: SignInProps) => {
             key={input.name}
             {...input}
             value={values[input.name]}
-            onChange={onChange}
+            handleChange={handleChange}
           />
         ))}
       </div>

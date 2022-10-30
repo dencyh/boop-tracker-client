@@ -1,7 +1,7 @@
 import React from "react";
 import { IBaseInput } from "../../../components/inputs/interfaces/IBaseInput";
 
-const Search = ({ ...rest }: IBaseInput) => {
+const Search = ({ handleChange, ...rest }: IBaseInput) => {
   return (
     <div className="p-3">
       <label htmlFor="input-group-search" className="sr-only">
@@ -28,6 +28,7 @@ const Search = ({ ...rest }: IBaseInput) => {
           className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
           placeholder="Search user"
           {...rest}
+          onChange={(e) => handleChange({ name: "", value: e.target.value })}
         />
       </div>
     </div>

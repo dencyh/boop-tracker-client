@@ -101,7 +101,12 @@ const ProjectsList = () => {
         <div className={`${isHidden ? "scale-0" : "scale-100"} duration-300`}>
           <div className="mt-4 px-4">
             <div className="py-2.5">
-              <Search label="" placeholder="Search" onChange={handleSearch} />
+              <Search
+                label=""
+                name="projectSearch"
+                placeholder="Search"
+                handleChange={handleSearch}
+              />
             </div>
             <ProjectFilters handleFilters={handleFilters} filters={filters} />
           </div>
