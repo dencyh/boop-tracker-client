@@ -97,12 +97,13 @@ export default class Store {
     const activeFilters = this.bugFilters.filter(
       (filter) => filter.active === true
     );
+    const currentProjectId = this.currentProject.id;
     // Reset current project
     this.setCurrentProjectById(this.currentProject.id);
 
     const runFilters = (project: IProject) => {
       if (activeFilters.length === 0) {
-        this.setCurrentProjectById(this.currentProject.id);
+        this.setCurrentProjectById(currentProjectId);
       }
       activeFilters.forEach((filter) => {
         let activeValues;
@@ -134,7 +135,7 @@ export default class Store {
           if (isCallback) {
             // If callback provided
             updatedBugs = project.bugs.filter((bug) =>
-              activeValues.every((callback) => callback(bug, this.user))
+              activeValues.some((callback) => callback(bug, this.user))
             );
           } else if (typeof activeValues[0] === "string") {
             // If plain string
@@ -150,7 +151,7 @@ export default class Store {
       return project;
     };
 
-    if (this.currentProject.id) {
+    if (currentProjectId) {
       this.setCurrentProject(runFilters(this.currentProject));
     } else {
       this.setFilteredProjectsWithBugs(
@@ -474,6 +475,7 @@ export default class Store {
       });
 
       await this.refreshOnUpdate();
+      this.filterBugs();
       return response;
     } catch (e) {
       console.error(e);
@@ -534,6 +536,7 @@ export default class Store {
         newValue
       });
       await this.getBug(this.bug.id);
+      await this.refreshOnUpdate();
       return response;
     } catch (e) {
       console.error(e);
@@ -546,7 +549,7 @@ export default class Store {
     this.setLoading(true);
     try {
       const response = await BugService.deleteBug(id);
-      await this.getUserProjects();
+      await this.refreshOnUpdate();
       return response;
     } catch (e) {
       console.error(e);

@@ -84,8 +84,8 @@ const ProjectsList = () => {
       navigate("/bugs");
   };
 
-  const handleSearch = (e) => {
-    setQuery(e.currentTarget.value);
+  const handleSearch = ({ value }) => {
+    setQuery(value);
   };
 
   return (

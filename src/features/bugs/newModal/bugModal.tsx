@@ -53,9 +53,9 @@ const BugModal = ({ onClose }: BugModalProps) => {
     return { ...acc, [project.id]: project.title.toLowerCase() };
   }, {});
 
-  useEffect(() => {
-    store.getViewers();
-  }, []);
+  // useEffect(() => {
+  //   store.getViewers();
+  // }, []);
 
   const usersItems: ReactSelectOption[] = store.users.map((user) => ({
     label: `${user.firstName}  ${user.lastName}`,
@@ -156,10 +156,6 @@ const BugModal = ({ onClose }: BugModalProps) => {
     onClose();
   };
 
-  useEffect(() => {
-    store.setCurrentProjectById(bugValues.projectId);
-  }, [store.projects]);
-
   return (
     <form className="mx-auto flex flex-col" onSubmit={handleSumbit}>
       <div className="flex-gap-4 flex justify-between">
@@ -211,7 +207,7 @@ const BugModal = ({ onClose }: BugModalProps) => {
           </div>
           <div className="w-4/5">
             <MultiSelect
-              name="viewers"
+              name="assignedTo"
               options={usersItems}
               handleChange={handleChange}
             />

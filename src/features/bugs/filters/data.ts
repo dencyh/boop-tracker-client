@@ -48,7 +48,7 @@ export const filterMenuItems: filter[] = [
       {
         active: false,
         name: "In 7 days",
-        callback: (bug: IBug) => checkBugTime(bug) > 0 && checkBugTime(bug) < 7
+        callback: (bug: IBug) => checkBugTime(bug) >= 0 && checkBugTime(bug) < 7
       },
       {
         active: false,
