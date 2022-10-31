@@ -11,12 +11,15 @@ import Project from "../features/projects";
 import { Context } from "..";
 import ConfirmEmail from "./confirmEmail";
 import { observer } from "mobx-react-lite";
+import Introduction from "../features/introduction";
 
 function Home() {
   const { store } = useContext(Context);
   if (store.user?.emailConfirmed === false) return <ConfirmEmail />;
+
   return (
     <div className="flex">
+      <Introduction />
       <Sidebar />
       <ProjectsList />
       <Routes>

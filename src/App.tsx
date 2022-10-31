@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       {store.isLoading && !store.user.id && (
-        <div className="contianer bg-black- fixed flex h-screen w-full items-center justify-center bg-dark-transparent text-white">
+        <div className="contianer bg-black- fixed z-40 flex h-screen w-full items-center justify-center bg-dark-transparent text-white">
           <Loader />
         </div>
       )}

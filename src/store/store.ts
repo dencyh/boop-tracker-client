@@ -23,6 +23,7 @@ export default class Store {
   users = [] as IUser[];
   isAuth = false;
   isLoading = false;
+  showIntroductoin = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -79,6 +80,10 @@ export default class Store {
 
   setLoading(value: boolean) {
     this.isLoading = value;
+  }
+
+  setShowIntroduction(value: boolean) {
+    this.showIntroductoin = value;
   }
 
   async refreshOnUpdate() {
@@ -172,6 +177,8 @@ export default class Store {
       this.setAuth(true);
       this.setUser(response.data.user);
 
+      this.setShowIntroduction(true);
+
       return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
@@ -199,6 +206,7 @@ export default class Store {
       this.setAuth(true);
       this.setUser(response.data.user);
 
+      this.setShowIntroduction(true);
       return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {

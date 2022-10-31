@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../../..";
 import Button from "../../../components/controls/button";
 import Input from "../../../components/inputs/input";

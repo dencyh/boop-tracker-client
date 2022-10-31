@@ -67,7 +67,6 @@ const SignIn = ({ onSignOption }: SignInProps) => {
             }, {})
           : {};
         setErrors(errorsObj);
-        console.log(errorsObj);
       });
     return Object.keys(errors).length === 0;
   };

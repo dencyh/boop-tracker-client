@@ -111,8 +111,6 @@ const signUp = ({ onSignOption }: SignInProps) => {
             }, {})
           : {};
 
-        console.log(errorsObj);
-
         setErrors(errorsObj);
       });
     return Object.keys(errors).length === 0;
