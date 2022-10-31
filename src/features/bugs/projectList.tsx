@@ -9,7 +9,7 @@ import BugTable from "./bugTable";
 import Table from "./bugTable/table";
 import TableHeaders from "./bugTable/tableHeaders";
 import Filters from "./filters";
-import { checkBugTime } from "../../services/utils";
+import { checkBugTime } from "../../services/utils/checkBugTime";
 dayjs.extend(relativeTime);
 
 type SortKeys = keyof IBug;

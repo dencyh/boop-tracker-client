@@ -8,4 +8,5 @@ export interface IBaseInput
   errorMessage?: string;
   serverError?: string;
   hideShow?: boolean;
+  submitErrors?: boolean;
 }

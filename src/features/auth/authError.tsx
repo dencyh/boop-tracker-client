@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const serverErrors = {
   0: {
@@ -21,15 +21,23 @@ type AuthErrorProps = {
 };
 
 const AuthError = ({ status, message }: AuthErrorProps) => {
+  const [open, setOpen] = useState(true);
+  useEffect(() => {
+    setTimeout(() => setOpen(false), 2000);
+  }, []);
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-red-500 p-2 text-center text-lg font-medium text-white">
-      <p className="mb-1">
-        {message
-          ? message
-          : serverErrors[status]?.top || "Something went wrong"}
-      </p>
-      {message ? "" : <p>{serverErrors[status]?.bottom}</p>}
-    </div>
+    <>
+      {open && (
+        <div className="fixed bottom-0 left-0 w-full bg-red-500 p-2 text-center text-lg font-medium text-white">
+          <p className="mb-1">
+            {message
+              ? message
+              : serverErrors[status]?.top || "Something went wrong"}
+          </p>
+          {message ? "" : <p>{serverErrors[status]?.bottom}</p>}
+        </div>
+      )}
+    </>
   );
 };
 

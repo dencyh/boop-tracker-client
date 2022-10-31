@@ -1,9 +1,26 @@
-import React, { FormEvent, useContext, useState } from "react";
+import React, { FormEvent, useContext, useEffect, useState } from "react";
 import { Context } from "../../index";
 import Button from "../../components/controls/button";
 import Input from "../../components/inputs/input";
 import SignHeader from "./signHeader";
 import { SignInInputs } from "./signIn";
+import * as yup from "yup";
+
+let signUpSchema = yup.object().shape({
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
+  password: yup
+    .string()
+    .required("Cannot be empty")
+    .matches(/[A-Z]+/, "Must have at least one capital letter")
+    .matches(/[a-z]+/, "Must have at least one lowercase letter")
+    .matches(/\d+/, "Must have at least one number")
+    .min(6, "Must be at least 6 characters"),
+  email: yup.string().required("Cannot be empty").email("Must be an email"),
+  lastName: yup.string().required("Cannot be empty"),
+  firstName: yup.string().required("Cannot be empty")
+});
 
 type SignInProps = {
   onSignOption: () => void;
@@ -41,58 +58,81 @@ const signUp = ({ onSignOption }: SignInProps) => {
       name: "firstName",
       type: "text",
       placeholder: "First name",
-      errorMessage: "Can not be empty",
-      label: "First name",
-      required: true
+      label: "First name"
     },
     {
       name: "lastName",
       type: "text",
       placeholder: "Last name",
-      errorMessage: "Can not be empty",
-      label: "Last name",
-      required: true
+      label: "Last name"
     },
     {
       name: "email",
       type: "email",
       placeholder: "elon@mars.com",
-      errorMessage: "Must be an email",
-      label: "Email",
-      required: true
+
+      label: "Email"
     },
     {
       name: "password",
       type: "password",
-      placeholder: "",
-      errorMessage:
-        "Must be minimum six characters, at least one capital and one lowercase letter and one number",
       label: "Password",
-      pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d\\w\\W]{6,}$",
-      required: true,
       hideShow: true
     },
     {
       name: "confirmPassword",
       type: "password",
-      placeholder: "",
-      errorMessage: "Passwords don't match",
       label: "Confirm password",
-      pattern: values.password,
       hideShow: true
     }
   ];
 
   const { store } = useContext(Context);
+  const [errors, setErrors] = useState({});
 
-  const handleSignUp = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const { firstName, lastName, email, password } = values;
-    store.signUp(firstName, lastName, email, password);
+  useEffect(() => {
+    validate();
+  }, [values]);
+
+  const validate = () => {
+    signUpSchema
+      .validate(values, { abortEarly: false })
+      .then(() => setErrors({}))
+      .catch((e) => {
+        const { inner } = e;
+
+        const errorsObj = Array.isArray(inner)
+          ? inner.reduce((acc, item) => {
+              const { path, errors } = item;
+              if (!acc[path] && errors.length) {
+                acc[path] = errors[0];
+              }
+              return acc;
+            }, {})
+          : {};
+
+        console.log(errorsObj);
+
+        setErrors(errorsObj);
+      });
+    return Object.keys(errors).length === 0;
   };
 
   const handleChange = ({ name, value }: { name: string; value: string }) => {
     setValues({ ...values, [name]: value });
+  };
+
+  const [submitErrors, setSubmitErrors] = useState(false);
+
+  const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const isValid = validate();
+    if (!isValid) {
+      setSubmitErrors(true);
+      return;
+    }
+    const { firstName, lastName, email, password } = values;
+    store.signUp(firstName, lastName, email, password);
   };
 
   return (
@@ -102,9 +142,11 @@ const signUp = ({ onSignOption }: SignInProps) => {
         {signUpInputs.map((input: SignUpInputs) => (
           <Input
             key={input.name}
+            errorMessage={errors[input.name]}
             {...input}
             value={values[input.name]}
             handleChange={handleChange}
+            submitErrors={submitErrors}
           />
         ))}
       </div>

@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { IBug } from "../models/IBug";
+import { IBug } from "../../models/IBug";
 
 /**
  *

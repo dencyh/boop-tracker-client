@@ -1,6 +1,6 @@
 import { IUser } from "./../../../models/IUser";
 import { IBug } from "./../../../models/IBug";
-import { checkBugTime } from "../../../services/utils";
+import { checkBugTime } from "../../../services/utils/checkBugTime";
 
 export interface filter {
   active: boolean;
