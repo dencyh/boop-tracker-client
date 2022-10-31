@@ -98,7 +98,7 @@ const SettingsForm = () => {
     if (!editingPassword) {
       password = "";
     }
-    console.log(password);
+
     const res = await store.updateUser({
       firstName,
       lastName,

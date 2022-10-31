@@ -3,7 +3,6 @@ import { Context } from "../../..";
 import Button from "../../../components/controls/button";
 import Input from "../../../components/inputs/input";
 import Textarea from "../../../components/inputs/textarea";
-import CheckboxDropdown from "./checkboxDropdown";
 import MuiPicker from "./muiPicker";
 import SimpleDropdown from "./simpleDropdown";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -11,11 +10,15 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { observer } from "mobx-react-lite";
 import BugModalError from "./bugModalError";
 import dayjs from "dayjs";
+import { MultiValue, SingleValue } from "react-select";
+import MultiSelect, {
+  ReactSelectOption
+} from "../../../components/inputs/multiSelect";
 
 export interface BugValues {
   title: string;
   description: string;
-  assignedTo: string[];
+  assignedTo: ReactSelectOption[];
   status: string;
   priority: string;
   due: Date;
@@ -53,6 +56,11 @@ const BugModal = ({ onClose }: BugModalProps) => {
   useEffect(() => {
     store.getViewers();
   }, []);
+
+  const usersItems: ReactSelectOption[] = store.users.map((user) => ({
+    label: `${user.firstName}  ${user.lastName}`,
+    value: user.id.toString()
+  }));
 
   const initialBugValues: BugValues = {
     title: "",
@@ -92,7 +100,14 @@ const BugModal = ({ onClose }: BugModalProps) => {
     value
   }: {
     name: string;
-    value: string | string[] | Date | undefined;
+    value:
+      | string
+      | string[]
+      | Date
+      | undefined
+      | boolean
+      | MultiValue<ReactSelectOption>
+      | SingleValue<ReactSelectOption>;
   }) => {
     setBugValues({ ...bugValues, [name]: value });
 
@@ -126,7 +141,7 @@ const BugModal = ({ onClose }: BugModalProps) => {
     const errors = checkErrors();
     if (errors[0]) return;
 
-    const userIds = assignedTo.map((userId) => Number(userId));
+    const userIds = assignedTo.map((user) => Number(user.value));
     await store.createBug({
       title,
       description,
@@ -171,23 +186,7 @@ const BugModal = ({ onClose }: BugModalProps) => {
             <Button name="Create" />
           </div>
         </div>
-        <div className="flex flex-col items-end gap-4">
-          <div>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <MuiPicker
-                label="Choose due date"
-                name="due"
-                handleChange={handleChange}
-                initValue={dayjs(bugValues.due)}
-              />
-            </LocalizationProvider>
-          </div>
-          <CheckboxDropdown
-            label="Assign to"
-            name="assignedTo"
-            menuItems={store.users}
-            handleChange={handleChange}
-          />
+        <div className="flex w-2/5 flex-col items-end gap-4">
           <SimpleDropdown
             label="Status"
             name="status"
@@ -200,6 +199,23 @@ const BugModal = ({ onClose }: BugModalProps) => {
             menuItems={priorityData}
             handleChange={handleChange}
           />
+          <div className="w-4/5">
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <MuiPicker
+                label="Choose due date"
+                name="due"
+                handleChange={handleChange}
+                initValue={dayjs(bugValues.due)}
+              />
+            </LocalizationProvider>
+          </div>
+          <div className="w-4/5">
+            <MultiSelect
+              name="viewers"
+              options={usersItems}
+              handleChange={handleChange}
+            />
+          </div>
         </div>
       </div>
     </form>

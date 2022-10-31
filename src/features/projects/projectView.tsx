@@ -8,14 +8,11 @@ import EditableField from "./editableField";
 import Loader from "../../components/loader";
 import Button from "../../components/controls/button";
 import DeleteModal from "../../components/deleteModal";
-import MultiSelect from "../../components/inputs/multiSelect";
+import MultiSelect, {
+  ReactSelectOption
+} from "../../components/inputs/multiSelect";
 import Toggle from "../../components/inputs/toggle";
 import { IProject } from "../../models/IProject";
-
-type Option = {
-  label: string;
-  value: string;
-};
 
 const ProjectView = () => {
   const { store } = useContext(Context);
@@ -26,8 +23,8 @@ const ProjectView = () => {
     store.getProjectById(Number(id));
     store.getViewers();
   }, [id]);
-  const [allUsers, setAllUsers] = useState<Option[]>([]);
-  const [viewers, setViewers] = useState<Option[]>([]);
+  const [allUsers, setAllUsers] = useState<ReactSelectOption[]>([]);
+  const [viewers, setViewers] = useState<ReactSelectOption[]>([]);
 
   useEffect(() => {
     store.project.id

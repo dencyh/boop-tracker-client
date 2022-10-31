@@ -83,11 +83,10 @@ export default class Store {
 
   async refreshOnUpdate() {
     const projectId = this.currentProject.id;
-    console.log(projectId);
+
     if (projectId) {
       await this.getUserProjects();
       this.setCurrentProjectById(projectId);
-      console.log(this.currentProject.id);
     } else {
       await this.getUserProjects();
       this.setCurrentProject({} as IProject);
@@ -171,7 +170,7 @@ export default class Store {
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
-      console.log(response);
+
       return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
@@ -198,7 +197,7 @@ export default class Store {
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
-      console.log(response);
+
       return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
@@ -214,7 +213,7 @@ export default class Store {
       localStorage.removeItem("token");
       this.setAuth(false);
       this.setUser({} as IUser);
-      console.log(response);
+      return response;
     } catch (e: unknown) {
       console.error(e);
     } finally {
@@ -244,7 +243,7 @@ export default class Store {
       });
       localStorage.setItem("token", response.data.tokens.accessToken);
       this.setUser(response.data.updatedUser);
-      console.log(response);
+
       return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
@@ -286,8 +285,9 @@ export default class Store {
     this.setLoading(true);
     try {
       const response = await ProjectService.getProjectById(id);
-      console.log(response);
+
       this.setProject(response.data);
+      return response;
     } catch (e) {
       console.error(e);
       return e;
@@ -318,8 +318,8 @@ export default class Store {
         deadline,
         closed
       });
-      console.log(response);
       this.getUserProjects();
+      return response;
     } catch (e: unknown) {
       console.error(e);
     } finally {
@@ -345,7 +345,7 @@ export default class Store {
       });
       await this.refreshOnUpdate();
 
-      console.log(response);
+      return response;
     } catch (e) {
       console.error(e);
       return e;
@@ -359,7 +359,7 @@ export default class Store {
     try {
       const response = await ProjectService.deleteProject(id);
       await this.getUserProjects();
-      console.log(response);
+      return response;
     } catch (e) {
       console.error(e);
     } finally {
@@ -386,7 +386,7 @@ export default class Store {
       });
 
       await this.refreshOnUpdate();
-      console.log(response);
+      return response;
     } catch (e) {
       console.error(e);
       return e;
@@ -401,7 +401,7 @@ export default class Store {
       const response = await ProjectService.deleteStage(stage);
       await this.refreshOnUpdate();
 
-      console.log(response);
+      return response;
     } catch (e) {
       console.error(e);
       return e;
@@ -428,7 +428,7 @@ export default class Store {
         userId: this.user.id
       });
       await this.refreshOnUpdate();
-      console.log(response);
+      return response;
     } catch (e) {
       console.error(e);
       return e;
@@ -441,9 +441,8 @@ export default class Store {
     this.setLoading(true);
     try {
       const response = await BugService.getBug(id);
-
-      console.log(response);
       this.setBug(response.data);
+      return response;
     } catch (e: unknown) {
       console.error(e);
     } finally {
@@ -473,7 +472,7 @@ export default class Store {
         createdBy,
         projectId
       });
-      console.log(response);
+
       await this.refreshOnUpdate();
       return response;
     } catch (e) {
@@ -495,7 +494,6 @@ export default class Store {
         parentId
       });
       await this.getBug(bugId);
-      console.log(response);
       return response;
     } catch (e) {
       console.error(e);
@@ -513,7 +511,7 @@ export default class Store {
         userId: this.user.id
       });
       this.getBug(Number(this.bug.id));
-      console.log(response);
+      return response;
     } catch (e) {
       console.error(e);
     } finally {
@@ -536,7 +534,7 @@ export default class Store {
         newValue
       });
       await this.getBug(this.bug.id);
-      console.log(response);
+      return response;
     } catch (e) {
       console.error(e);
     } finally {
@@ -549,7 +547,7 @@ export default class Store {
     try {
       const response = await BugService.deleteBug(id);
       await this.getUserProjects();
-      console.log(response);
+      return response;
     } catch (e) {
       console.error(e);
     } finally {

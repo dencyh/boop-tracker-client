@@ -1,22 +1,23 @@
 import React from "react";
-import Select, { MultiValue } from "react-select";
+import Select, { MultiValue, SingleValue } from "react-select";
 
-type Option = {
+export interface ReactSelectOption {
   label: string;
   value: string;
-};
+}
 
 type MultiSelectProps = {
   name: string;
-  options: Option[];
-  value?: Option[];
+  options: ReactSelectOption[];
+  value?: ReactSelectOption[];
   handleChange: ({
     name,
     value
   }: {
     name: string;
-    value: MultiValue<Option>;
+    value: MultiValue<ReactSelectOption> | SingleValue<ReactSelectOption>;
   }) => void;
+  isMulti?: boolean;
 };
 
 const MultiSelect = ({

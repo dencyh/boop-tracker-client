@@ -13,12 +13,9 @@ import EditableField from "../../projects/editableField";
 import Button from "../../../components/controls/button";
 import DeleteModal from "../../../components/deleteModal";
 import Loader from "../../../components/loader";
-import MultiSelect from "../../../components/inputs/multiSelect";
-
-type Option = {
-  label: string;
-  value: string;
-};
+import MultiSelect, {
+  ReactSelectOption
+} from "../../../components/inputs/multiSelect";
 
 const BugInside = () => {
   const { store } = useContext(Context);
@@ -35,11 +32,16 @@ const BugInside = () => {
   };
 
   const [bugValues, setBugValues] = useState<BugValues>(initialBugValues);
-  const [allUsers, setAllUsers] = useState<Option[]>([]);
-  const [viewers, setViewers] = useState<Option[]>([]);
+  const [allUsers, setAllUsers] = useState<ReactSelectOption[]>([]);
+  const [assignee, setAssignee] = useState<ReactSelectOption[]>([]);
 
   useEffect(() => {
-    store.project.id
+    store.getBug(Number(id));
+    store.getViewers();
+  }, [id]);
+
+  useEffect(() => {
+    store.bug.id
       ? setAllUsers(
           store.users.map((item) => ({
             label: item.firstName + " " + item.lastName,
@@ -47,20 +49,15 @@ const BugInside = () => {
           }))
         )
       : "";
-    store.project.id
-      ? setViewers(
-          store.project.viewers.map((item) => ({
+    store.bug.id
+      ? setAssignee(
+          store.bug.assignedTo.map((item) => ({
             label: item.firstName + " " + item.lastName,
             value: item.id.toString()
           }))
         )
       : "";
-  }, [store.project, store.users]);
-
-  useEffect(() => {
-    store.getBug(Number(id));
-    store.getViewers();
-  }, [id]);
+  }, [store.bug, store.users]);
 
   const commentByParentId = useMemo(() => {
     if (store.bug?.comments?.length) {
@@ -141,7 +138,7 @@ const BugInside = () => {
   };
 
   const onViewersChange = ({ name, value }: { name: string; value }) => {
-    const ids = value.map((option) => option.id);
+    const ids = value.map((option) => option.value);
     const assingedUsers = store.users.filter((user) => {
       return ids.includes(user.id.toString());
     });
@@ -205,7 +202,7 @@ const BugInside = () => {
                   <MultiSelect
                     name="assignedTo"
                     options={allUsers}
-                    value={viewers}
+                    value={assignee}
                     handleChange={onViewersChange}
                   />
                 </div>

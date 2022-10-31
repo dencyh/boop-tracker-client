@@ -3,18 +3,21 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import dayjs from "dayjs";
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
+import { MultiValue, SingleValue } from "react-select";
 import { Context } from "../../..";
 import Button from "../../../components/controls/button";
 import Input from "../../../components/inputs/input";
+import MultiSelect, {
+  ReactSelectOption
+} from "../../../components/inputs/multiSelect";
 import Textarea from "../../../components/inputs/textarea";
 import Toggle from "../../../components/inputs/toggle";
-import CheckboxDropdown from "./checkboxDropdown";
 import MuiPicker from "./muiPicker";
 
 export interface ProjectValues {
   title: string;
   description: string;
-  viewers: string[];
+  viewers: ReactSelectOption[];
   deadline: Date;
   closed: boolean;
 }
@@ -28,6 +31,11 @@ const ProjectModal = ({ onClose }: ProjetModalProps) => {
   useEffect(() => {
     store.getViewers();
   }, []);
+
+  const usersItems: ReactSelectOption[] = store.users.map((user) => ({
+    label: `${user.firstName}  ${user.lastName}`,
+    value: user.id.toString()
+  }));
 
   const initialProjectValues = {
     title: "",
@@ -44,7 +52,14 @@ const ProjectModal = ({ onClose }: ProjetModalProps) => {
     value
   }: {
     name: string;
-    value: string | string[] | Date | undefined | boolean;
+    value:
+      | string
+      | string[]
+      | Date
+      | undefined
+      | boolean
+      | MultiValue<ReactSelectOption>
+      | SingleValue<ReactSelectOption>;
   }) => {
     setProjectValues({
       ...projectValues,
@@ -55,7 +70,7 @@ const ProjectModal = ({ onClose }: ProjetModalProps) => {
   const handleSumbit = async (e: React.FormEvent) => {
     e.preventDefault();
     const { title, description, viewers, deadline, closed } = projectValues;
-    const viewerIds = viewers.map((key) => Number(key));
+    const viewerIds = viewers.map((user) => Number(user.value));
     await store.createProject({
       title,
       description,
@@ -66,6 +81,7 @@ const ProjectModal = ({ onClose }: ProjetModalProps) => {
 
     onClose();
   };
+
   return (
     <form className="mx-auto flex gap-4" onSubmit={handleSumbit}>
       <div className="w-3/5">
@@ -94,7 +110,7 @@ const ProjectModal = ({ onClose }: ProjetModalProps) => {
         </div>
       </div>
       <div className="flex w-2/5 flex-col items-end">
-        <div className="my-4">
+        <div className="my-4 w-4/5">
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <MuiPicker
               label="Estimate deadline"
@@ -104,12 +120,13 @@ const ProjectModal = ({ onClose }: ProjetModalProps) => {
             />
           </LocalizationProvider>
         </div>
-        <CheckboxDropdown
-          label="Add viewers"
-          name="viewers"
-          menuItems={store.users}
-          handleChange={handleChange}
-        />
+        <div className="w-4/5">
+          <MultiSelect
+            name="viewers"
+            options={usersItems}
+            handleChange={handleChange}
+          />
+        </div>
       </div>
     </form>
   );
