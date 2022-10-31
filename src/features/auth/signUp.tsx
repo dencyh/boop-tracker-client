@@ -6,7 +6,7 @@ import SignHeader from "./signHeader";
 import { SignInInputs } from "./signIn";
 import * as yup from "yup";
 
-let signUpSchema = yup.object().shape({
+export const signUpSchema = yup.object().shape({
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match"),
