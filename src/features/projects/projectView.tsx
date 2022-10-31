@@ -21,7 +21,6 @@ const ProjectView = () => {
 
   useEffect(() => {
     store.getProjectById(Number(id));
-    store.getViewers();
   }, [id]);
   const [allUsers, setAllUsers] = useState<ReactSelectOption[]>([]);
   const [viewers, setViewers] = useState<ReactSelectOption[]>([]);

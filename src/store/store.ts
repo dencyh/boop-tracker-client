@@ -345,6 +345,7 @@ export default class Store {
         newValue
       });
       await this.refreshOnUpdate();
+      this.setProject(response.data);
 
       return response;
     } catch (e) {
@@ -496,6 +497,7 @@ export default class Store {
         parentId
       });
       await this.getBug(bugId);
+      await this.refreshOnUpdate();
       return response;
     } catch (e) {
       console.error(e);
