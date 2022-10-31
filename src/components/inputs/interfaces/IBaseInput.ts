@@ -7,4 +7,5 @@ export interface IBaseInput
   label?: string;
   errorMessage?: string;
   serverError?: string;
+  hideShow?: boolean;
 }

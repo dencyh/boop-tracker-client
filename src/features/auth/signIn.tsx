@@ -24,6 +24,7 @@ export interface SignInInputs {
   label: string;
   pattern?: string;
   required?: boolean;
+  hideShow?: boolean;
 }
 
 const signInHeader = {
@@ -53,7 +54,8 @@ const SignIn = ({ onSignOption }: SignInProps) => {
       type: "password",
       placeholder: "",
       errorMessage: "Enter password",
-      label: "Password"
+      label: "Password",
+      hideShow: true
     }
   ];
 

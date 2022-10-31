@@ -66,10 +66,11 @@ const signUp = ({ onSignOption }: SignInProps) => {
       type: "password",
       placeholder: "",
       errorMessage:
-        "Must be minimum six characters, at least one letter and one number",
+        "Must be minimum six characters, at least one capital and one lowercase letter and one number",
       label: "Password",
-      pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}",
-      required: true
+      pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d\\w\\W]{6,}$",
+      required: true,
+      hideShow: true
     },
     {
       name: "confirmPassword",
@@ -77,7 +78,8 @@ const signUp = ({ onSignOption }: SignInProps) => {
       placeholder: "",
       errorMessage: "Passwords don't match",
       label: "Confirm password",
-      pattern: values.password
+      pattern: values.password,
+      hideShow: true
     }
   ];
 
