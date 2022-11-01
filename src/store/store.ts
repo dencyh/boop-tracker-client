@@ -206,7 +206,6 @@ export default class Store {
       this.setAuth(true);
       this.setUser(response.data.user);
 
-      this.setShowIntroduction(true);
       return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
