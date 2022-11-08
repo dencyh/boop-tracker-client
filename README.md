@@ -34,4 +34,4 @@
 
 In you want to test locally:
 `npm start`
-You also will to need to launch [backend server](https://github.com/dencyh/boop-tracker-api)
+You also will need to launch [backend server](https://github.com/dencyh/boop-tracker-api)
